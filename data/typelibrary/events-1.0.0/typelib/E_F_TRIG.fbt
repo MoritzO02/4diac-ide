@@ -1,33 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd">
-<FBType Comment="Boolean falling edge detection" Name="E_F_TRIG">
-  <Identification Description="Copyright (c) 2017 fortiss GmbH&#13;&#10; &#13;&#10;This program and the accompanying materials are made&#13;&#10;available under the terms of the Eclipse Public License 2.0&#13;&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#13;&#10;&#13;&#10;SPDX-License-Identifier: EPL-2.0" Standard="61499-1 Annex A"/>
-  <VersionInfo Author="Alois Zoitl" Date="2017-09-22" Organization="fortiss GmbH" Remarks="initial API and implementation and/or initial documentation" Version="1.0"/>
-  <InterfaceList>
-    <EventInputs>
-      <Event Comment="check for falling edge" Name="EI" Type="Event">
-        <With Var="QI"/>
-      </Event>
-    </EventInputs>
-    <EventOutputs>
-      <Event Comment="confirmation that an falling edge was detected" Name="EO" Type="Event"/>
-    </EventOutputs>
-    <InputVars>
-      <VarDeclaration Comment="value to check for a falling edge" Name="QI" Type="BOOL"/>
-    </InputVars>
-    <OutputVars/>
-  </InterfaceList>
-  <FBNetwork>
-    <FB Comment="" Name="E_D_FF" Type="E_D_FF" x="780.0" y="100.0"/>
-    <FB Comment="" Name="E_SWITCH" Type="E_SWITCH" x="1400.0" y="100.0"/>
-    <DataConnections>
-      <Connection Comment="" Destination="E_D_FF.D" Source="QI" dx1="0.0" dx2="0.0" dy="0.0"/>
-      <Connection Comment="" Destination="E_SWITCH.G" Source="E_D_FF.Q" dx1="0.0" dx2="0.0" dy="0.0"/>
-    </DataConnections>
-    <EventConnections>
-      <Connection Comment="" Destination="E_D_FF.CLK" Source="EI" dx1="560.0" dx2="0.0" dy="0.0"/>
-      <Connection Comment="" Destination="E_SWITCH.EI" Source="E_D_FF.EO" dx1="0.0" dx2="0.0" dy="0.0"/>
-      <Connection Comment="" Destination="EO" Source="E_SWITCH.EO0" dx1="0.0" dx2="0.0" dy="0.0"/>
-    </EventConnections>
-  </FBNetwork>
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_F_TRIG" Comment="Boolean falling edge detection" >
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI" Type="Event" Comment="check for falling edge" >
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="confirmation that an falling edge was detected" >
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="value to check for a falling edge" />
+		</InputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_D_FF" Type="E_D_FF" x="780" y="100">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" x="1400" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI" Destination="E_D_FF.CLK" dx1="560"/>
+			<Connection Source="E_D_FF.EO" Destination="E_SWITCH.EI"/>
+			<Connection Source="E_SWITCH.EO0" Destination="EO" dx1="6241.18"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="E_D_FF.D" dx1="70.59" dx2="70.59" dy="-29.41"/>
+			<Connection Source="E_D_FF.Q" Destination="E_SWITCH.G" dx1="70.59" dx2="70.59" dy="47.06"/>
+		</DataConnections>
+	</FBNetwork>
 </FBType>

@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_DEMUX8" Comment="Event demultiplexor 8 Events">
-	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017, 2024 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0" >
+<FBType Name="E_DEMUX8" Comment="Event demultiplexor 8 Events" >
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-07-15" Remarks="copy from E_DEMUX and make a E_DEMUX8 in the same way">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="EI" Type="Event" Comment="Event to demultiplex">
+			<Event Name="EI" Type="Event" Comment="Event to demultiplex" >
 				<With Var="K"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="EO0" Type="Event" Comment="">
+			<Event Name="EO0" Type="Event">
 			</Event>
-			<Event Name="EO1" Type="Event" Comment="">
+			<Event Name="EO1" Type="Event">
 			</Event>
-			<Event Name="EO2" Type="Event" Comment="">
+			<Event Name="EO2" Type="Event">
 			</Event>
-			<Event Name="EO3" Type="Event" Comment="">
+			<Event Name="EO3" Type="Event">
 			</Event>
-			<Event Name="EO4" Type="Event" Comment="">
+			<Event Name="EO4" Type="Event">
 			</Event>
-			<Event Name="EO5" Type="Event" Comment="">
+			<Event Name="EO5" Type="Event">
 			</Event>
-			<Event Name="EO6" Type="Event" Comment="">
+			<Event Name="EO6" Type="Event">
 			</Event>
-			<Event Name="EO7" Type="Event" Comment="">
+			<Event Name="EO7" Type="Event">
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="K" Type="UINT" Comment="Event index"/>
+			<VarDeclaration Name="K" Type="UINT" Comment="Event index" />
 		</InputVars>
 	</InterfaceList>
 	<BasicFB>
 		<ECC>
-			<ECState Name="START" Comment="Initial State" x="-2400" y="4266.67">
+			<ECState Name="START" Comment="Initial State"  x="-2400" y="4266.67">
 			</ECState>
-			<ECState Name="State" Comment="" x="2666.67" y="4800">
+			<ECState Name="State" x="2666.67" y="4800">
 			</ECState>
-			<ECState Name="State_1" Comment="" x="-533.33" y="533.33">
+			<ECState Name="State_1" x="-533.33" y="533.33">
 				<ECAction Output="EO0"/>
 			</ECState>
-			<ECState Name="State_2" Comment="" x="-533.33" y="1066.67">
+			<ECState Name="State_2" x="-533.33" y="1066.67">
 				<ECAction Output="EO1"/>
 			</ECState>
-			<ECState Name="State_3" Comment="" x="-533.33" y="1600">
+			<ECState Name="State_3" x="-533.33" y="1600">
 				<ECAction Output="EO2"/>
 			</ECState>
-			<ECState Name="State_4" Comment="" x="-533.33" y="2133.33">
+			<ECState Name="State_4" x="-533.33" y="2133.33">
 				<ECAction Output="EO3"/>
 			</ECState>
-			<ECState Name="State_5" Comment="" x="-533.33" y="2666.67">
+			<ECState Name="State_5" x="-533.33" y="2666.67">
 				<ECAction Output="EO4"/>
 			</ECState>
-			<ECState Name="State_6" Comment="" x="-533.33" y="3200">
+			<ECState Name="State_6" x="-533.33" y="3200">
 				<ECAction Output="EO5"/>
 			</ECState>
-			<ECState Name="State_7" Comment="" x="-533.33" y="3733.33">
+			<ECState Name="State_7" x="-533.33" y="3733.33">
 				<ECAction Output="EO6"/>
 			</ECState>
-			<ECState Name="State_8" Comment="" x="-533.33" y="4266.67">
+			<ECState Name="State_8" x="-533.33" y="4266.67">
 				<ECAction Output="EO7"/>
 			</ECState>
 			<ECTransition Source="State_1" Destination="START" Condition="1" Comment="" x="-1613.33" y="620"/>
