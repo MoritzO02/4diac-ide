@@ -14,6 +14,7 @@
 package org.eclipse.fordiac.ide.gef.print;
 
 import org.eclipse.fordiac.ide.gef.Messages;
+import org.eclipse.fordiac.ide.model.ui.editors.AbstractBreadCrumbEditor;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Shell;
@@ -55,6 +56,18 @@ public class PrintPreviewAction extends Action {
 		final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		final IEditorPart editor = window.getActivePage().getActiveEditor();
 		if (null != editor) {
+			// bug #2637: for Subapps, print the FB Network (the breadcrumb/network
+			// editor), not the currently active interface page
+			final AbstractBreadCrumbEditor breadcrumb = editor.getAdapter(AbstractBreadCrumbEditor.class);
+			if (breadcrumb != null) {
+				final IEditorPart activeInner = breadcrumb.getActiveEditor();
+				if (activeInner != null) {
+					final GraphicalViewer networkViewer = activeInner.getAdapter(GraphicalViewer.class);
+					if (networkViewer != null) {
+						return networkViewer;
+					}
+				}
+			}
 			return editor.getAdapter(GraphicalViewer.class);
 		}
 		return null;

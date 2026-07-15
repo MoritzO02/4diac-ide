@@ -58,6 +58,8 @@ public class PrintPreview extends Dialog {
 	private static final String ONLY_DIGIT_REGEX = "^\\d*$"; //$NON-NLS-1$
 	private static final Pattern ONLY_DIGIT_PATTERN = Pattern.compile(ONLY_DIGIT_REGEX, Pattern.MULTILINE);
 
+	private static final int PAGE_LIMIT = 5;
+
 	/**
 	 * The current page shown in the print preview. Always starting with 1.
 	 */
@@ -75,6 +77,7 @@ public class PrintPreview extends Dialog {
 
 	private Combo scaleSelection;
 	private Combo combo;
+	private Text pageLimitText;
 
 	private PrintMargin margin;
 
@@ -119,7 +122,7 @@ public class PrintPreview extends Dialog {
 	 * @param composite The container of the elements
 	 */
 	private void createOptionsGUI(final Composite parent) {
-		final GridLayout layout = new GridLayout(6, false);
+		final GridLayout layout = new GridLayout(7, false);
 		layout.marginHeight = 0;
 		parent.setLayout(layout);
 
@@ -129,11 +132,32 @@ public class PrintPreview extends Dialog {
 		scaleSelection.add(Messages.PrintPreview_LABEL_FitPage);
 		scaleSelection.add(Messages.PrintPreview_LABEL_FitWidth);
 		scaleSelection.add(Messages.PrintPreview_LABEL_FitHeight);
+		scaleSelection.add(Messages.PrintPreview_LABEL_PageLimit);
 		scaleSelection.select(0);
 		scaleSelection.addListener(SWT.Selection, ev -> {
+			pageLimitText.setEnabled(scaleSelection.getSelectionIndex() == 4);
 			updatePageNumbers();
 			canvas.redraw();
 		});
+
+		pageLimitText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		pageLimitText.setText("1"); //$NON-NLS-1$
+		pageLimitText.addListener(SWT.Verify, ev -> {
+			if (!ev.doit) {
+				return;
+			}
+			if (ev.keyCode == SWT.DEL || ev.keyCode == SWT.BS) {
+				return;
+			}
+			if (ev.character == SWT.NULL) {
+				ev.doit = true;
+			} else {
+				final String currentValue = ((Text) ev.widget).getText();
+				final String resultingValue = currentValue.substring(0, ev.start) + ev.text + currentValue.substring(ev.end);
+				ev.doit = ONLY_DIGIT_PATTERN.matcher(resultingValue).matches();
+			}
+		});
+		pageLimitText.setEnabled(false);
 
 		printBorder = new Button(parent, SWT.CHECK);
 		printBorder.setText(Messages.PrintPreview_LABEL_PrintBorder);
@@ -261,12 +285,35 @@ public class PrintPreview extends Dialog {
 		case PrintFigureOperation.FIT_HEIGHT:
 			scale *= (margin.getHeight() / (scale * figure.getBounds().height));
 			break;
+		case PAGE_LIMIT:
+			int limit = 1;
+			try {
+				limit = Integer.parseInt(pageLimitText.getText());
+			} catch (final NumberFormatException e) {
+				// fallback to 1
+			}
+			scale = computePageLimitScale(limit, figure.getBounds().width, figure.getBounds().height,
+					margin.getWidth(), margin.getHeight());
+			break;
 		case PrintFigureOperation.TILE: // when tile is selected we keep the default printer scale factor
 		default:
 			break;
 		}
 
 		return scale;
+	}
+
+	private double computePageLimitScale(final int pageLimit, final double figW, final double figH,
+			final double marginW, final double marginH) {
+		final int limit = Math.max(1, pageLimit);
+		final double base = printer.getDPI().x * 1.0 / Display.getCurrent().getDPI().x * 1.0;
+		final double areaFit = Math.sqrt(limit * marginW * marginH / (figW * figH));
+		double scale = Math.min(areaFit, base); // cap at 1:1 so small content does not print oversized
+		final double step = 0.01;
+		while ((Math.ceil(figW * scale / marginW) * Math.ceil(figH * scale / marginH)) > limit && scale > step) {
+			scale -= step;
+		}
+		return Math.max(scale, step);
 	}
 
 	private void createButtonArea(final Composite parent) {
