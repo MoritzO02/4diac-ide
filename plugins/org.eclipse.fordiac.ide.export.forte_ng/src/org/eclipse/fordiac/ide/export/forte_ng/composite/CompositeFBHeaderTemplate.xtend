@@ -37,59 +37,59 @@ class CompositeFBHeaderTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		«generateFBClassHeader»
-		      «generateFBDeclaration»
+		??generateFBClassHeader??
+		      ??generateFBDeclaration??
 		
 		    private:
-		      «generateFBInterfaceDeclaration»
+		      ??generateFBInterfaceDeclaration??
 		
-		      «fbs.generateInternalFBDeclarations»
+		      ??fbs.generateInternalFBDeclarations??
 		
-		      «generateReadInputDataDeclaration»
-		      «generateWriteOutputDataDeclaration»
-		      «(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration»
-		      «generateSetFBNetworkInitialValuesDeclaration»
+		      ??generateReadInputDataDeclaration??
+		      ??generateWriteOutputDataDeclaration??
+		      ??(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration??
+		      ??generateSetFBNetworkInitialValuesDeclaration??
 		
 		    public:
-		      «FBClassName»(StringId paInstanceNameId, CFBContainer &paContainer);
+		      ??FBClassName??(StringId paInstanceNameId, CFBContainer &paContainer);
 		
-		      «generateInterfaceDeclarations»
+		      ??generateInterfaceDeclarations??
 		  };
 		}
 		
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 		
 	'''
 	
 	def generateSetFBNetworkInitialValuesDeclaration() '''
-		«IF fbs.flatMap[interface.inputVars].exists[!value?.value.nullOrEmpty]»
+		??IF fbs.flatMap[interface.inputVars].exists[!value?.value.nullOrEmpty]??
 			void setFBNetworkInitialValues() override;
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	override protected CharSequence generateHeaderIncludes() '''
-		«generateDependencyInclude("forte/cfb.h")»
-		«generateDependencyInclude("forte/typelib.h")»
-		«super.generateHeaderIncludes»
+		??generateDependencyInclude("forte/cfb.h")??
+		??generateDependencyInclude("forte/typelib.h")??
+		??super.generateHeaderIncludes??
 	'''
 
 	override generateInterfaceVariableAndConnectionDeclarations() '''
-		«type.interfaceList.outputVars.filter[needsOutputVariable].toList.generateVariableDeclarations(false)»
-		«type.interfaceList.sockets.generateSocketDeclarations»
-		«type.interfaceList.plugs.generatePlugDeclarations»
-		«type.interfaceList.eventOutputs.generateEventConnectionDeclarations»
-		«type.interfaceList.inputVars.generateDataConnectionDeclarations(true)»
-		«type.interfaceList.outputVars.generateDataConnectionDeclarations(false)»
-		«type.interfaceList.inOutVars.generateDataConnectionDeclarations(true)»
-		«type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false)»
-		«type.interfaceList.inputVars.generateDataConnectionDeclarations(false, true)»
-		«type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false, true)»
+		??type.interfaceList.outputVars.filter[needsOutputVariable].toList.generateVariableDeclarations(false)??
+		??type.interfaceList.sockets.generateSocketDeclarations??
+		??type.interfaceList.plugs.generatePlugDeclarations??
+		??type.interfaceList.eventOutputs.generateEventConnectionDeclarations??
+		??type.interfaceList.inputVars.generateDataConnectionDeclarations(true)??
+		??type.interfaceList.outputVars.generateDataConnectionDeclarations(false)??
+		??type.interfaceList.inOutVars.generateDataConnectionDeclarations(true)??
+		??type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false)??
+		??type.interfaceList.inputVars.generateDataConnectionDeclarations(false, true)??
+		??type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false, true)??
 	'''
 	
 	def private needsOutputVariable(VarDeclaration varDeclaration) {
@@ -97,11 +97,11 @@ class CompositeFBHeaderTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	override generateAccessorDeclarations() '''
-		«super.generateAccessorDeclarations»
-		«generateConnectionAccessorsDeclaration("getIf2InConUnchecked", "CDataConnection *")»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«generateConnectionAccessorsDeclaration("getDIOOutConInternalUnchecked", "CInOutDataConnection *")»
-		«ENDIF»
+		??super.generateAccessorDeclarations??
+		??generateConnectionAccessorsDeclaration("getIf2InConUnchecked", "CDataConnection *")??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??generateConnectionAccessorsDeclaration("getDIOOutConInternalUnchecked", "CInOutDataConnection *")??
+		??ENDIF??
 	'''
 	
 	override generateEventAccessorDefinitions() ''''''

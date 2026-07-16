@@ -32,7 +32,7 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 	def exportValidBasicFB() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-		  «VARIABLE_NAME» : ARRAY [0..31] OF DWORD;
+		  ??VARIABLE_NAME?? : ARRAY [0..31] OF DWORD;
 		END_VAR'''))
 
 		val exports = generateFunctionBlock(functionBlock);
@@ -42,16 +42,16 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 
 		for (export : exports) {
 			switch export.getName() {
-				case '''«ExporterTestBase.BASICFUNCTIONBLOCK_NAME»_fbt.h''': {
+				case '''??ExporterTestBase.BASICFUNCTIONBLOCK_NAME??_fbt.h''': {
 					headerfileFound = true
 
 					assertEquals('''
 						/*************************************************************************
 						 *** FORTE Library Element
 						 ***
-						 *** «ForteNgExportTemplate.HEADER_TEXT»
+						 *** ??ForteNgExportTemplate.HEADER_TEXT??
 						 ***
-						 *** Name: «ExporterTestBase.BASICFUNCTIONBLOCK_NAME»
+						 *** Name: ??ExporterTestBase.BASICFUNCTIONBLOCK_NAME??
 						 *** Description:
 						 *** Version:
 						 *************************************************************************/
@@ -61,14 +61,14 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 						#include "forte/basicfb.h"
 						
 						namespace forte {
-						  class «EXPORTED_FUNCTIONBLOCK_NAME» final : public CBasicFB {
-						      DECLARE_FIRMWARE_FB(«EXPORTED_FUNCTIONBLOCK_NAME»)
+						  class ??EXPORTED_FUNCTIONBLOCK_NAME?? final : public CBasicFB {
+						      DECLARE_FIRMWARE_FB(??EXPORTED_FUNCTIONBLOCK_NAME??)
 						
 						    private:
 						
 						      CIEC_ANY *getVarInternal(size_t) override;
 						
-						      void «EXPORTED_ALGORITHM_NAME»(void);
+						      void ??EXPORTED_ALGORITHM_NAME??(void);
 						
 						      static const TForteInt16 scmStateINIT = 0;
 						
@@ -81,7 +81,7 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 						      void setInitialValues() override;
 						
 						    public:
-						      «EXPORTED_FUNCTIONBLOCK_NAME»(StringId paInstanceNameId, CFBContainer &paContainer);
+						      ??EXPORTED_FUNCTIONBLOCK_NAME??(StringId paInstanceNameId, CFBContainer &paContainer);
 						
 						      CIEC_ANY *getDI(size_t) override;
 						      CIEC_ANY *getDO(size_t) override;
@@ -94,21 +94,21 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 					'''.toString(), export.data.toString())
 					assertNoErrors(export.errors)
 				}
-				case '''«ExporterTestBase.BASICFUNCTIONBLOCK_NAME»_fbt.cpp''': {
+				case '''??ExporterTestBase.BASICFUNCTIONBLOCK_NAME??_fbt.cpp''': {
 					cppfileFound = true
 
 					assertEquals('''
 					/*************************************************************************
 					 *** FORTE Library Element
 					 ***
-					 *** «ForteNgExportTemplate.HEADER_TEXT»
+					 *** ??ForteNgExportTemplate.HEADER_TEXT??
 					 ***
-					 *** Name: «ExporterTestBase.BASICFUNCTIONBLOCK_NAME»
+					 *** Name: ??ExporterTestBase.BASICFUNCTIONBLOCK_NAME??
 					 *** Description:
 					 *** Version:
 					 *************************************************************************/
 					
-					#include "forte/«ExporterTestBase.BASICFUNCTIONBLOCK_NAME»_fbt.h"
+					#include "forte/??ExporterTestBase.BASICFUNCTIONBLOCK_NAME??_fbt.h"
 					
 					#include "forte/datatypes/forte_array_fixed.h"
 					#include "forte/datatypes/forte_dword.h"
@@ -134,17 +134,17 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 					    };
 					  }
 					
-					  DEFINE_FIRMWARE_FB(«EXPORTED_FUNCTIONBLOCK_NAME», «ExporterTestBase.BASICFUNCTIONBLOCK_NAME.FORTEStringId», TypeHash)
+					  DEFINE_FIRMWARE_FB(??EXPORTED_FUNCTIONBLOCK_NAME??, ??ExporterTestBase.BASICFUNCTIONBLOCK_NAME.FORTEStringId??, TypeHash)
 					
-					  «EXPORTED_FUNCTIONBLOCK_NAME»::«EXPORTED_FUNCTIONBLOCK_NAME»(const StringId paInstanceNameId, CFBContainer &paContainer) :
+					  ??EXPORTED_FUNCTIONBLOCK_NAME??::??EXPORTED_FUNCTIONBLOCK_NAME??(const StringId paInstanceNameId, CFBContainer &paContainer) :
 					      CBasicFB(paContainer, cFBInterfaceSpec, paInstanceNameId, {}) {
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::setInitialValues() {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::setInitialValues() {
 					    CBasicFB::setInitialValues();
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) {
 					    do {
 					      switch(mECCState) {
 					        case scmStateINIT:
@@ -158,43 +158,43 @@ class ForteNgBasicFBTest extends ExporterTestBasicFBTypeBase {
 					    } while(true);
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::enterStateINIT(CEventChainExecutionThread *const) {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::enterStateINIT(CEventChainExecutionThread *const) {
 					    mECCState = scmStateINIT;
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::readInputData(TEventID) {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::readInputData(TEventID) {
 					    // nothing to do
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::writeOutputData(TEventID) {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::writeOutputData(TEventID) {
 					    // nothing to do
 					  }
 					
-					  CIEC_ANY *«EXPORTED_FUNCTIONBLOCK_NAME»::getDI(size_t) {
+					  CIEC_ANY *??EXPORTED_FUNCTIONBLOCK_NAME??::getDI(size_t) {
 					    return nullptr;
 					  }
 					
-					  CIEC_ANY *«EXPORTED_FUNCTIONBLOCK_NAME»::getDO(size_t) {
+					  CIEC_ANY *??EXPORTED_FUNCTIONBLOCK_NAME??::getDO(size_t) {
 					    return nullptr;
 					  }
 					
-					  CEventConnection *«EXPORTED_FUNCTIONBLOCK_NAME»::getEOConUnchecked(TPortId) {
+					  CEventConnection *??EXPORTED_FUNCTIONBLOCK_NAME??::getEOConUnchecked(TPortId) {
 					    return nullptr;
 					  }
 					
-					  CDataConnection **«EXPORTED_FUNCTIONBLOCK_NAME»::getDIConUnchecked(TPortId) {
+					  CDataConnection **??EXPORTED_FUNCTIONBLOCK_NAME??::getDIConUnchecked(TPortId) {
 					    return nullptr;
 					  }
 					
-					  CDataConnection *«EXPORTED_FUNCTIONBLOCK_NAME»::getDOConUnchecked(TPortId) {
+					  CDataConnection *??EXPORTED_FUNCTIONBLOCK_NAME??::getDOConUnchecked(TPortId) {
 					    return nullptr;
 					  }
 					
-					  CIEC_ANY *«EXPORTED_FUNCTIONBLOCK_NAME»::getVarInternal(size_t) {
+					  CIEC_ANY *??EXPORTED_FUNCTIONBLOCK_NAME??::getVarInternal(size_t) {
 					    return nullptr;
 					  }
 					
-					  void «EXPORTED_FUNCTIONBLOCK_NAME»::«EXPORTED_ALGORITHM_NAME»(void) {
+					  void ??EXPORTED_FUNCTIONBLOCK_NAME??::??EXPORTED_ALGORITHM_NAME??(void) {
 					    CIEC_ARRAY_FIXED<CIEC_DWORD, 0, 31> st_lv_variable = CIEC_ARRAY_FIXED<CIEC_DWORD, 0, 31>{};
 					
 					  }

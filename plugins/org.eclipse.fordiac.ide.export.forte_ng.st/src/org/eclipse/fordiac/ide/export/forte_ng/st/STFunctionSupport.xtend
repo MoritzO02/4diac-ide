@@ -66,21 +66,21 @@ class STFunctionSupport extends StructuredTextSupport {
 	}
 
 	def private CharSequence generateStructuredTextFunctionHeader(STFunction func) '''
-		«func.generateStructuredTextFunctionDeclaration»;
+		??func.generateStructuredTextFunctionDeclaration??;
 	'''
 
 	def private CharSequence generateStructuredTextFunctionImpl(STFunction func) '''
-		«func.generateStructuredTextFunctionDeclaration» {
-		  «func.generateStructuredTextFunctionBody»
+		??func.generateStructuredTextFunctionDeclaration?? {
+		  ??func.generateStructuredTextFunctionBody??
 		}
 		
 	'''
 
 	def private CharSequence generateStructuredTextFunctionDeclaration(STFunction func) //
-	'''«func.returnType?.generateTypeName ?: "void"» func_«func.name»(«func.generateStructuredTextFunctionParameters»)'''
+	'''??func.returnType?.generateTypeName ?: "void"?? func_??func.name??(??func.generateStructuredTextFunctionParameters??)'''
 
 	def private CharSequence generateStructuredTextFunctionParameters(STFunction func) //
-	'''«FOR param : func.structuredTextFunctionParameters SEPARATOR ", "»«param.generateParameterTypeName»«param.generateParameterName»«ENDFOR»'''
+	'''??FOR param : func.structuredTextFunctionParameters SEPARATOR ", "????param.generateParameterTypeName????param.generateParameterName????ENDFOR??'''
 
 	def private getStructuredTextFunctionParameters(STFunction func) {
 		func.varDeclarations.filter(STVarInputDeclarationBlock).flatMap[varDeclarations] +
@@ -89,19 +89,19 @@ class STFunctionSupport extends StructuredTextSupport {
 	}
 
 	def private CharSequence generateStructuredTextFunctionBody(STFunction func) '''
-		«func.varDeclarations.filter(STVarOutputDeclarationBlock).generateOutputGuard»
-		«IF func.returnType !== null»«func.returnType.generateTypeName» st_ret_val = «func.returnType.generateTypeDefaultValue»;«ENDIF»
-		«func.varDeclarations.filter(STVarOutputDeclarationBlock).generateVariables(false)»
-		«func.varDeclarations.filter(STVarPlainDeclarationBlock).generateVariables(true)»
-		«func.varDeclarations.filter(STVarTempDeclarationBlock).generateVariables(true)»
+		??func.varDeclarations.filter(STVarOutputDeclarationBlock).generateOutputGuard??
+		??IF func.returnType !== null????func.returnType.generateTypeName?? st_ret_val = ??func.returnType.generateTypeDefaultValue??;??ENDIF??
+		??func.varDeclarations.filter(STVarOutputDeclarationBlock).generateVariables(false)??
+		??func.varDeclarations.filter(STVarPlainDeclarationBlock).generateVariables(true)??
+		??func.varDeclarations.filter(STVarTempDeclarationBlock).generateVariables(true)??
 		
-		«func.code.generateStatementList»
+		??func.code.generateStatementList??
 		
-		«IF func.returnType !== null»return st_ret_val;«ENDIF»
+		??IF func.returnType !== null??return st_ret_val;??ENDIF??
 	'''
 
 	override protected dispatch CharSequence generateStatement(STReturn stmt) //
-	'''return«IF currentFunction.returnType !== null» st_ret_val«ENDIF»;'''
+	'''return??IF currentFunction.returnType !== null?? st_ret_val??ENDIF??;'''
 
 	override protected dispatch CharSequence generateExpression(STFeatureExpression expr) {
 		if (expr.feature === currentFunction && !expr.call)

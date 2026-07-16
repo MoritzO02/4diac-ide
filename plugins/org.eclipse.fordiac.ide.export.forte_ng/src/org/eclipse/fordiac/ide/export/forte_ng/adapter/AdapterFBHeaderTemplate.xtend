@@ -34,104 +34,104 @@ class AdapterFBHeaderTemplate extends ForteFBTemplate<AdapterType> {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		«generateFBClassHeader»
-		      «generateFBDeclaration»
+		??generateFBClassHeader??
+		      ??generateFBDeclaration??
 		
 		    private:
-		      «generateFBInterfaceDeclaration»
+		      ??generateFBInterfaceDeclaration??
 		
-		      «(type.interfaceList.inputVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration»
+		      ??(type.interfaceList.inputVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration??
 		    public:
-		      «type.interfaceList.inputVars.generateVariableDeclarations(false)»
-		      «type.interfaceList.outputVars.generateVariableDeclarations(false)»
-		      «type.interfaceList.eventInputs.generateEventAccessors»
-		      «type.interfaceList.eventOutputs.generateEventAccessors»
-		      ~«FBClassName»() override = default;
+		      ??type.interfaceList.inputVars.generateVariableDeclarations(false)??
+		      ??type.interfaceList.outputVars.generateVariableDeclarations(false)??
+		      ??type.interfaceList.eventInputs.generateEventAccessors??
+		      ??type.interfaceList.eventOutputs.generateEventAccessors??
+		      ~??FBClassName??() override = default;
 		      
 		    protected:
-		      «FBClassName»(CFBContainer &paContainer,
+		      ??FBClassName??(CFBContainer &paContainer,
 		                    const SFBInterfaceSpec &paInterfaceSpec,
 		                    const StringId paInstanceNameId,
 		                    TForteUInt8 paParentAdapterlistID);
 		  };
 		
-		  «generatePlugClass»
+		  ??generatePlugClass??
 		
-		  «generateSocketClass»
+		  ??generateSocketClass??
 		}
 		
-		«generateIncludeGuardEnd»		
+		??generateIncludeGuardEnd??		
 	'''
 
 	override protected generateHeaderIncludes() '''
-		«generateDependencyInclude("forte/adapter.h")»
-		«super.generateHeaderIncludes»
+		??generateDependencyInclude("forte/adapter.h")??
+		??super.generateHeaderIncludes??
 	'''
 
 	override protected generateFBClassHeader() '''
-		namespace «type.generateTypeNamespace» {
-		  class «FBClassName» : public «baseClass» {
+		namespace ??type.generateTypeNamespace?? {
+		  class ??FBClassName?? : public ??baseClass?? {
 	'''
 
 	override protected generateFBDeclaration() '''
-		DECLARE_ADAPTER_TYPE(«FBClassName»)
+		DECLARE_ADAPTER_TYPE(??FBClassName??)
 	'''
 
 	override protected generateEventConstants(List<Event> events) '''
 	public:
-	  «super.generateEventConstants(events)»
+	  ??super.generateEventConstants(events)??
 	
 	private:
 	'''
 
 	def private generateEventAccessors(List<Event> events) '''
-		«FOR event : events»
-			TEventID «event.generateName»() {
-			  return getParentAdapterListEventID() + scmEvent«event.name»ID;
+		??FOR event : events??
+			TEventID ??event.generateName??() {
+			  return getParentAdapterListEventID() + scmEvent??event.name??ID;
 			}
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 	
 	def generatePlugClass() '''
-		«generatePlugSocketClassStart("_Plug")»
+		??generatePlugSocketClassStart("_Plug")??
 		
-		    «type.interfaceList.eventInputs.generateEventConnectionDeclarations»
-		    «type.interfaceList.outputVars.generateDataConnectionDeclarations(true)»
-		    «type.interfaceList.inputVars.generateDataConnectionDeclarations(false)»
+		    ??type.interfaceList.eventInputs.generateEventConnectionDeclarations??
+		    ??type.interfaceList.outputVars.generateDataConnectionDeclarations(true)??
+		    ??type.interfaceList.inputVars.generateDataConnectionDeclarations(false)??
 		  private:
-		    «generateReadInputDataDeclaration»
-		    «generateWriteOutputDataDeclaration»
-		    «generateAccessorDeclarations()»
+		    ??generateReadInputDataDeclaration??
+		    ??generateWriteOutputDataDeclaration??
+		    ??generateAccessorDeclarations()??
 		};
 	'''
 
 	def generateSocketClass() '''
-		«generatePlugSocketClassStart("_Socket")»
+		??generatePlugSocketClassStart("_Socket")??
 		
-		    «type.interfaceList.eventOutputs.generateEventConnectionDeclarations»
-		    «type.interfaceList.inputVars.generateDataConnectionDeclarations(true)»
-		    «type.interfaceList.outputVars.generateDataConnectionDeclarations(false)»
+		    ??type.interfaceList.eventOutputs.generateEventConnectionDeclarations??
+		    ??type.interfaceList.inputVars.generateDataConnectionDeclarations(true)??
+		    ??type.interfaceList.outputVars.generateDataConnectionDeclarations(false)??
 		  private:
-		    «generateReadInputDataDeclaration»
-		    «generateWriteOutputDataDeclaration»
-		    «generateAccessorDeclarations()»
+		    ??generateReadInputDataDeclaration??
+		    ??generateWriteOutputDataDeclaration??
+		    ??generateAccessorDeclarations()??
 		};
 	'''
 	
 	def generatePlugSocketClassStart(String kind) '''
-	  class «FBClassName»«kind» final : public «FBClassName» {
+	  class ??FBClassName????kind?? final : public ??FBClassName?? {
 	    public:
-	      «FBClassName»«kind»(StringId paInstanceNameId,
+	      ??FBClassName????kind??(StringId paInstanceNameId,
 	                          CFBContainer &paContainer,
 	                          TForteUInt8 paParentAdapterlistID);
-	      ~«FBClassName»«kind»() override = default;
+	      ~??FBClassName????kind??() override = default;
 	'''
 	
 }

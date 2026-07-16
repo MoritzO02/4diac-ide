@@ -61,62 +61,62 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	}
 
 	def protected generateFBClassHeader() '''
-		namespace «type.generateTypeNamespace» {
-		  class «FBClassName» final : public «baseClass» {
+		namespace ??type.generateTypeNamespace?? {
+		  class ??FBClassName?? final : public ??baseClass?? {
 	'''
 
 	def protected generateHeaderIncludes() '''
-		«getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes»
-		«type.compilerInfo?.header»
+		??getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes??
+		??type.compilerInfo?.header??
 	'''
 
 	def protected generateFBDeclaration() '''
-		DECLARE_FIRMWARE_FB(«FBClassName»)
+		DECLARE_FIRMWARE_FB(??FBClassName??)
 	'''
 
 	def protected generateFBDefinition() '''
-		DEFINE_FIRMWARE_FB(«FBClassName», «type.generateTypeSpec», TypeHash)
+		DEFINE_FIRMWARE_FB(??FBClassName??, ??type.generateTypeSpec??, TypeHash)
 	'''
 
 	def protected generateFBInterfaceDeclaration() '''
-		«type.interfaceList.eventOutputs.generateEventConstants»
-		«type.interfaceList.eventInputs.generateEventConstants»
+		??type.interfaceList.eventOutputs.generateEventConstants??
+		??type.interfaceList.eventInputs.generateEventConstants??
 	'''
 
-	def protected generateEventConstants(List<Event> events) '''«FOR event : events»
-			static const TEventID «event.generateEventID» = «events.indexOf(event)»;
-		«ENDFOR»'''
+	def protected generateEventConstants(List<Event> events) '''??FOR event : events??
+			static const TEventID ??event.generateEventID?? = ??events.indexOf(event)??;
+		??ENDFOR??'''
 
-	def protected generateEventID(Event event) '''scmEvent«event.name»ID'''
+	def protected generateEventID(Event event) '''scmEvent??event.name??ID'''
 
 	def protected generateFBInterfaceDefinition() '''
-		«IF !type.interfaceList.eventInputs.empty»
-			const auto cEventInputNames = std::array{«type.interfaceList.eventInputs.FORTENameList»};
-			«IF !type.interfaceList.eventInputs.containsOnlyBasicEventType»
-				const auto cEventInputTypeIds = std::array{«type.interfaceList.eventInputs.FORTEEventTypeList»};
-			«ENDIF»
-		«ENDIF»
-		«IF !type.interfaceList.eventOutputs.empty»
-			const auto cEventOutputNames = std::array{«type.interfaceList.eventOutputs.FORTENameList»};
-			«IF !type.interfaceList.eventOutputs.containsOnlyBasicEventType»
-				const auto cEventOutputTypeIds = std::array{«type.interfaceList.eventOutputs.FORTEEventTypeList»};
-			«ENDIF»
-		«ENDIF»
-		«IF !type.interfaceList.inputVars.empty»
-			const auto cDataInputNames = std::array{«type.interfaceList.inputVars.FORTENameList»};
-		«ENDIF»
-		«IF !type.interfaceList.outputVars.empty»
-			const auto cDataOutputNames = std::array{«type.interfaceList.outputVars.FORTENameList»};
-		«ENDIF»
-		«IF !type.interfaceList.inOutVars.empty»
-			const auto cDataInOutNames = std::array{«type.interfaceList.inOutVars.FORTENameList»};
-		«ENDIF»
-		«IF !type.interfaceList.sockets.empty» 
-			const auto cSocketNameIds = std::array{«type.interfaceList.sockets.FORTENameList»};
-		«ENDIF»
-		«IF !type.interfaceList.plugs.empty»
-			const auto cPlugNameIds = std::array{«type.interfaceList.plugs.FORTENameList»};
-		«ENDIF»
+		??IF !type.interfaceList.eventInputs.empty??
+			const auto cEventInputNames = std::array{??type.interfaceList.eventInputs.FORTENameList??};
+			??IF !type.interfaceList.eventInputs.containsOnlyBasicEventType??
+				const auto cEventInputTypeIds = std::array{??type.interfaceList.eventInputs.FORTEEventTypeList??};
+			??ENDIF??
+		??ENDIF??
+		??IF !type.interfaceList.eventOutputs.empty??
+			const auto cEventOutputNames = std::array{??type.interfaceList.eventOutputs.FORTENameList??};
+			??IF !type.interfaceList.eventOutputs.containsOnlyBasicEventType??
+				const auto cEventOutputTypeIds = std::array{??type.interfaceList.eventOutputs.FORTEEventTypeList??};
+			??ENDIF??
+		??ENDIF??
+		??IF !type.interfaceList.inputVars.empty??
+			const auto cDataInputNames = std::array{??type.interfaceList.inputVars.FORTENameList??};
+		??ENDIF??
+		??IF !type.interfaceList.outputVars.empty??
+			const auto cDataOutputNames = std::array{??type.interfaceList.outputVars.FORTENameList??};
+		??ENDIF??
+		??IF !type.interfaceList.inOutVars.empty??
+			const auto cDataInOutNames = std::array{??type.interfaceList.inOutVars.FORTENameList??};
+		??ENDIF??
+		??IF !type.interfaceList.sockets.empty?? 
+			const auto cSocketNameIds = std::array{??type.interfaceList.sockets.FORTENameList??};
+		??ENDIF??
+		??IF !type.interfaceList.plugs.empty??
+			const auto cPlugNameIds = std::array{??type.interfaceList.plugs.FORTENameList??};
+		??ENDIF??
 	'''
 
 	def containsOnlyBasicEventType(EList<Event> events) {
@@ -127,15 +127,15 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	// as there this code is duplicated
 	def protected generateFBInterfaceSpecDefinition() '''
 		const SFBInterfaceSpec cFBInterfaceSpec = {
-		    .mEINames = «IF type.interfaceList.eventInputs.empty»{}«ELSE»cEventInputNames«ENDIF»,
-		    .mEITypeNames = «IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType»{}«ELSE»cEventInputTypeIds«ENDIF»,
-		    .mEONames = «IF type.interfaceList.eventOutputs.empty»{}«ELSE»cEventOutputNames«ENDIF»,
-		    .mEOTypeNames = «IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType»{}«ELSE»cEventOutputTypeIds«ENDIF»,
-		    .mDINames = «IF type.interfaceList.inputVars.empty»{}«ELSE»cDataInputNames«ENDIF»,
-		    .mDONames = «IF type.interfaceList.outputVars.empty»{}«ELSE»cDataOutputNames«ENDIF»,
-		    .mDIONames = «IF type.interfaceList.inOutVars.empty»{}«ELSE»cDataInOutNames«ENDIF»,
-		    .mSocketNames = «IF type.interfaceList.sockets.empty»{}«ELSE»cSocketNameIds«ENDIF»,
-		    .mPlugNames = «IF type.interfaceList.plugs.empty»{}«ELSE»cPlugNameIds«ENDIF»,
+		    .mEINames = ??IF type.interfaceList.eventInputs.empty??{}??ELSE??cEventInputNames??ENDIF??,
+		    .mEITypeNames = ??IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType??{}??ELSE??cEventInputTypeIds??ENDIF??,
+		    .mEONames = ??IF type.interfaceList.eventOutputs.empty??{}??ELSE??cEventOutputNames??ENDIF??,
+		    .mEOTypeNames = ??IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType??{}??ELSE??cEventOutputTypeIds??ENDIF??,
+		    .mDINames = ??IF type.interfaceList.inputVars.empty??{}??ELSE??cDataInputNames??ENDIF??,
+		    .mDONames = ??IF type.interfaceList.outputVars.empty??{}??ELSE??cDataOutputNames??ENDIF??,
+		    .mDIONames = ??IF type.interfaceList.inOutVars.empty??{}??ELSE??cDataInOutNames??ENDIF??,
+		    .mSocketNames = ??IF type.interfaceList.sockets.empty??{}??ELSE??cSocketNameIds??ENDIF??,
+		    .mPlugNames = ??IF type.interfaceList.plugs.empty??{}??ELSE??cPlugNameIds??ENDIF??,
 		};
 	'''
 
@@ -144,32 +144,32 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	'''
 
 	def protected generateReadInputDataDefinition() '''
-		void «FBClassName»::readInputData(«IF type.interfaceList.eventInputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventInputs.generateReadInputDataBody»
+		void ??FBClassName??::readInputData(??IF type.interfaceList.eventInputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventInputs.generateReadInputDataBody??
 		}
 	'''
 
 	def protected generateReadInputDataBody(List<Event> events) '''
-		«IF events.exists[!with.empty]»
+		??IF events.exists[!with.empty]??
 			switch(paEIID) {
-			  «FOR event : events.filter[!with.empty]»
-			  	case «event.generateEventID»: {
-			  	  «FOR variable : event.with.map[withVariable]»
-			  	  	«variable.generateReadInputDataVariable»
-			  	  «ENDFOR»
+			  ??FOR event : events.filter[!with.empty]??
+			  	case ??event.generateEventID??: {
+			  	  ??FOR variable : event.with.map[withVariable]??
+			  	  	??variable.generateReadInputDataVariable??
+			  	  ??ENDFOR??
 			  	  break;
 			  	}
-			  «ENDFOR»
+			  ??ENDFOR??
 			  default:
 			    break;
 			}
-		«ELSE»
+		??ELSE??
 			// nothing to do
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	def protected generateReadInputDataVariable(VarDeclaration variable) '''
-		readData(«variable.absoluteDataPortIndex», «variable.generateName», «IF variable.inOutVar»&«ENDIF»«variable.generateNameAsConnection»);
+		readData(??variable.absoluteDataPortIndex??, ??variable.generateName??, ??IF variable.inOutVar??&??ENDIF????variable.generateNameAsConnection??);
 	'''
 
 	def protected generateWriteOutputDataDeclaration() '''
@@ -177,32 +177,32 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	'''
 
 	def protected generateWriteOutputDataDefinition() '''
-		void «FBClassName»::writeOutputData(«IF type.interfaceList.eventOutputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventOutputs.generateWriteOutputDataBody»
+		void ??FBClassName??::writeOutputData(??IF type.interfaceList.eventOutputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventOutputs.generateWriteOutputDataBody??
 		}
 	'''
 
 	def protected generateWriteOutputDataBody(List<Event> events) '''
-		«IF events.exists[!with.empty]»
+		??IF events.exists[!with.empty]??
 			switch(paEIID) {
-			  «FOR event : events.filter[!with.empty]»
-			  	case «event.generateEventID»: {
-			  	  «FOR variable : event.with.map[withVariable]»
-			  	  	«variable.generateWriteOutputDataVariable»
-			  	  «ENDFOR»
+			  ??FOR event : events.filter[!with.empty]??
+			  	case ??event.generateEventID??: {
+			  	  ??FOR variable : event.with.map[withVariable]??
+			  	  	??variable.generateWriteOutputDataVariable??
+			  	  ??ENDFOR??
 			  	  break;
 			  	}
-			  «ENDFOR»
+			  ??ENDFOR??
 			  default:
 			    break;
 			}
-		«ELSE»
+		??ELSE??
 			// nothing to do
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	def protected generateWriteOutputDataVariable(VarDeclaration variable) '''
-		writeData(«variable.absoluteDataPortIndex», «variable.generateName», «variable.generateNameAsConnection»);
+		writeData(??variable.absoluteDataPortIndex??, ??variable.generateName??, ??variable.generateNameAsConnection??);
 	'''
 
 	def protected getWithVariable(With with) {
@@ -214,71 +214,71 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	}
 
 	def protected generateInterfaceDeclarations() '''
-		«generateInterfaceVariableAndConnectionDeclarations()»
-		«generateAccessorDeclarations()»
-		«generateEventAccessorDefinitions»
+		??generateInterfaceVariableAndConnectionDeclarations()??
+		??generateAccessorDeclarations()??
+		??generateEventAccessorDefinitions??
 	'''
 
 	protected def CharSequence generateAccessorDeclarations() '''
-		«generateAccessorDeclaration("getDI", false)»
-		«generateAccessorDeclaration("getDO", false)»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«generateAccessorDeclaration("getDIO", false)»
-		«ENDIF»
-		«IF !type.interfaceList.sockets.empty»
-			«generateAccessorDeclaration("getSocketPinUnchecked", "forte::ISocketPin *", false)»
-		«ENDIF»
-		«IF !type.interfaceList.plugs.empty»
-			«generateAccessorDeclaration("getPlugPinUnchecked", "forte::IPlugPin *", false)»
-		«ENDIF»
-		«generateConnectionAccessorsDeclaration("getEOConUnchecked", "CEventConnection *")»
-		«generateConnectionAccessorsDeclaration("getDIConUnchecked", "CDataConnection **")»
-		«generateConnectionAccessorsDeclaration("getDOConUnchecked", "CDataConnection *")»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«generateConnectionAccessorsDeclaration("getDIOInConUnchecked", "CInOutDataConnection **")»
-		«ENDIF»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«generateConnectionAccessorsDeclaration("getDIOOutConUnchecked", "CInOutDataConnection *")»
-		«ENDIF»
+		??generateAccessorDeclaration("getDI", false)??
+		??generateAccessorDeclaration("getDO", false)??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??generateAccessorDeclaration("getDIO", false)??
+		??ENDIF??
+		??IF !type.interfaceList.sockets.empty??
+			??generateAccessorDeclaration("getSocketPinUnchecked", "forte::ISocketPin *", false)??
+		??ENDIF??
+		??IF !type.interfaceList.plugs.empty??
+			??generateAccessorDeclaration("getPlugPinUnchecked", "forte::IPlugPin *", false)??
+		??ENDIF??
+		??generateConnectionAccessorsDeclaration("getEOConUnchecked", "CEventConnection *")??
+		??generateConnectionAccessorsDeclaration("getDIConUnchecked", "CDataConnection **")??
+		??generateConnectionAccessorsDeclaration("getDOConUnchecked", "CDataConnection *")??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??generateConnectionAccessorsDeclaration("getDIOInConUnchecked", "CInOutDataConnection **")??
+		??ENDIF??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??generateConnectionAccessorsDeclaration("getDIOOutConUnchecked", "CInOutDataConnection *")??
+		??ENDIF??
 	'''
 
 	protected def CharSequence generateInterfaceVariableAndConnectionDeclarations() '''
-		«type.interfaceList.inputVars.generateVariableDeclarations(false)»
-		«type.interfaceList.inOutVars.generateVariableDeclarations(false)»
-		«type.interfaceList.outputVars.generateVariableDeclarations(false)»
-		«type.interfaceList.sockets.generateSocketDeclarations»
-		«type.interfaceList.plugs.generatePlugDeclarations»
-		«type.interfaceList.eventOutputs.generateEventConnectionDeclarations»
-		«type.interfaceList.inputVars.generateDataConnectionDeclarations(true)»
-		«type.interfaceList.outputVars.generateDataConnectionDeclarations(false)»
-		«type.interfaceList.inOutVars.generateDataConnectionDeclarations(true)»
-		«type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false)»
+		??type.interfaceList.inputVars.generateVariableDeclarations(false)??
+		??type.interfaceList.inOutVars.generateVariableDeclarations(false)??
+		??type.interfaceList.outputVars.generateVariableDeclarations(false)??
+		??type.interfaceList.sockets.generateSocketDeclarations??
+		??type.interfaceList.plugs.generatePlugDeclarations??
+		??type.interfaceList.eventOutputs.generateEventConnectionDeclarations??
+		??type.interfaceList.inputVars.generateDataConnectionDeclarations(true)??
+		??type.interfaceList.outputVars.generateDataConnectionDeclarations(false)??
+		??type.interfaceList.inOutVars.generateDataConnectionDeclarations(true)??
+		??type.interfaceList.outMappedInOutVars.generateDataConnectionDeclarations(false)??
 	'''
 
 	def protected generateInterfaceDefinitions() '''
-		«generateReadInputDataDefinition»
+		??generateReadInputDataDefinition??
 		
-		«generateWriteOutputDataDefinition»
+		??generateWriteOutputDataDefinition??
 		
-		«type.interfaceList.inputVars.generateAccessorDefinition("getDI", false)»
-		«type.interfaceList.outputVars.generateAccessorDefinition("getDO", false)»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«type.interfaceList.inOutVars.generateAccessorDefinition("getDIO", false)»
-		«ENDIF»
-		«IF !type.interfaceList.sockets.empty»
-			«type.interfaceList.sockets.toList.generateAccessorDefinition("getSocketPinUnchecked", "forte::ISocketPin *", false)»
-		«ENDIF»
-		«IF !type.interfaceList.plugs.empty»
-			«type.interfaceList.plugs.toList.generateAccessorDefinition("getPlugPinUnchecked", "forte::IPlugPin *", false)»
-		«ENDIF»
-		«type.interfaceList.eventOutputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")»
-		«type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")»
-		«type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«type.interfaceList.inOutVars.generateConnectionAccessorsDefinition("getDIOInConUnchecked", "CInOutDataConnection **")»«ENDIF»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«type.interfaceList.outMappedInOutVars.generateConnectionAccessorsDefinition("getDIOOutConUnchecked", "CInOutDataConnection *")»
-		«ENDIF»
+		??type.interfaceList.inputVars.generateAccessorDefinition("getDI", false)??
+		??type.interfaceList.outputVars.generateAccessorDefinition("getDO", false)??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??type.interfaceList.inOutVars.generateAccessorDefinition("getDIO", false)??
+		??ENDIF??
+		??IF !type.interfaceList.sockets.empty??
+			??type.interfaceList.sockets.toList.generateAccessorDefinition("getSocketPinUnchecked", "forte::ISocketPin *", false)??
+		??ENDIF??
+		??IF !type.interfaceList.plugs.empty??
+			??type.interfaceList.plugs.toList.generateAccessorDefinition("getPlugPinUnchecked", "forte::IPlugPin *", false)??
+		??ENDIF??
+		??type.interfaceList.eventOutputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")??
+		??type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")??
+		??type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??type.interfaceList.inOutVars.generateConnectionAccessorsDefinition("getDIOInConUnchecked", "CInOutDataConnection **")????ENDIF??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??type.interfaceList.outMappedInOutVars.generateConnectionAccessorsDefinition("getDIOOutConUnchecked", "CInOutDataConnection *")??
+		??ENDIF??
 	'''
 
 	def protected generateSetInitialValuesDeclaration(Iterable<VarDeclaration> variables) '''
@@ -286,9 +286,9 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	'''
 
 	def protected generateSetInitialValuesDefinition(Iterable<VarDeclaration> variables) '''
-		void «className»::setInitialValues() {
-		  «baseClass»::setInitialValues();
-		  «generateVariableDefaultAssignment(variables.filter[!isRetainedVariable(it)])»
+		void ??className??::setInitialValues() {
+		  ??baseClass??::setInitialValues();
+		  ??generateVariableDefaultAssignment(variables.filter[!isRetainedVariable(it)])??
 		}
 		
 	'''
@@ -299,19 +299,19 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	}
 
 	def protected generateVariableDefaultAssignment(Iterable<VarDeclaration> variables) '''
-		«FOR variable : variables»
-			«IF variable.needsGenericAccess»
-				«variable.generateName».setValue(«variable.generateVariableDefaultValue»);
-			«ELSE»
-				«variable.generateName» = «variable.generateVariableDefaultValue»;
-			«ENDIF»
-		«ENDFOR»
+		??FOR variable : variables??
+			??IF variable.needsGenericAccess??
+				??variable.generateName??.setValue(??variable.generateVariableDefaultValue??);
+			??ELSE??
+				??variable.generateName?? = ??variable.generateVariableDefaultValue??;
+			??ENDIF??
+		??ENDFOR??
 	'''
 
 	def protected generateEventConnectionDeclarations(List<Event> elements) '''
-		«FOR element : elements AFTER '\n'»
-			CEventConnection «element.generateNameAsConnection»;
-		«ENDFOR»
+		??FOR element : elements AFTER '\n'??
+			CEventConnection ??element.generateNameAsConnection??;
+		??ENDFOR??
 	'''
 
 	def protected generateDataConnectionDeclarations(List<VarDeclaration> elements, boolean input) {
@@ -320,41 +320,41 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 
 	def protected generateDataConnectionDeclarations(List<VarDeclaration> elements, boolean input,
 		boolean internalConnection) '''
-		«FOR element : elements AFTER '\n'»
-			«element.generateDataConnectionDeclaration(input, internalConnection)»
-		«ENDFOR»
+		??FOR element : elements AFTER '\n'??
+			??element.generateDataConnectionDeclaration(input, internalConnection)??
+		??ENDFOR??
 	'''
 
 	def protected generateDataConnectionDeclaration(VarDeclaration element, boolean input,
 		boolean internalConnection) '''
-		«element.generateDataConnectionType(input, internalConnection)»«element.generateNameAsConnection(internalConnection)»;
+		??element.generateDataConnectionType(input, internalConnection)????element.generateNameAsConnection(internalConnection)??;
 	'''
 
 	def protected generateDataConnectionType(VarDeclaration element, boolean input, boolean internalConnection) //
-	'''C«IF !input»Out«ENDIF»«IF element.inOutVar»InOut«ENDIF»DataConnection«IF !input»<«element.generateVariableTypeName»> «ELSE» *«ENDIF»'''
+	'''C??IF !input??Out??ENDIF????IF element.inOutVar??InOut??ENDIF??DataConnection??IF !input??<??element.generateVariableTypeName??> ??ELSE?? *??ENDIF??'''
 
 	def protected generateConnectionInitializer() //
-	'''«type.interfaceList.eventOutputs.generateEventConnectionInitializer»«//no newline
-	   »«type.interfaceList.inputVars.generateDataConnectionPointerInitializer»«//no newline
-	   »«type.interfaceList.outputVars.generateDataConnectionInitializer»«//no newline
-	   »«type.interfaceList.inOutVars.generateDataConnectionPointerInitializer»«//no newline
-	   »«type.interfaceList.outMappedInOutVars.generateDataConnectionInitializer»'''
+	'''??type.interfaceList.eventOutputs.generateEventConnectionInitializer????//no newline
+	   ????type.interfaceList.inputVars.generateDataConnectionPointerInitializer????//no newline
+	   ????type.interfaceList.outputVars.generateDataConnectionInitializer????//no newline
+	   ????type.interfaceList.inOutVars.generateDataConnectionPointerInitializer????//no newline
+	   ????type.interfaceList.outMappedInOutVars.generateDataConnectionInitializer??'''
 
 	def protected generateEventConnectionInitializer(List<Event> events) //
-	'''«FOR event : events BEFORE ",\n" SEPARATOR ",\n"»«event.generateNameAsConnection»(*this, «events.indexOf(event)»)«ENDFOR»'''
+	'''??FOR event : events BEFORE ",\n" SEPARATOR ",\n"????event.generateNameAsConnection??(*this, ??events.indexOf(event)??)??ENDFOR??'''
 
 	def protected generateDataConnectionInitializer(List<VarDeclaration> variables) {
 		generateDataConnectionInitializer(variables, false);
 	}
 
 	def protected generateDataConnectionInitializer(List<VarDeclaration> variables, boolean internal) //
-	'''«FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"»«variable.generateNameAsConnection(internal)»(*this, «variables.indexOf(variable)», «variable.generateName»)«ENDFOR»'''
+	'''??FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"????variable.generateNameAsConnection(internal)??(*this, ??variables.indexOf(variable)??, ??variable.generateName??)??ENDFOR??'''
 
 	def protected generateDataConnectionPointerInitializer(List<VarDeclaration> variables) //
-	'''«FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"»«variable.generateNameAsConnection»(nullptr)«ENDFOR»'''
+	'''??FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"????variable.generateNameAsConnection??(nullptr)??ENDFOR??'''
 
 	def protected generateConnectionAccessorsDeclaration(String function, String type) '''
-		«type»«function»(TPortId) override;
+		??type????function??(TPortId) override;
 	'''
 
 	def protected generateConnectionAccessorsDefinition(List<? extends INamedElement> elements, String function,
@@ -364,22 +364,22 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 
 	def protected generateConnectionAccessorsDefinition(List<? extends INamedElement> elements, String function,
 		String type, boolean internal) '''
-		«IF elements.empty»
-			«type»«className»::«function»(TPortId) {
+		??IF elements.empty??
+			??type????className??::??function??(TPortId) {
 			  return nullptr;
 			}
 			
-		«ELSE»
-			«type»«className»::«function»(const TPortId paIndex) {
+		??ELSE??
+			??type????className??::??function??(const TPortId paIndex) {
 			  switch(paIndex) {
-			    «FOR element : elements»
-			    	case «elements.indexOf(element)»: return &«element.generateNameAsConnection(internal)»;
-			    «ENDFOR»
+			    ??FOR element : elements??
+			    	case ??elements.indexOf(element)??: return &??element.generateNameAsConnection(internal)??;
+			    ??ENDFOR??
 			  }
 			  return nullptr;
 			}
 			
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	def protected CharSequence generateNameAsConnection(VarDeclaration varDeclaration) {
@@ -388,18 +388,18 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 
 	def protected CharSequence generateNameAsConnection(VarDeclaration varDeclaration, boolean internal) {
 		if (internal) {
-			'''conn_if2in_«varDeclaration.name»'''
+			'''conn_if2in_??varDeclaration.name??'''
 		} else if (varDeclaration.inOutVar) {
-			'''conn_inout_«IF varDeclaration.isIsInput»in«ELSE»out«ENDIF»_«varDeclaration.name»'''
+			'''conn_inout_??IF varDeclaration.isIsInput??in??ELSE??out??ENDIF??_??varDeclaration.name??'''
 		} else {
-			'''conn_«varDeclaration.name»'''
+			'''conn_??varDeclaration.name??'''
 		}
 	}
 
 	def protected CharSequence generateNameAsConnection(INamedElement element, boolean internal) {
 		switch (element) {
 			VarDeclaration: generateNameAsConnection(element, internal)
-			default: '''conn_«element.name»'''
+			default: '''conn_??element.name??'''
 		}
 	}
 
@@ -408,69 +408,69 @@ abstract class ForteFBTemplate<T extends FBType> extends ForteLibraryElementTemp
 	}
 
 	def protected generateEventAccessorDefinitions() '''
-		«FOR event : type.interfaceList.eventInputs BEFORE '\n' SEPARATOR '\n'»
-			«event.generateEventAccessorDefinition»
-		«ENDFOR»
-		«IF type.interfaceList.eventInputs.size == 1»
+		??FOR event : type.interfaceList.eventInputs BEFORE '\n' SEPARATOR '\n'??
+			??event.generateEventAccessorDefinition??
+		??ENDFOR??
+		??IF type.interfaceList.eventInputs.size == 1??
 			
-			«type.interfaceList.eventInputs.first.generateEventAccessorCallOperator»
-		«ENDIF»
+			??type.interfaceList.eventInputs.first.generateEventAccessorCallOperator??
+		??ENDIF??
 	'''
 
 	def protected generateEventAccessorDefinition(Event event) '''
-		void «event.generateName»(«event.generateParameters») {
-		  «FOR variable : event.outputParameters.filter(VarDeclaration)»
-		  	«variable.generateOutputGuard»
-		  «ENDFOR»
-		  «FOR variable : (event.inputParameters + event.inOutParameters).filter(VarDeclaration)»
-		  	«variable.generateName» = «variable.generateNameAsParameter»;
-		  «ENDFOR»
-		  executeEvent(«event.generateEventID», nullptr);
-		  «FOR variable : event.inOutParameters.filter(VarDeclaration)»
-		  	«IF GenericTypes.isAnyType(variable.type)»
-		  		«variable.generateNameAsParameter».setValue(«variable.generateName».unwrap());
-		  	«ELSE»
-		  		«variable.generateNameAsParameter» = «variable.generateName»;
-		  	«ENDIF»
-		  «ENDFOR»
-		  «FOR variable : event.outputParameters.filter(VarDeclaration)»
-		  	«IF GenericTypes.isAnyType(variable.type)»
-		  		«variable.generateNameAsParameter»->setValue(«variable.generateName».unwrap());
-		  	«ELSE»
-		  		*«variable.generateNameAsParameter» = «variable.generateName»;
-		  	«ENDIF»
-		  «ENDFOR»
+		void ??event.generateName??(??event.generateParameters??) {
+		  ??FOR variable : event.outputParameters.filter(VarDeclaration)??
+		  	??variable.generateOutputGuard??
+		  ??ENDFOR??
+		  ??FOR variable : (event.inputParameters + event.inOutParameters).filter(VarDeclaration)??
+		  	??variable.generateName?? = ??variable.generateNameAsParameter??;
+		  ??ENDFOR??
+		  executeEvent(??event.generateEventID??, nullptr);
+		  ??FOR variable : event.inOutParameters.filter(VarDeclaration)??
+		  	??IF GenericTypes.isAnyType(variable.type)??
+		  		??variable.generateNameAsParameter??.setValue(??variable.generateName??.unwrap());
+		  	??ELSE??
+		  		??variable.generateNameAsParameter?? = ??variable.generateName??;
+		  	??ENDIF??
+		  ??ENDFOR??
+		  ??FOR variable : event.outputParameters.filter(VarDeclaration)??
+		  	??IF GenericTypes.isAnyType(variable.type)??
+		  		??variable.generateNameAsParameter??->setValue(??variable.generateName??.unwrap());
+		  	??ELSE??
+		  		*??variable.generateNameAsParameter?? = ??variable.generateName??;
+		  	??ENDIF??
+		  ??ENDFOR??
 		}
 	'''
 
 	def protected generateEventAccessorCallOperator(Event event) '''
-		void operator()(«event.generateParameters») {
-		  «event.generateName»(«event.generateForwardArguments»);
+		void operator()(??event.generateParameters??) {
+		  ??event.generateName??(??event.generateForwardArguments??);
 		}
 	'''
 
 	def protected getFBClassName() { className }
 
 	def generateInternalFBDeclarations(List<FB> internalFbs) '''
-		«FOR fb : internalFbs»
-			CInternalFB<«fb.type.generateTypeName»> «fb.generateName»;
-		«ENDFOR»		
+		??FOR fb : internalFbs??
+			CInternalFB<??fb.type.generateTypeName??> ??fb.generateName??;
+		??ENDFOR??		
 	'''
 
 	def generateInternalFBInitializer(List<FB> internalFbs) // /
-	'''«FOR fb : internalFbs BEFORE ",\n" SEPARATOR ",\n"»«fb.generateInternalFBInitializer»«ENDFOR»'''
+	'''??FOR fb : internalFbs BEFORE ",\n" SEPARATOR ",\n"????fb.generateInternalFBInitializer????ENDFOR??'''
 
 	def generateInternalFBInitializer(FB fb) {
 		if (fb.genericType)
-			'''«fb.generateName»(«fb.name.FORTEStringId», "«fb.generateInternalFBConfigString»", *this)'''
+			'''??fb.generateName??(??fb.name.FORTEStringId??, "??fb.generateInternalFBConfigString??", *this)'''
 		else
-			'''«fb.generateName»(«fb.name.FORTEStringId», *this)'''
+			'''??fb.generateName??(??fb.name.FORTEStringId??, *this)'''
 	}
 
 	def generateInternalFBConfigString(FB fb) {
 		switch (fb) {
 			ConfigurableFB case fb.dataType !== null: //
-			'''«fb.type.generateTypeNameFull»_1«fb.dataType.generateTypeNameFull»'''
+			'''??fb.type.generateTypeNameFull??_1??fb.dataType.generateTypeNameFull??'''
 			default:
 				fb.type.generateTypeNameFull
 		}

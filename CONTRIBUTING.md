@@ -45,8 +45,8 @@ To build and develop the 4diac IDE you need:
 
 Additional Eclipse plugins (should be included in the Eclipse IDE for Java and DSL Developers):
 
-- M2E – Maven Integration for Eclipse
-- M2E – PDE Integration
+- M2E ??? Maven Integration for Eclipse
+- M2E ??? PDE Integration
 - Xtext Complete SDK
 
 A detailed description of setting up a 4diac IDE development environment and running 4diac IDE from source can be found in our [development documentation](https://eclipse.dev/4diac/doc/development/building4diac.html)

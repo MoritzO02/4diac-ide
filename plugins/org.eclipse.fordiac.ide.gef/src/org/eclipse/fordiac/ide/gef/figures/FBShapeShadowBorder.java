@@ -58,7 +58,7 @@ public class FBShapeShadowBorder extends AbstractShadowBorder {
 	private static void drawDropShadow(final Graphics graphics, final Rectangle topShadowRect,
 			final Rectangle middleShadowRect, final Rectangle bottomShadowRect) {
 		graphics.setAlpha(SHADOW_ALPHA);
-		final double horInc = 0.7; // emulate a roughly 30° shadow angle
+		final double horInc = 0.7; // emulate a roughly 30?? shadow angle
 		double horI = 0;
 		for (int i = 0; i < SHADOW_SIZE; i++) {
 			horI += horInc;

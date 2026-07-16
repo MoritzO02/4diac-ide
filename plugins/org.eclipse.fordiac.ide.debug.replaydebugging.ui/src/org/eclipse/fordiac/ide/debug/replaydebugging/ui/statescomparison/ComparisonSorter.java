@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 
 /**
- * Pluggable ViewerComparator. Sorting is stateless given the mode — all context
+ * Pluggable ViewerComparator. Sorting is stateless given the mode ??? all context
  * comes from the active ColumnState list injected before each sort pass.
  */
 public class ComparisonSorter extends ViewerComparator {
@@ -61,7 +61,7 @@ public class ComparisonSorter extends ViewerComparator {
 	/**
 	 * Rows where values differ across columns are sort to the top. Uniqueness score
 	 * equals to the number of distinct values across enabled columns. Higher score
-	 * (more unique) → earlier in list.
+	 * (more unique) ??? earlier in list.
 	 */
 	private int compareByUniqueness(final RowEntry a, final RowEntry b) {
 		return Integer.compare(uniquenessScore(b), uniquenessScore(a)); // desc

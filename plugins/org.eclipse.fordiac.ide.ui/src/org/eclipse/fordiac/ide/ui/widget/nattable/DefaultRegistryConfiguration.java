@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - Extracted the class from NatTableWidgetFactory
+ *   Dunja ??ivotin - Extracted the class from NatTableWidgetFactory
  *******************************************************************************/
 package org.eclipse.fordiac.ide.ui.widget.nattable;
 

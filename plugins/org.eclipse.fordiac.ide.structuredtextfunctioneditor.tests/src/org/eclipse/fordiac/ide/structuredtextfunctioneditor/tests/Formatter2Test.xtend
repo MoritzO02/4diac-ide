@@ -1213,7 +1213,7 @@ class Formatter2Test {
 			toBeFormatted = '''
 				FUNCTION hubert
 				
-				IF langerVariablenBezeichner OR langerVariablenBezeichner THEN // DasisteinlangesWortdasdiemaximaleZeilenlängeüberschreitensollohneLeerzeichen
+				IF langerVariablenBezeichner OR langerVariablenBezeichner THEN // DasisteinlangesWortdasdiemaximaleZeilenl??nge??berschreitensollohneLeerzeichen
 					bol1 := TRUE;
 				END_IF;
 				
@@ -1222,7 +1222,7 @@ class Formatter2Test {
 			expectation = '''
 				FUNCTION hubert
 				
-				IF langerVariablenBezeichner OR langerVariablenBezeichner THEN // DasisteinlangesWortdasdiemaximaleZeilenlängeüberschreitensollohneLeerzeichen
+				IF langerVariablenBezeichner OR langerVariablenBezeichner THEN // DasisteinlangesWortdasdiemaximaleZeilenl??nge??berschreitensollohneLeerzeichen
 					bol1 := TRUE;
 				END_IF;
 				

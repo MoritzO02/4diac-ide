@@ -39,185 +39,185 @@ class AdapterFBImplTemplate extends ForteFBTemplate<AdapterType> {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		
-		    «generateFBInterfaceDefinition»
+		    ??generateFBInterfaceDefinition??
 		
-		    «generateFBInterfaceSpecDefinition»
+		    ??generateFBInterfaceSpecDefinition??
 		  }
 		
-		  «generateFBDefinition»
+		  ??generateFBDefinition??
 		
 		
-		  «FBClassName»::«FBClassName»(CFBContainer &paContainer,
+		  ??FBClassName??::??FBClassName??(CFBContainer &paContainer,
 		                               const SFBInterfaceSpec &paInterfaceSpec,
 		                               const StringId paInstanceNameId,
 		                               TForteUInt8 paParentAdapterlistID) :
-		      CAdapter(paContainer, paInterfaceSpec, paInstanceNameId, paParentAdapterlistID)«// no newline
-		      »«(type.interfaceList.inputVars + type.interfaceList.outputVars).generateVariableInitializer» {
+		      CAdapter(paContainer, paInterfaceSpec, paInstanceNameId, paParentAdapterlistID)??// no newline
+		      ????(type.interfaceList.inputVars + type.interfaceList.outputVars).generateVariableInitializer?? {
 		  }
 		
-		  «(type.interfaceList.inputVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition»
+		  ??(type.interfaceList.inputVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition??
 		
-		  «generatePlugImpl»
+		  ??generatePlugImpl??
 		
-		  «generateSocketImpl»
+		  ??generateSocketImpl??
 		}
 	'''
 
 	override protected generateFBDefinition() '''
-		DEFINE_ADAPTER_TYPE(«FBClassName», «type.generateTypeSpec», TypeHash)
+		DEFINE_ADAPTER_TYPE(??FBClassName??, ??type.generateTypeSpec??, TypeHash)
 	'''
 
 	def generateFBInterfaceSpecSocket() '''
 		const SFBInterfaceSpec cFBInterfaceSpecSocket = {
-		    .mEINames = «IF type.interfaceList.eventInputs.empty»{}«ELSE»cEventInputNames«ENDIF»,
-		    .mEITypeNames = «IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType»{}«ELSE»cEventInputTypeIds«ENDIF»,
-		    .mEONames = «IF type.interfaceList.eventOutputs.empty»{}«ELSE»cEventOutputNames«ENDIF»,
-		    .mEOTypeNames = «IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType»{}«ELSE»cEventOutputTypeIds«ENDIF»,
-		    .mDINames = «IF type.interfaceList.inputVars.empty»{}«ELSE»cDataInputNames«ENDIF»,
-		    .mDONames = «IF type.interfaceList.outputVars.empty»{}«ELSE»cDataOutputNames«ENDIF»,
-		    .mDIONames = «IF type.interfaceList.inOutVars.empty»{}«ELSE»cDataInOutNames«ENDIF»,
-		    .mSocketNames = «IF type.interfaceList.sockets.empty»{}«ELSE»cSocketNameIds«ENDIF»,
-		    .mPlugNames = «IF type.interfaceList.plugs.empty»{}«ELSE»cPlugNameIds«ENDIF»,
+		    .mEINames = ??IF type.interfaceList.eventInputs.empty??{}??ELSE??cEventInputNames??ENDIF??,
+		    .mEITypeNames = ??IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType??{}??ELSE??cEventInputTypeIds??ENDIF??,
+		    .mEONames = ??IF type.interfaceList.eventOutputs.empty??{}??ELSE??cEventOutputNames??ENDIF??,
+		    .mEOTypeNames = ??IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType??{}??ELSE??cEventOutputTypeIds??ENDIF??,
+		    .mDINames = ??IF type.interfaceList.inputVars.empty??{}??ELSE??cDataInputNames??ENDIF??,
+		    .mDONames = ??IF type.interfaceList.outputVars.empty??{}??ELSE??cDataOutputNames??ENDIF??,
+		    .mDIONames = ??IF type.interfaceList.inOutVars.empty??{}??ELSE??cDataInOutNames??ENDIF??,
+		    .mSocketNames = ??IF type.interfaceList.sockets.empty??{}??ELSE??cSocketNameIds??ENDIF??,
+		    .mPlugNames = ??IF type.interfaceList.plugs.empty??{}??ELSE??cPlugNameIds??ENDIF??,
 		};
 	'''
 
 	def generateFBInterfaceSpecPlug() '''
 		const SFBInterfaceSpec cFBInterfaceSpecPlug = {
-		    .mEINames = «IF type.interfaceList.eventOutputs.empty»{}«ELSE»cEventOutputNames«ENDIF»,
-		    .mEITypeNames = «IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType»{}«ELSE»cEventOutputTypeIds«ENDIF»,
-		    .mEONames = «IF type.interfaceList.eventInputs.empty»{}«ELSE»cEventInputNames«ENDIF»,
-		    .mEOTypeNames = «IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType»{}«ELSE»cEventInputTypeIds«ENDIF»,
-		    .mDINames = «IF type.interfaceList.outputVars.empty»{}«ELSE»cDataOutputNames«ENDIF»,
-		    .mDONames = «IF type.interfaceList.inputVars.empty»{}«ELSE»cDataInputNames«ENDIF»,
-		    .mDIONames = «IF type.interfaceList.inOutVars.empty»{}«ELSE»cDataInOutNames«ENDIF»,
-		    .mSocketNames = «IF type.interfaceList.sockets.empty»{}«ELSE»cSocketNameIds«ENDIF»,
-		    .mPlugNames = «IF type.interfaceList.plugs.empty»{}«ELSE»cPlugNameIds«ENDIF»,
+		    .mEINames = ??IF type.interfaceList.eventOutputs.empty??{}??ELSE??cEventOutputNames??ENDIF??,
+		    .mEITypeNames = ??IF type.interfaceList.eventOutputs.empty || type.interfaceList.eventOutputs.containsOnlyBasicEventType??{}??ELSE??cEventOutputTypeIds??ENDIF??,
+		    .mEONames = ??IF type.interfaceList.eventInputs.empty??{}??ELSE??cEventInputNames??ENDIF??,
+		    .mEOTypeNames = ??IF type.interfaceList.eventInputs.empty || type.interfaceList.eventInputs.containsOnlyBasicEventType??{}??ELSE??cEventInputTypeIds??ENDIF??,
+		    .mDINames = ??IF type.interfaceList.outputVars.empty??{}??ELSE??cDataOutputNames??ENDIF??,
+		    .mDONames = ??IF type.interfaceList.inputVars.empty??{}??ELSE??cDataInputNames??ENDIF??,
+		    .mDIONames = ??IF type.interfaceList.inOutVars.empty??{}??ELSE??cDataInOutNames??ENDIF??,
+		    .mSocketNames = ??IF type.interfaceList.sockets.empty??{}??ELSE??cSocketNameIds??ENDIF??,
+		    .mPlugNames = ??IF type.interfaceList.plugs.empty??{}??ELSE??cPlugNameIds??ENDIF??,
 		};
 	'''
 
 	override protected generateFBInterfaceSpecDefinition() '''
-		«generateFBInterfaceSpecSocket»
+		??generateFBInterfaceSpecSocket??
 		
-		«generateFBInterfaceSpecPlug»
+		??generateFBInterfaceSpecPlug??
 	'''
 	
 	def generatePlugImpl() '''
-		«generatePlugConstructorImpl»
+		??generatePlugConstructorImpl??
 		
-		«generatePlugReadInputData»
+		??generatePlugReadInputData??
 		
-		«generatePlugWriteOutputData»		
-		«{ myClassName = plugClassName
+		??generatePlugWriteOutputData??		
+		??{ myClassName = plugClassName
 		   null // do not add to output string	
-		}»
-		«type.interfaceList.outputVars.generateAccessorDefinition("getDI", false)»
-		«type.interfaceList.inputVars.generateAccessorDefinition("getDO", false)»
-		«type.interfaceList.eventInputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")»
-		«type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")»
-		«type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")»
-		«{myClassName = null
+		}??
+		??type.interfaceList.outputVars.generateAccessorDefinition("getDI", false)??
+		??type.interfaceList.inputVars.generateAccessorDefinition("getDO", false)??
+		??type.interfaceList.eventInputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")??
+		??type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")??
+		??type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")??
+		??{myClassName = null
 		   null // do not add to output string	
-		}»
+		}??
 	'''
 	
 	def generateSocketImpl() '''
-		«generateSocketConstructorImpl»
+		??generateSocketConstructorImpl??
 		
-		«generateSocketReadInputData»
+		??generateSocketReadInputData??
 		
-		«generateSocketWriteOutputData»
-		«{myClassName = socketClassName
+		??generateSocketWriteOutputData??
+		??{myClassName = socketClassName
 		   null // do not add to output string	
-		}»
-		«type.interfaceList.inputVars.generateAccessorDefinition("getDI", false)»
-		«type.interfaceList.outputVars.generateAccessorDefinition("getDO", false)»
-		«type.interfaceList.eventOutputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")»
-		«type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")»
-		«type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")»
-		«{myClassName = null
+		}??
+		??type.interfaceList.inputVars.generateAccessorDefinition("getDI", false)??
+		??type.interfaceList.outputVars.generateAccessorDefinition("getDO", false)??
+		??type.interfaceList.eventOutputs.generateConnectionAccessorsDefinition("getEOConUnchecked", "CEventConnection *")??
+		??type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getDIConUnchecked", "CDataConnection **")??
+		??type.interfaceList.outputVars.generateConnectionAccessorsDefinition("getDOConUnchecked", "CDataConnection *")??
+		??{myClassName = null
 		   null // do not add to output string	
-		}»
+		}??
 	'''
 	
 	def generatePlugConstructorImpl() '''
-		«plugClassName»::«plugClassName»(StringId paInstanceNameId,
+		??plugClassName??::??plugClassName??(StringId paInstanceNameId,
 		                                         CFBContainer &paContainer,
 		                                         TForteUInt8 paParentAdapterlistID) :
-		    «FBClassName»(paContainer, cFBInterfaceSpecPlug, paInstanceNameId, paParentAdapterlistID)«//no newline
-		    »«type.interfaceList.eventInputs.generateEventConnectionInitializer»«//no newline
-		    »«type.interfaceList.outputVars.generateDataConnectionPointerInitializer»«//no newline
-		    »«type.interfaceList.inputVars.generateDataConnectionInitializer» {
+		    ??FBClassName??(paContainer, cFBInterfaceSpecPlug, paInstanceNameId, paParentAdapterlistID)??//no newline
+		    ????type.interfaceList.eventInputs.generateEventConnectionInitializer????//no newline
+		    ????type.interfaceList.outputVars.generateDataConnectionPointerInitializer????//no newline
+		    ????type.interfaceList.inputVars.generateDataConnectionInitializer?? {
 		}
 	'''
 	
 	def generateSocketConstructorImpl() '''
-		«socketClassName»::«socketClassName»(StringId paInstanceNameId,
+		??socketClassName??::??socketClassName??(StringId paInstanceNameId,
 		                                         CFBContainer &paContainer,
 		                                         TForteUInt8 paParentAdapterlistID) :
-		    «FBClassName»(paContainer, cFBInterfaceSpecSocket, paInstanceNameId, paParentAdapterlistID)«//no newline
-		    »«type.interfaceList.eventOutputs.generateEventConnectionInitializer»«//no newline
-		    »«type.interfaceList.inputVars.generateDataConnectionPointerInitializer»«//no newline
-		    »«type.interfaceList.outputVars.generateDataConnectionInitializer» {
+		    ??FBClassName??(paContainer, cFBInterfaceSpecSocket, paInstanceNameId, paParentAdapterlistID)??//no newline
+		    ????type.interfaceList.eventOutputs.generateEventConnectionInitializer????//no newline
+		    ????type.interfaceList.inputVars.generateDataConnectionPointerInitializer????//no newline
+		    ????type.interfaceList.outputVars.generateDataConnectionInitializer?? {
 		}
 	'''
 	
 	def generatePlugReadInputData()  '''
-		void «plugClassName»::readInputData(«IF type.interfaceList.eventOutputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventOutputs.generateReadInputDataBody(socketClassName)»
+		void ??plugClassName??::readInputData(??IF type.interfaceList.eventOutputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventOutputs.generateReadInputDataBody(socketClassName)??
 		}
 	'''
 	
 	def generateSocketReadInputData()  '''
-		void «socketClassName»::readInputData(«IF type.interfaceList.eventInputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventInputs.generateReadInputDataBody(plugClassName)»
+		void ??socketClassName??::readInputData(??IF type.interfaceList.eventInputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventInputs.generateReadInputDataBody(plugClassName)??
 		}
 	'''
 	
 	def generateReadInputDataBody(List<Event> events, CharSequence peerName) '''
-	«IF events.exists[!with.empty]»
+	??IF events.exists[!with.empty]??
 		switch(paEIID) {
-		  «FOR event : events.filter[!with.empty]»
-		  	case «event.generateEventID»: {
-		  	  «FOR variable : event.with.map[withVariable]»
-		  	  	«variable.generateReadInputDataVariable»
-		  	  «ENDFOR»
-		  	  if(auto peer = static_cast<«peerName» *>(getPeer()); peer) {
-		  	    «FOR variable : event.with.map[withVariable]»
-		  	       peer->«variable.generateName» = «variable.generateName»;
-		  	    «ENDFOR»
+		  ??FOR event : events.filter[!with.empty]??
+		  	case ??event.generateEventID??: {
+		  	  ??FOR variable : event.with.map[withVariable]??
+		  	  	??variable.generateReadInputDataVariable??
+		  	  ??ENDFOR??
+		  	  if(auto peer = static_cast<??peerName?? *>(getPeer()); peer) {
+		  	    ??FOR variable : event.with.map[withVariable]??
+		  	       peer->??variable.generateName?? = ??variable.generateName??;
+		  	    ??ENDFOR??
 		  	  }
 		  	  break;
 		  	}
-		  «ENDFOR»
+		  ??ENDFOR??
 		  default:
 		    break;
 		}
-	«ELSE»
+	??ELSE??
 		// nothing to do
-	«ENDIF»
+	??ENDIF??
 	'''
 	
 	def generatePlugWriteOutputData()  '''
-		void «plugClassName»::writeOutputData(«IF type.interfaceList.eventInputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventInputs.generateWriteOutputDataBody»
+		void ??plugClassName??::writeOutputData(??IF type.interfaceList.eventInputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventInputs.generateWriteOutputDataBody??
 		}
 	'''
 
 	def generateSocketWriteOutputData()  '''
-		void «socketClassName»::writeOutputData(«IF type.interfaceList.eventOutputs.exists[!with.empty]»const TEventID paEIID«ELSE»TEventID«ENDIF») {
-		  «type.interfaceList.eventOutputs.generateWriteOutputDataBody»
+		void ??socketClassName??::writeOutputData(??IF type.interfaceList.eventOutputs.exists[!with.empty]??const TEventID paEIID??ELSE??TEventID??ENDIF??) {
+		  ??type.interfaceList.eventOutputs.generateWriteOutputDataBody??
 		}
 	'''
 
-	def getPlugClassName() '''«FBClassName»_Plug'''
+	def getPlugClassName() '''??FBClassName??_Plug'''
 
-	def getSocketClassName() '''«FBClassName»_Socket'''
+	def getSocketClassName() '''??FBClassName??_Socket'''
 }

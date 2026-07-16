@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Antonio Garmend�a, Bianca Wiesmayr
+ *   Antonio Garmend???a, Bianca Wiesmayr
  *       - initial implementation and/or documentation
  *   Paul Pavlicek - cleanup
  *******************************************************************************/

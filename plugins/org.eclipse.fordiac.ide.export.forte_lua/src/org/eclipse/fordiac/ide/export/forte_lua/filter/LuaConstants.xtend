@@ -48,90 +48,90 @@ class LuaConstants {
 	
 	static final int WITH_DELIMITER = 65535;
 
-	def static luaTypeName(FBType type) '''FORTE_«type.name»'''
+	def static luaTypeName(FBType type) '''FORTE_??type.name??'''
 
 	def static luaStateVariable() '''STATE'''
 
 	def static luaFBStateVarName() '''FB_STATE'''
 
-	def static luaStateName(ECState state) '''ECC_«state.name»'''
+	def static luaStateName(ECState state) '''ECC_??state.name??'''
 
 	def static luaInputEventName(
-		Event event) '''«IF event.blockFBNetworkElement instanceof AdapterFB»AEI_«event.blockFBNetworkElement.name»_«event.name»«ELSE»EI_«event.name»«ENDIF»'''
+		Event event) '''??IF event.blockFBNetworkElement instanceof AdapterFB??AEI_??event.blockFBNetworkElement.name??_??event.name????ELSE??EI_??event.name????ENDIF??'''
 
 	def static luaOutputEventName(
-		Event event) '''«IF event.blockFBNetworkElement instanceof AdapterFB»AEO_«event.blockFBNetworkElement.name»_«event.name»«ELSE»EO_«event.name»«ENDIF»'''
+		Event event) '''??IF event.blockFBNetworkElement instanceof AdapterFB??AEO_??event.blockFBNetworkElement.name??_??event.name????ELSE??EO_??event.name????ENDIF??'''
 
-	def static luaAdapterInputEventName(Event event, String adapterName) '''AEI_«adapterName»_«event.name»'''
+	def static luaAdapterInputEventName(Event event, String adapterName) '''AEI_??adapterName??_??event.name??'''
 
-	def static luaAdapterOutputEventName(Event event, String adapterName) '''AEO_«adapterName»_«event.name»'''
+	def static luaAdapterOutputEventName(Event event, String adapterName) '''AEO_??adapterName??_??event.name??'''
 
-	def static luaFBInputVarName(VarDeclaration decl) '''DI_«decl.name»'''
+	def static luaFBInputVarName(VarDeclaration decl) '''DI_??decl.name??'''
 
-	def static luaFBOutputVarName(VarDeclaration decl) '''DO_«decl.name»'''
+	def static luaFBOutputVarName(VarDeclaration decl) '''DO_??decl.name??'''
 
-	def static luaFBAdapterInputVarName(VarDeclaration decl, String adapterName) '''ADI_«adapterName»_«decl.name»'''
+	def static luaFBAdapterInputVarName(VarDeclaration decl, String adapterName) '''ADI_??adapterName??_??decl.name??'''
 
-	def static luaFBAdapterOutputVarName(VarDeclaration decl, String adapterName) '''ADO_«adapterName»_«decl.name»'''
+	def static luaFBAdapterOutputVarName(VarDeclaration decl, String adapterName) '''ADO_??adapterName??_??decl.name??'''
 
-	def static luaFBInternalVarName(VarDeclaration decl) '''IN_«decl.name»'''
+	def static luaFBInternalVarName(VarDeclaration decl) '''IN_??decl.name??'''
 
-	def static luaVariable(VarDeclaration decl) '''VAR_«decl.name»'''
+	def static luaVariable(VarDeclaration decl) '''VAR_??decl.name??'''
 
-	def static luaAdapterVariable(String name, String adapterInstanceName) '''VAR_«adapterInstanceName»_«name»'''
+	def static luaAdapterVariable(String name, String adapterInstanceName) '''VAR_??adapterInstanceName??_??name??'''
 
-	def static luaAlgorithmName(Algorithm alg) '''alg_«alg.name»'''
+	def static luaAlgorithmName(Algorithm alg) '''alg_??alg.name??'''
 
-	def static luaFBStateConstant() '''local «luaFBStateVarName» = «FB_STATE»'''
+	def static luaFBStateConstant() '''local ??luaFBStateVarName?? = ??FB_STATE??'''
 
 	def static luaStateConstants(ECC ecc) '''
-		«FOR state : ecc.ECState»
-			local «state.luaStateName» = «ecc.ECState.indexOf(state)»
-		«ENDFOR»
+		??FOR state : ecc.ECState??
+			local ??state.luaStateName?? = ??ecc.ECState.indexOf(state)??
+		??ENDFOR??
 	'''
 
 	def static luaEventConstants(InterfaceList ifl) '''
-		«FOR event : ifl.eventInputs»
-			local «event.luaInputEventName» = «ifl.eventInputs.indexOf(event)»
-		«ENDFOR»
-		«FOR event : ifl.eventOutputs»
-			local «event.luaOutputEventName» = «ifl.eventOutputs.indexOf(event)»
-		«ENDFOR»
+		??FOR event : ifl.eventInputs??
+			local ??event.luaInputEventName?? = ??ifl.eventInputs.indexOf(event)??
+		??ENDFOR??
+		??FOR event : ifl.eventOutputs??
+			local ??event.luaOutputEventName?? = ??ifl.eventOutputs.indexOf(event)??
+		??ENDFOR??
 	'''
 
 	def static luaFBVariableConstants(InterfaceList ifl) '''
-		«FOR decl : ifl.inputVars»
-			local «decl.luaFBInputVarName» = «FB_DI_FLAG.bitwiseOr(ifl.inputVars.indexOf(decl))»
-		«ENDFOR»
-		«FOR decl : ifl.outputVars»
-			local «decl.luaFBOutputVarName» = «FB_DO_FLAG.bitwiseOr(ifl.outputVars.indexOf(decl))»
-		«ENDFOR»
+		??FOR decl : ifl.inputVars??
+			local ??decl.luaFBInputVarName?? = ??FB_DI_FLAG.bitwiseOr(ifl.inputVars.indexOf(decl))??
+		??ENDFOR??
+		??FOR decl : ifl.outputVars??
+			local ??decl.luaFBOutputVarName?? = ??FB_DO_FLAG.bitwiseOr(ifl.outputVars.indexOf(decl))??
+		??ENDFOR??
 	'''
 
 	def static luaFBAdapterConstants(InterfaceList ifl) '''
-		«FOR socket : ifl.sockets»
-			«socket.luaFBAdapterInterfaceConstants(ifl.sockets,ifl.plugs.size)»
-		«ENDFOR»
-		«FOR plug : ifl.plugs»
-			«plug.luaFBAdapterInterfaceConstants(ifl.plugs,0)»
-		«ENDFOR»
+		??FOR socket : ifl.sockets??
+			??socket.luaFBAdapterInterfaceConstants(ifl.sockets,ifl.plugs.size)??
+		??ENDFOR??
+		??FOR plug : ifl.plugs??
+			??plug.luaFBAdapterInterfaceConstants(ifl.plugs,0)??
+		??ENDFOR??
 	'''
 
 	def static luaFBAdapterInterfaceConstants(AdapterDeclaration adapter, EList<?> ifl, int offset) '''
-		«var aifl = getAdapterInterfaceList(adapter)»		
-		«var adapterID = ifl.indexOf(adapter)+offset»
-		«FOR decl : aifl.eventOutputs»
-			local «decl.luaAdapterOutputEventName(adapter.name)» = «FB_AD_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.eventOutputs.indexOf(decl))»
-		«ENDFOR»
-		«FOR decl : aifl.eventInputs»
-			local «decl.luaAdapterInputEventName(adapter.name)» = «FB_AD_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.eventInputs.indexOf(decl))»
-		«ENDFOR»
-		«FOR decl : aifl.outputVars»
-			local «decl.luaFBAdapterOutputVarName(adapter.name)» = «FB_ADI_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.outputVars.indexOf(decl))»
-		«ENDFOR»
-		«FOR decl : aifl.inputVars»
-			local «decl.luaFBAdapterInputVarName(adapter.name)» = «FB_ADO_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.inputVars.indexOf(decl))»
-		«ENDFOR»    
+		??var aifl = getAdapterInterfaceList(adapter)??		
+		??var adapterID = ifl.indexOf(adapter)+offset??
+		??FOR decl : aifl.eventOutputs??
+			local ??decl.luaAdapterOutputEventName(adapter.name)?? = ??FB_AD_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.eventOutputs.indexOf(decl))??
+		??ENDFOR??
+		??FOR decl : aifl.eventInputs??
+			local ??decl.luaAdapterInputEventName(adapter.name)?? = ??FB_AD_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.eventInputs.indexOf(decl))??
+		??ENDFOR??
+		??FOR decl : aifl.outputVars??
+			local ??decl.luaFBAdapterOutputVarName(adapter.name)?? = ??FB_ADI_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.outputVars.indexOf(decl))??
+		??ENDFOR??
+		??FOR decl : aifl.inputVars??
+			local ??decl.luaFBAdapterInputVarName(adapter.name)?? = ??FB_ADO_FLAG.bitwiseOr(adapterID << 16).bitwiseOr(aifl.inputVars.indexOf(decl))??
+		??ENDFOR??    
 	'''
 
 	def static getAdapterInterfaceList(AdapterDeclaration adapter) {
@@ -141,58 +141,58 @@ class LuaConstants {
 	}
 
 	def static luaInternalConstants(BasicFBType type) '''
-		«FOR decl : type.internalVars»
-			local «decl.luaFBInternalVarName» = «FB_IN_FLAG.bitwiseOr(type.internalVars.indexOf(decl))»
-		«ENDFOR»
+		??FOR decl : type.internalVars??
+			local ??decl.luaFBInternalVarName?? = ??FB_IN_FLAG.bitwiseOr(type.internalVars.indexOf(decl))??
+		??ENDFOR??
 	'''
 
 	def static luaConstants(BasicFBType type) '''
-		«luaFBStateConstant»
-		«type.ECC.luaStateConstants»
-		«type.interfaceList.luaEventConstants»
-		«type.interfaceList.luaFBVariableConstants»
-		«type.interfaceList.luaFBAdapterConstants»
-		«type.luaInternalConstants»
+		??luaFBStateConstant??
+		??type.ECC.luaStateConstants??
+		??type.interfaceList.luaEventConstants??
+		??type.interfaceList.luaFBVariableConstants??
+		??type.interfaceList.luaFBAdapterConstants??
+		??type.luaInternalConstants??
 	'''
 
-	def static luaFBStateVariable() '''fb[«luaFBStateVarName»]'''
+	def static luaFBStateVariable() '''fb[??luaFBStateVarName??]'''
 
 	def static luaFBVariable(VarDeclaration decl) {
 		val type = decl.rootContainer as FBType 
 		if (type.interfaceList.inputVars.contains(decl)) {
-			'''fb[«decl.luaFBInputVarName»]'''
+			'''fb[??decl.luaFBInputVarName??]'''
 		} else if (type.interfaceList.outputVars.contains(decl)) {
-			'''fb[«decl.luaFBOutputVarName»]'''
+			'''fb[??decl.luaFBOutputVarName??]'''
 		} else if (type instanceof BasicFBType && (type as BasicFBType).internalVars.contains(decl)) {
-			'''fb[«decl.luaFBInternalVarName»]'''
+			'''fb[??decl.luaFBInternalVarName??]'''
 		} else {
-			throw new IllegalArgumentException('''Unknown kind of variable «decl.name»''')
+			throw new IllegalArgumentException('''Unknown kind of variable ??decl.name??''')
 		}
 	}
 
 	def static luaFBVariablesPrefix(Iterable<VarDeclaration> variables) '''
-		«FOR variable : variables»
-			local «variable.luaVariable» = «variable.luaFBVariable»
-		«ENDFOR»
+		??FOR variable : variables??
+			local ??variable.luaVariable?? = ??variable.luaFBVariable??
+		??ENDFOR??
 	'''
 
 	def static luaFBAdapterInECCVariablesPrefix(VarDeclaration adapterVariable, String adapterName, boolean isPlug) '''
-		«IF isPlug»
-			local «adapterVariable.name.luaAdapterVariable(adapterName)» = fb[«adapterVariable.isInput ? adapterVariable.luaFBAdapterInputVarName(adapterName) : adapterVariable.luaFBAdapterOutputVarName(adapterName)»]
-		«ELSE»
-			local «adapterVariable.name.luaAdapterVariable(adapterName)» = fb[«adapterVariable.isInput ? adapterVariable.luaFBAdapterOutputVarName(adapterName) : adapterVariable.luaFBAdapterInputVarName(adapterName)»]
-		«ENDIF»
+		??IF isPlug??
+			local ??adapterVariable.name.luaAdapterVariable(adapterName)?? = fb[??adapterVariable.isInput ? adapterVariable.luaFBAdapterInputVarName(adapterName) : adapterVariable.luaFBAdapterOutputVarName(adapterName)??]
+		??ELSE??
+			local ??adapterVariable.name.luaAdapterVariable(adapterName)?? = fb[??adapterVariable.isInput ? adapterVariable.luaFBAdapterOutputVarName(adapterName) : adapterVariable.luaFBAdapterInputVarName(adapterName)??]
+		??ENDIF??
 	'''
 
 	def static luaFBVariablesSuffix(Iterable<VarDeclaration> variables) '''
-		«FOR variable : variables.filter[!it.isIsInput]»
-			«variable.luaFBVariable» = «variable.luaVariable»
-		«ENDFOR»
+		??FOR variable : variables.filter[!it.isIsInput]??
+			??variable.luaFBVariable?? = ??variable.luaVariable??
+		??ENDFOR??
 	'''
 
-	def static luaSendOutputEvent(Event event) '''fb(«event.luaOutputEventName»)'''
+	def static luaSendOutputEvent(Event event) '''fb(??event.luaOutputEventName??)'''
 
-	def static luaSendAdapterOutputEvent(Event event) '''fb(AEO_«event.name.replace('.','_')»)'''
+	def static luaSendAdapterOutputEvent(Event event) '''fb(AEO_??event.name.replace('.','_')??)'''
 
 	def static getEventWith(Event event, List<Integer> with, List<VarDeclaration> vars) {
 		if (event.with.empty) {
@@ -231,33 +231,33 @@ class LuaConstants {
 		}
 		'''
 		local interfaceSpec = {
-		  numEIs = «ifl.eventInputs.size»,
-		  EINames = «ifl.eventInputs.map[it.name].luaStringList»,
-		  EIWith = «inputWith.luaIntegerList»,
-		  EIWithIndexes = «inputWithIndexes.luaIntegerList»,
-		  numEOs = «ifl.eventOutputs.size»,
-		  EONames = «ifl.eventOutputs.map[it.name].luaStringList»,
-		  EOWith = «outputWith.luaIntegerList»,
-		  EOWithIndexes = «outputWithIndexes.luaIntegerList»,
-		  numDIs = «ifl.inputVars.size»,
-		  DINames = «ifl.inputVars.map[it.name].luaStringList»,
-		  DIDataTypeNames = «ifl.inputVars.typeList.luaValueList»,
-		  numDOs = «ifl.outputVars.size»,
-		  DONames = «ifl.outputVars.map[it.name].luaStringList»,
-		  DODataTypeNames = «ifl.outputVars.typeList.luaValueList»,
-		  numAdapters = «ifl.plugs.size + ifl.sockets.size»,
+		  numEIs = ??ifl.eventInputs.size??,
+		  EINames = ??ifl.eventInputs.map[it.name].luaStringList??,
+		  EIWith = ??inputWith.luaIntegerList??,
+		  EIWithIndexes = ??inputWithIndexes.luaIntegerList??,
+		  numEOs = ??ifl.eventOutputs.size??,
+		  EONames = ??ifl.eventOutputs.map[it.name].luaStringList??,
+		  EOWith = ??outputWith.luaIntegerList??,
+		  EOWithIndexes = ??outputWithIndexes.luaIntegerList??,
+		  numDIs = ??ifl.inputVars.size??,
+		  DINames = ??ifl.inputVars.map[it.name].luaStringList??,
+		  DIDataTypeNames = ??ifl.inputVars.typeList.luaValueList??,
+		  numDOs = ??ifl.outputVars.size??,
+		  DONames = ??ifl.outputVars.map[it.name].luaStringList??,
+		  DODataTypeNames = ??ifl.outputVars.typeList.luaValueList??,
+		  numAdapters = ??ifl.plugs.size + ifl.sockets.size??,
 		  adapterInstanceDefinition = {
-		    «ifl.plugs.map['''{adapterNameID = "«it.name»", adapterTypeNameID = "«it.typeName»", isPlug = true}'''].join(",\n")»«IF !ifl.sockets.isEmpty && !ifl.plugs.isEmpty»,«ENDIF»
-		    «ifl.sockets.map['''{adapterNameID = "«it.name»", adapterTypeNameID = "«it.typeName»", isPlug = false}'''].join(",\n")»
+		    ??ifl.plugs.map['''{adapterNameID = "??it.name??", adapterTypeNameID = "??it.typeName??", isPlug = true}'''].join(",\n")????IF !ifl.sockets.isEmpty && !ifl.plugs.isEmpty??,??ENDIF??
+		    ??ifl.sockets.map['''{adapterNameID = "??it.name??", adapterTypeNameID = "??it.typeName??", isPlug = false}'''].join(",\n")??
 		  }
 		}'''
 	}
 
 	def static luaInternalVarsInformation(BasicFBType type) '''
 	local internalVarsInformation = {
-	  numIntVars = «type.internalVars.size»,
-	  intVarsNames = «type.internalVars.map[it.name].luaStringList»,
-	  intVarsDataTypeNames = «type.internalVars.typeList.luaValueList»
+	  numIntVars = ??type.internalVars.size??,
+	  intVarsNames = ??type.internalVars.map[it.name].luaStringList??,
+	  intVarsDataTypeNames = ??type.internalVars.typeList.luaValueList??
 	}'''
 
 }

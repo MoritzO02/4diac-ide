@@ -28,46 +28,46 @@ class ServiceInterfaceFBImplTemplate extends ForteFBTemplate<ServiceInterfaceFBT
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		
-		    «generateFBInterfaceDefinition»
-		    «generateFBInterfaceSpecDefinition»
+		    ??generateFBInterfaceDefinition??
+		    ??generateFBInterfaceSpecDefinition??
 		  }
 		
-		  «generateFBDefinition»
+		  ??generateFBDefinition??
 		
-		  «FBClassName»::«FBClassName»(const StringId paInstanceNameId, CFBContainer &paContainer) :
-		      «baseClass»(paContainer, cFBInterfaceSpec, paInstanceNameId)«//no newline
-		  	»«(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer»«// no newline
-		  	»«(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer»«// no newline
-		  	»«generateConnectionInitializer» {
+		  ??FBClassName??::??FBClassName??(const StringId paInstanceNameId, CFBContainer &paContainer) :
+		      ??baseClass??(paContainer, cFBInterfaceSpec, paInstanceNameId)??//no newline
+		  	????(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer????// no newline
+		  	????(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer????// no newline
+		  	????generateConnectionInitializer?? {
 		  };
 		
-		  «(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition»
-		  «generateExecuteEvent»
+		  ??(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition??
+		  ??generateExecuteEvent??
 		
-		  «generateInterfaceDefinitions»
+		  ??generateInterfaceDefinitions??
 		}
 	'''
 
 	def protected generateExecuteEvent() '''
-		void «FBClassName»::executeEvent(const TEventID paEIID, CEventChainExecutionThread *const paECET) {
+		void ??FBClassName??::executeEvent(const TEventID paEIID, CEventChainExecutionThread *const paECET) {
 		  switch(paEIID) {
-		    «FOR event : type.interfaceList.eventInputs»
-		    	case scmEvent«event.name»ID:
-		    	  #error add code for «event.name» event!
+		    ??FOR event : type.interfaceList.eventInputs??
+		    	case scmEvent??event.name??ID:
+		    	  #error add code for ??event.name?? event!
 		    	  /*
 		    	    do not forget to send output event, calling e.g.
 		    	      sendOutputEvent(scmEventCNFID, paECET);
 		    	  */
 		    	  break;
-		    «ENDFOR»
+		    ??ENDFOR??
 		  }
 		}
 	'''

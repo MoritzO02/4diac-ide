@@ -175,50 +175,50 @@ final class ForteNgExportUtil {
 
 	def static CharSequence generateName(IInterfaceElement element) {
 		switch (element) {
-			Event: '''«EVENT_EXPORT_PREFIX»«element.name»'''
+			Event: '''??EVENT_EXPORT_PREFIX????element.name??'''
 			case element.eContainmentFeature == LibraryElementPackage.Literals.
-				BASE_FB_TYPE__INTERNAL_CONST_VARS: '''«VARIABLE_EXPORT_PREFIX»const_«element.name»'''
+				BASE_FB_TYPE__INTERNAL_CONST_VARS: '''??VARIABLE_EXPORT_PREFIX??const_??element.name??'''
 			VarDeclaration case element.FBType instanceof CompositeFBType:
 				if (element.isInput || element.inOutVar)
-					'''«CONNECTION_EXPORT_PREFIX»if2in_«element.name».getValue()'''
+					'''??CONNECTION_EXPORT_PREFIX??if2in_??element.name??.getValue()'''
 				else if (!element.inputConnections.empty && !element.inputConnections.first.negated)
 					element.inputConnections.first.generateConnectionValue
 				else
-					'''«VARIABLE_EXPORT_PREFIX»«element.name»'''
-			default: '''«VARIABLE_EXPORT_PREFIX»«element.name»'''
+					'''??VARIABLE_EXPORT_PREFIX????element.name??'''
+			default: '''??VARIABLE_EXPORT_PREFIX????element.name??'''
 		}
 	}
 
 	def static CharSequence generateConnectionValue(Connection conn) {
 		if (conn.sourceElement.genericType)
-			'''«conn.sourceElement.generateName»->getDOConnection(«conn.source.name.FORTEStringId»)->getValue()'''
+			'''??conn.sourceElement.generateName??->getDOConnection(??conn.source.name.FORTEStringId??)->getValue()'''
 		else if (conn.sourceElement !== null)
-			'''«conn.sourceElement.generateName»->«CONNECTION_EXPORT_PREFIX»«conn.source.name».getValue()'''
+			'''??conn.sourceElement.generateName??->??CONNECTION_EXPORT_PREFIX????conn.source.name??.getValue()'''
 		else
-			'''«CONNECTION_EXPORT_PREFIX»if2in_«conn.source.name».getValue()'''
+			'''??CONNECTION_EXPORT_PREFIX??if2in_??conn.source.name??.getValue()'''
 	}
 
 	def static CharSequence generateName(BlockFBNetworkElement element) {
 		switch (element) {
-			AdapterFB: '''«VARIABLE_EXPORT_PREFIX»«element.name»'''
-			default: '''«FB_EXPORT_PREFIX»«element.name»'''
+			AdapterFB: '''??VARIABLE_EXPORT_PREFIX????element.name??'''
+			default: '''??FB_EXPORT_PREFIX????element.name??'''
 		}
 	}
 
-	def static CharSequence generateNameAsParameter(VarDeclaration variable) '''pa«variable.name»'''
+	def static CharSequence generateNameAsParameter(VarDeclaration variable) '''pa??variable.name??'''
 
 	def static CharSequence generateTypeName(LibraryElement type) {
 		switch (type) {
-			AdapterType: '''«type.generateTypeNamespace»::FORTE_«type.generateTypeNamePlain»'''
+			AdapterType: '''??type.generateTypeNamespace??::FORTE_??type.generateTypeNamePlain??'''
 			ArrayType:
 				generateArrayTypeName(type.subranges, type.baseType)
 			// match generic types (must be before other data types)
-			DataType case GenericTypes.isAnyType(type): '''CIEC_«type.generateTypeNamePlain»_VARIANT'''
-			StringType: '''CIEC_«type.generateTypeNamePlain»«IF type.isSetMaxLength»_FIXED<«type.maxLength»>«ENDIF»'''
-			AnyElementaryType: '''CIEC_«type.generateTypeNamePlain»'''
-			DataType: '''«type.generateTypeNamespace»::CIEC_«type.generateTypeNamePlain»'''
-			case type.genericType: '''«type.generateTypeNamespace»::«type.genericClassName»'''
-			default: '''«type.generateTypeNamespace»::FORTE_«type.generateTypeNamePlain»'''
+			DataType case GenericTypes.isAnyType(type): '''CIEC_??type.generateTypeNamePlain??_VARIANT'''
+			StringType: '''CIEC_??type.generateTypeNamePlain????IF type.isSetMaxLength??_FIXED<??type.maxLength??>??ENDIF??'''
+			AnyElementaryType: '''CIEC_??type.generateTypeNamePlain??'''
+			DataType: '''??type.generateTypeNamespace??::CIEC_??type.generateTypeNamePlain??'''
+			case type.genericType: '''??type.generateTypeNamespace??::??type.genericClassName??'''
+			default: '''??type.generateTypeNamespace??::FORTE_??type.generateTypeNamePlain??'''
 		}
 	}
 
@@ -229,22 +229,22 @@ final class ForteNgExportUtil {
 	def static CharSequence generateTypeNameAsInOutParameter(LibraryElement type) {
 		if (type instanceof ArrayType)
 			// use CIEC_ARRAY_COMMON for first dimension
-			'''CIEC_ARRAY_COMMON<«generateArrayTypeName(type.subranges.subList(1, type.subranges.size), type.baseType)»>'''
+			'''CIEC_ARRAY_COMMON<??generateArrayTypeName(type.subranges.subList(1, type.subranges.size), type.baseType)??>'''
 		else
 			generateTypeName(type)
 	}
 
 	def static CharSequence generateTypeNameAsOutputParameter(LibraryElement type) {
 		if (type instanceof AnyBitType)
-			'''CAnyBitOutputParameter<«type.generateTypeName»>'''
+			'''CAnyBitOutputParameter<??type.generateTypeName??>'''
 		else
-			'''COutputParameter<«type.generateTypeName»>'''
+			'''COutputParameter<??type.generateTypeName??>'''
 	}
 
 	def static String generateArrayTypeName(List<Subrange> subranges, DataType baseType) {
 		subranges.reverseView.fold(baseType.generateTypeName) [ result, subrange |
 			val fixed = subrange.setLowerLimit && subrange.setUpperLimit
-			'''«IF fixed»CIEC_ARRAY_FIXED«ELSE»CIEC_ARRAY_VARIABLE«ENDIF»<«result»«IF fixed», «subrange.lowerLimit», «subrange.upperLimit»«ENDIF»>'''
+			'''??IF fixed??CIEC_ARRAY_FIXED??ELSE??CIEC_ARRAY_VARIABLE??ENDIF??<??result????IF fixed??, ??subrange.lowerLimit??, ??subrange.upperLimit????ENDIF??>'''
 		].toString
 	}
 
@@ -276,19 +276,19 @@ final class ForteNgExportUtil {
 
 	def static String generateDefiningInclude(Resource resource) {
 		resource.contents.filter(LibraryElement)?.head?.generateTypeIncludePath ?:
-			'''«resource.URI.trimFileExtension.lastSegment».h'''
+			'''??resource.URI.trimFileExtension.lastSegment??.h'''
 	}
 
 	def static String generateTypeIncludePath(LibraryElement type) {
 		switch (path : type.generateTypePath.join('/')) {
-			case !path.empty: '''forte/«path»/«type.generateTypeBasename».h'''
-			default: '''forte/«type.generateTypeBasename».h'''
+			case !path.empty: '''forte/??path??/??type.generateTypeBasename??.h'''
+			default: '''forte/??type.generateTypeBasename??.h'''
 		}
 	}
 
-	def static String generateTypeHeaderFileName(LibraryElement type) '''«type.generateTypeBasename».h'''
+	def static String generateTypeHeaderFileName(LibraryElement type) '''??type.generateTypeBasename??.h'''
 
-	def static String generateTypeSourceFileName(LibraryElement type) '''«type.generateTypeBasename».cpp'''
+	def static String generateTypeSourceFileName(LibraryElement type) '''??type.generateTypeBasename??.cpp'''
 
 	def static Path generateTypeHeaderFilePath(LibraryElement type) {
 		Path.of("include", "forte").resolve(type.generateTypePath)
@@ -331,8 +331,8 @@ final class ForteNgExportUtil {
 				type.name + "_adp"
 			AnyDerivedType:
 				type.name + "_dtp"
-			DataType case GenericTypes.isAnyType(type): '''forte_«type.generateTypeNamePlain.toLowerCase»_variant'''
-			DataType: '''forte_«type.name.toLowerCase»'''
+			DataType case GenericTypes.isAnyType(type): '''forte_??type.generateTypeNamePlain.toLowerCase??_variant'''
+			DataType: '''forte_??type.name.toLowerCase??'''
 			FunctionFBType case type.genericType:
 				type.genericClassName + "_fct"
 			FunctionFBType:
@@ -381,7 +381,7 @@ final class ForteNgExportUtil {
 		if (packageName.nullOrEmpty)
 			type.generateTypeNamePlain
 		else
-			'''«packageName»::«type.generateTypeNamePlain»'''
+			'''??packageName??::??type.generateTypeNamePlain??'''
 	}
 
 	def static String generateTypeNamePlain(LibraryElement type) {
@@ -419,7 +419,7 @@ final class ForteNgExportUtil {
 		]
 	}
 
-	def static CharSequence getFORTEStringId(String s) '''"«s»"_STRID'''
+	def static CharSequence getFORTEStringId(String s) '''"??s??"_STRID'''
 
 	def static int getAbsoluteDataPortIndex(IInterfaceElement element) {
 		val interfaceList = element.interfaceList

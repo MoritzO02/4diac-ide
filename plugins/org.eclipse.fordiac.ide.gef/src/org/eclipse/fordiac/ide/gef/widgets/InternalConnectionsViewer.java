@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin
+ *   Dunja ??ivotin
  *   - initial API and implementation and/or initial documentation
  *   - removed boilerplate code
  *******************************************************************************/

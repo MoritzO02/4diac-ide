@@ -26,37 +26,37 @@ class ServiceInterfaceFBHeaderTemplate extends ForteFBTemplate<ServiceInterfaceF
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		«generateFBClassHeader»
-		      «generateFBDeclaration»
+		??generateFBClassHeader??
+		      ??generateFBDeclaration??
 		
 		    private:
-		      «generateFBInterfaceDeclaration»
+		      ??generateFBInterfaceDeclaration??
 		
 		      void executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) override;
 		
-		      «generateReadInputDataDeclaration»
-		      «generateWriteOutputDataDeclaration»
-		      «(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration»
+		      ??generateReadInputDataDeclaration??
+		      ??generateWriteOutputDataDeclaration??
+		      ??(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration??
 		
 		    public:
-		      «FBClassName»(StringId paInstanceNameId, CFBContainer &paContainer);
+		      ??FBClassName??(StringId paInstanceNameId, CFBContainer &paContainer);
 		
-		      «generateInterfaceDeclarations»
+		      ??generateInterfaceDeclarations??
 		  };
 		}
 		
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 		
 	'''
 
 	override protected generateHeaderIncludes() '''
-		«generateDependencyInclude("forte/funcbloc.h")»
-		«super.generateHeaderIncludes»
+		??generateDependencyInclude("forte/funcbloc.h")??
+		??super.generateHeaderIncludes??
 	'''
 }

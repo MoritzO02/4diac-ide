@@ -16,7 +16,7 @@
  *   Michael Jaeger   - replaced HashSet with ArrayList
  *   Lukas Wais		  - implemented tree menu for structured types
  *   Alois Zoitl	  - fixed fokus checking for linux.
- *   Dunja Životin    - extracted DataTypeTreeSelectionDialog and TypeNode into separate classes
+ *   Dunja ??ivotin    - extracted DataTypeTreeSelectionDialog and TypeNode into separate classes
  *   Martin Jobst     - refactored type proposals
  *******************************************************************************/
 

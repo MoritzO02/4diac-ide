@@ -45,23 +45,23 @@ class BasicFBImplTemplate extends BaseFBImplTemplate<BasicFBType> {
 	}
 
 	def protected generateStates() '''
-		«FOR state : type.ECC.ECState»
-			«state.generateState»
+		??FOR state : type.ECC.ECState??
+			??state.generateState??
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 
 	def protected generateState(ECState state) '''
-		void «FBClassName»::enterState«state.name»(CEventChainExecutionThread *const«IF hasOutputEvent(state)» paECET«ENDIF») {
-		  mECCState = «state.generateStateName»;
-		  «FOR action : state.ECAction»
-		  	«IF action.algorithm !== null»
-		  		alg_«action.algorithm.name»();
-		  	«ENDIF»
-		  	«IF action.output !== null»
-		  		«action.output.generateSendEvent»
-		  	«ENDIF»
-		  «ENDFOR»
+		void ??FBClassName??::enterState??state.name??(CEventChainExecutionThread *const??IF hasOutputEvent(state)?? paECET??ENDIF??) {
+		  mECCState = ??state.generateStateName??;
+		  ??FOR action : state.ECAction??
+		  	??IF action.algorithm !== null??
+		  		alg_??action.algorithm.name??();
+		  	??ENDIF??
+		  	??IF action.output !== null??
+		  		??action.output.generateSendEvent??
+		  	??ENDIF??
+		  ??ENDFOR??
 		}
 	'''
 
@@ -70,19 +70,19 @@ class BasicFBImplTemplate extends BaseFBImplTemplate<BasicFBType> {
 	}
 
 	override generateExecuteEvent() '''
-		void «FBClassName»::executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) {
+		void ??FBClassName??::executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) {
 		  do {
 		    switch(mECCState) {
-		      «FOR state : type.ECC.ECState»
-		      	case «state.generateStateName»:
-		      	  «FOR transition : state.outTransitions SEPARATOR "\nelse"»
-		      	  	if(«transition.generateTransitionCondition») enterState«transition.destination.name»(paECET);
-		      	  «ENDFOR»
-		      	  «IF !state.outTransitions.empty»else «ENDIF»return; //no transition cleared
-		      	  «IF !state.outTransitions.empty»break;«ENDIF»
-		      «ENDFOR»
+		      ??FOR state : type.ECC.ECState??
+		      	case ??state.generateStateName??:
+		      	  ??FOR transition : state.outTransitions SEPARATOR "\nelse"??
+		      	  	if(??transition.generateTransitionCondition??) enterState??transition.destination.name??(paECET);
+		      	  ??ENDFOR??
+		      	  ??IF !state.outTransitions.empty??else ??ENDIF??return; //no transition cleared
+		      	  ??IF !state.outTransitions.empty??break;??ENDIF??
+		      ??ENDFOR??
 		      default:
-		        DEVLOG_ERROR("The state is not in the valid range! The state value is: %d. The max value can be: «type.ECC.ECState.size».", mECCState.operator TForteUInt16 ());
+		        DEVLOG_ERROR("The state is not in the valid range! The state value is: %d. The max value can be: ??type.ECC.ECState.size??.", mECCState.operator TForteUInt16 ());
 		        mECCState = 0; // 0 is always the initial state
 		        return;
 		    }
@@ -90,15 +90,15 @@ class BasicFBImplTemplate extends BaseFBImplTemplate<BasicFBType> {
 		  } while(true);
 		}
 		
-		«generateStates»
+		??generateStates??
 	'''
 
 	def protected generateTransitionCondition(ECTransition transition) {
 		switch (it : transition) {
 			case conditionEvent !== null && !conditionExpression.nullOrEmpty: //
-			'''(«generateTransitionEvent(transition.conditionEvent)» == paEIID) && («transitionLanguageSupport.get(transition)?.generate(emptyMap)»)'''
+			'''(??generateTransitionEvent(transition.conditionEvent)?? == paEIID) && (??transitionLanguageSupport.get(transition)?.generate(emptyMap)??)'''
 			case conditionEvent !== null: //
-			'''«generateTransitionEvent(transition.conditionEvent)» == paEIID'''
+			'''??generateTransitionEvent(transition.conditionEvent)?? == paEIID'''
 			case !conditionExpression.nullOrEmpty:
 				if (conditionExpression == "1") {
 					"1"
@@ -113,12 +113,12 @@ class BasicFBImplTemplate extends BaseFBImplTemplate<BasicFBType> {
 	def protected generateTransitionEvent(Event event) {
 		var fbNetworkElement = event.blockFBNetworkElement
 		if (fbNetworkElement instanceof AdapterFB) {
-			return '''«fbNetworkElement.generateName»->«event.generateName»()'''
+			return '''??fbNetworkElement.generateName??->??event.generateName??()'''
 		}
 		event.generateEventID
 	}
 
-	def protected generateStateName(ECState state) '''scmState«state.name»'''
+	def protected generateStateName(ECState state) '''scmState??state.name??'''
 
 	override getErrors() {
 		(super.getErrors + transitionLanguageSupport.values.filterNull.flatMap [

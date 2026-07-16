@@ -29,19 +29,19 @@ class SimpleFBHeaderTemplate extends BaseFBHeaderTemplate<SimpleFBType> {
 		super(type, name, prefix, "CSimpleFB", options)
 	}
 
-	override generateClassInclude() '''«generateDependencyInclude("forte/simplefb.h")»'''
+	override generateClassInclude() '''??generateDependencyInclude("forte/simplefb.h")??'''
 
 	override generateAdditionalDeclarations() '''
-		«generateStates»
+		??generateStates??
 	'''
 	
 	def protected generateStates() '''
-		«FOR state : type.simpleECStates AFTER '\n'»
-			«state.generateState»
-		«ENDFOR»
+		??FOR state : type.simpleECStates AFTER '\n'??
+			??state.generateState??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateState(SimpleECState state) '''
-		void enterState«state.name»(CEventChainExecutionThread *const paECET);
+		void enterState??state.name??(CEventChainExecutionThread *const paECET);
 	'''
 }

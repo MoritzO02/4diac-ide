@@ -99,7 +99,7 @@ public class ReplayDebuggingView extends ViewPart implements IReplayNavigatorReg
 
 	private void setMenu() {
 
-		// Register context menu — links the viewer's selection to Eclipse's menu
+		// Register context menu ??? links the viewer's selection to Eclipse's menu
 		// framework
 		final MenuManager menuManager = new MenuManager();
 		menuManager.setRemoveAllWhenShown(true);

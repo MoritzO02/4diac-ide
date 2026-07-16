@@ -27,7 +27,7 @@ Examples of unacceptable behavior by participants include:
 
 ## Our Responsibilities
 
-With the support of the Eclipse Foundation staff (the “Staff”), project committers and leaders are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+With the support of the Eclipse Foundation staff (the ???Staff???), project committers and leaders are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
 Project committers and leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 

@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Gerhard Ebenhofer, Alois Zoitl, Filip Pr�stl Andr�n, Monika Wenger
+ *   Gerhard Ebenhofer, Alois Zoitl, Filip Pr???stl Andr???n, Monika Wenger
  *       - initial API and implementation and/or initial documentation
  *   Alois Zoitl - removed editor check from canUndo
  *******************************************************************************/

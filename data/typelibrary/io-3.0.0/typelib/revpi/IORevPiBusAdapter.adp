@@ -4,7 +4,7 @@
 	</Identification>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>
-	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="José Cabral" Date="2018-04-22">
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Jos?? Cabral" Date="2018-04-22">
 	</VersionInfo>
 	<CompilerInfo packageName="eclipse4diac::io::revpi">
 	</CompilerInfo>

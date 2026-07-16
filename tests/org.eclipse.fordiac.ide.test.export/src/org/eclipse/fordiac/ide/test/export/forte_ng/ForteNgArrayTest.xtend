@@ -29,7 +29,7 @@ class ForteNgArrayTest extends ExporterTestBasicFBTypeBase {
 	def void generatedDWORDArrayDeclaration() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-		  «VARIABLE_NAME» : ARRAY [0..31] OF DWORD;
+		  ??VARIABLE_NAME?? : ARRAY [0..31] OF DWORD;
 		END_VAR'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -46,7 +46,7 @@ class ForteNgArrayTest extends ExporterTestBasicFBTypeBase {
 	def void generatedDWORDArrayDeclarationWithInitializer() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-		  «VARIABLE_NAME» : ARRAY [0..31] OF DWORD := [0, 1, 2, 3(7)];
+		  ??VARIABLE_NAME?? : ARRAY [0..31] OF DWORD := [0, 1, 2, 3(7)];
 		END_VAR'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)

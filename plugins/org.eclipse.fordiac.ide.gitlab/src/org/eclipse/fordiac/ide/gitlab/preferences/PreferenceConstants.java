@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Michael Oberlehner - added gitlab endpoint token
  *******************************************************************************/
 package org.eclipse.fordiac.ide.gitlab.preferences;

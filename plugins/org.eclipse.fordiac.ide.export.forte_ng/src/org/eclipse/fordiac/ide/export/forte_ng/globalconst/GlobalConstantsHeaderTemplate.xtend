@@ -27,29 +27,29 @@ class GlobalConstantsHeaderTemplate extends ForteLibraryElementTemplate<GlobalCo
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		namespace «type.generateTypeNamespace» {
-		  class «className» final {
-		      «generateGlobalConstDeclaration»
+		namespace ??type.generateTypeNamespace?? {
+		  class ??className?? final {
+		      ??generateGlobalConstDeclaration??
 		    public:
-		      «type.constants.generateVariableDeclarations(true)»
-		      «className»() = delete;
+		      ??type.constants.generateVariableDeclarations(true)??
+		      ??className??() = delete;
 		  };
 		}
 		
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 		
 	'''
 
 	def protected generateHeaderIncludes() '''
-		«getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes»
+		??getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes??
 		
-		«type.compilerInfo?.header»
+		??type.compilerInfo?.header??
 	'''
 	
 	def protected generateGlobalConstDeclaration() '''

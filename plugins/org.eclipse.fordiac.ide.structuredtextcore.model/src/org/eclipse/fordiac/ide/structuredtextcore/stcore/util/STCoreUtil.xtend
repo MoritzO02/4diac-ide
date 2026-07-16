@@ -501,7 +501,7 @@ final class STCoreUtil {
 		(0 ..< ptypes.size).map [ index |
 			if (input.xor(method.getParameterType(index) == Variable)) {
 				STCoreFactory.eINSTANCE.createSTVarDeclaration => [
-					name = '''«IF input»IN«ELSE»OUT«ENDIF»«index»'''
+					name = '''??IF input??IN??ELSE??OUT??ENDIF????index??'''
 					comment = MessageFormat.format(method.getParameter(index)?.getAnnotation(Comment)?.value ?: "",
 						index)
 					type = ptypes.get(index)
@@ -552,7 +552,7 @@ final class STCoreUtil {
 	def static ArrayType newArrayType(DataType arrayBaseType, Iterable<Subrange> arraySubranges) {
 		if (arrayBaseType !== null)
 			DataFactory.eINSTANCE.createArrayType => [
-				name = '''ARRAY [«arraySubranges.map['''«IF setLowerLimit && setUpperLimit»«lowerLimit»..«upperLimit»«ELSE»*«ENDIF»'''].join(", ")»] OF «arrayBaseType.name»'''
+				name = '''ARRAY [??arraySubranges.map['''??IF setLowerLimit && setUpperLimit????lowerLimit??..??upperLimit????ELSE??*??ENDIF??'''].join(", ")??] OF ??arrayBaseType.name??'''
 				baseType = arrayBaseType
 				subranges.addAll(arraySubranges)
 			]
@@ -576,7 +576,7 @@ final class STCoreUtil {
 	def static AnyStringType newStringType(AnyStringType template, int maxLengthValue) {
 		if (template !== null)
 			DataFactory.eINSTANCE.create(template.eClass) as AnyStringType => [
-				name = '''«template.name»[«maxLengthValue»]'''
+				name = '''??template.name??[??maxLengthValue??]'''
 				maxLength = maxLengthValue
 			]
 		else

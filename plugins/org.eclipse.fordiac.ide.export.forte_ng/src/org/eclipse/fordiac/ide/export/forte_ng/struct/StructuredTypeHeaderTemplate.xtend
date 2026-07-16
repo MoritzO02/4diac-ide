@@ -29,26 +29,26 @@ class StructuredTypeHeaderTemplate extends StructBaseTemplate {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		namespace «type.generateTypeNamespace» {
-		  class «className» final : public CIEC_STRUCT {
-		    DECLARE_FIRMWARE_DATATYPE(«type.generateTypeNamePlain»)
+		namespace ??type.generateTypeNamespace?? {
+		  class ??className?? final : public CIEC_STRUCT {
+		    DECLARE_FIRMWARE_DATATYPE(??type.generateTypeNamePlain??)
 		
 		    public:
-		      «className»();
-		«IF !type.memberVariables.empty»
+		      ??className??();
+		??IF !type.memberVariables.empty??
 		
-		      «className»(«generateConstructorParameters»);
+		      ??className??(??generateConstructorParameters??);
 		
-		      «type.memberVariables.generateVariableDeclarations(false)»
-		«ENDIF»
+		      ??type.memberVariables.generateVariableDeclarations(false)??
+		??ENDIF??
 		      size_t getStructSize() const override {
-		        return «type.memberVariables.size»;
+		        return ??type.memberVariables.size??;
 		      }
 		
 		      const StringId* elementNames() const override {
@@ -59,8 +59,8 @@ class StructuredTypeHeaderTemplate extends StructBaseTemplate {
 		
 		      void setValue(const CIEC_ANY &paValue) override;
 		
-		      «generateAccessorDeclaration("getMember", false)»
-		      «generateAccessorDeclaration("getMember", true)»
+		      ??generateAccessorDeclaration("getMember", false)??
+		      ??generateAccessorDeclaration("getMember", true)??
 		
 		    private:
 		      static const StringId scmElementNames[];
@@ -68,15 +68,15 @@ class StructuredTypeHeaderTemplate extends StructBaseTemplate {
 		  };
 		}
 		
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 		
 	'''
 
 	def protected generateHeaderIncludes() '''
-		«generateDependencyInclude("forte/datatypes/forte_struct.h")»
+		??generateDependencyInclude("forte/datatypes/forte_struct.h")??
 		
-		«getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes»
+		??getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE}).generateDependencyIncludes??
 		
-		«type.compilerInfo?.header»
+		??type.compilerInfo?.header??
 	'''
 }

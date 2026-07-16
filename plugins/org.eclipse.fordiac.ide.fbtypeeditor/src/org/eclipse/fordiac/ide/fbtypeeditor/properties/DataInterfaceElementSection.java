@@ -14,7 +14,7 @@
  *     - initial API and implementation and/or initial documentation
  *   Bianca Wiesmayr
  *     - extract table viewer creation, add initialvalue/arraysize columns
- *   Dunja Životin
+ *   Dunja ??ivotin
  *     - extracted a part of the class into a separate widget
  *******************************************************************************/
 package org.eclipse.fordiac.ide.fbtypeeditor.properties;

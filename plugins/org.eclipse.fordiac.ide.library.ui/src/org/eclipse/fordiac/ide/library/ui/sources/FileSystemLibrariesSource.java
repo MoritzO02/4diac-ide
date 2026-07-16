@@ -57,7 +57,7 @@ public final class FileSystemLibrariesSource implements ILibrarySource {
 		rootText.setMessage("Choose a folder containing ZIPs or extracted libraries..."); //$NON-NLS-1$
 
 		final Button browse = new Button(grid, SWT.PUSH);
-		browse.setText("Browse…"); //$NON-NLS-1$
+		browse.setText("Browse???"); //$NON-NLS-1$
 		browse.addListener(SWT.Selection, ev -> {
 			final DirectoryDialog dlg = new DirectoryDialog(parent.getShell());
 			dlg.setText("Select library root folder"); //$NON-NLS-1$

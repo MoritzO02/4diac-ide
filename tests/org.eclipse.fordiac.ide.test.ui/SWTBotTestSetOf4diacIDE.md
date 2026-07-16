@@ -13,7 +13,7 @@ Copyright (c) 2023 Andrea Zoitl
 
 | Test group   | Test name                                      | FB           | Description - tests if...                                                  | Status  |
 |--------------|------------------------------------------------|--------------|----------------------------------------------------------------------------|---------|
-| new System   | menuNew4diacIDEProject                         |              | menu „New 4diac Project“ exists                                            | done    |
+| new System   | menuNew4diacIDEProject                         |              | menu ???New 4diac Project??? exists                                            | done    |
 |              | createANew4diacIDEProject                      |              | a new 4diac IDE project can be created                                     | done    |
 |              | TryToCreateANew4diacIDEProjectWithExistingName |              | try to create a new project with existing name (should not be able)        | done    |
 |              | deleteExisting4diacIDEProject                  |              | delete existing 4diac project                                              | done    | 

@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Bianca Wiesmayr - multline comments and cleanup
  *   Sebastian Hollersbacher - change to nebula NatTable
  *   Hesam Rezaee - Variable configuration for Global Constants

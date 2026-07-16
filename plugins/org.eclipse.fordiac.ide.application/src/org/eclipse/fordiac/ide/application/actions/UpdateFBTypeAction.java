@@ -26,7 +26,7 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * UpdateFBTypeAction triggers an update of the type for an FB instance
  *
- * @author Filip Andr�n (Filip.Andren@ait.ac.at)
+ * @author Filip Andr???n (Filip.Andren@ait.ac.at)
  */
 public class UpdateFBTypeAction extends SelectionAction {
 

@@ -17,14 +17,14 @@ import static extension org.eclipse.xtext.util.Strings.convertToJavaString
 
 class LuaUtils {
 	
-	def static luaString(String s) '''"«s.convertToJavaString»"'''
+	def static luaString(String s) '''"??s.convertToJavaString??"'''
 	
 	def static luaStringList(Iterable<String> list)
-		'''{«FOR value : list SEPARATOR ', '»«value.luaString»«ENDFOR»}'''
+		'''{??FOR value : list SEPARATOR ', '????value.luaString????ENDFOR??}'''
 
 	def static luaIntegerList(Iterable<Integer> list)
-		'''{«FOR value : list SEPARATOR ', '»«value.toString»«ENDFOR»}'''
+		'''{??FOR value : list SEPARATOR ', '????value.toString????ENDFOR??}'''
 
 	def static luaValueList(Iterable<?> list)
-		'''{«FOR value : list SEPARATOR ', '»«IF value instanceof String»«value.luaString»«ELSE»«value.toString»«ENDIF»«ENDFOR»}'''
+		'''{??FOR value : list SEPARATOR ', '????IF value instanceof String????value.luaString????ELSE????value.toString????ENDIF????ENDFOR??}'''
 }

@@ -38,66 +38,66 @@ abstract class BaseFBHeaderTemplate<T extends BaseFBType> extends ForteFBTemplat
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 		
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 		
-		«generateFBClassHeader»
-		      «generateFBDeclaration»
+		??generateFBClassHeader??
+		      ??generateFBDeclaration??
 		
 		    private:
-		      «generateFBInterfaceDeclaration»
+		      ??generateFBInterfaceDeclaration??
 		
-		      «type.internalVars.generateVariableDeclarations(false)»
-		      «type.internalConstVars.generateVariableDeclarations(true)»
-		      «generateAccessorDeclaration("getVarInternal", false)»
+		      ??type.internalVars.generateVariableDeclarations(false)??
+		      ??type.internalConstVars.generateVariableDeclarations(true)??
+		      ??generateAccessorDeclaration("getVarInternal", false)??
 		
-		      «type.internalFbs.generateInternalFBDeclarations»
-		      «generateAlgorithms»
-		      «generateMethods»
-		      «generateAdditionalDeclarations»
+		      ??type.internalFbs.generateInternalFBDeclarations??
+		      ??generateAlgorithms??
+		      ??generateMethods??
+		      ??generateAdditionalDeclarations??
 		      void executeEvent(TEventID paEIID, CEventChainExecutionThread *const paECET) override;
 		
-		      «generateReadInputDataDeclaration»
-		      «generateWriteOutputDataDeclaration»
-		      «(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration»
+		      ??generateReadInputDataDeclaration??
+		      ??generateWriteOutputDataDeclaration??
+		      ??(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDeclaration??
 		
 		    public:
-		      «FBClassName»(StringId paInstanceNameId, CFBContainer &paContainer);
+		      ??FBClassName??(StringId paInstanceNameId, CFBContainer &paContainer);
 		
-		      «generateInterfaceDeclarations»
+		      ??generateInterfaceDeclarations??
 		  };
 		}
 		
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 		
 	'''
 
 	def abstract CharSequence generateAdditionalDeclarations()
 
 	override protected generateHeaderIncludes() '''
-		«generateClassInclude»
-		«super.generateHeaderIncludes»
+		??generateClassInclude??
+		??super.generateHeaderIncludes??
 	'''
 
 	def abstract CharSequence generateClassInclude()
 
 	def protected generateAlgorithms() '''
-		«FOR alg : type.algorithm AFTER '\n'»
-			«alg.generateAlgorithm»
-		«ENDFOR»
+		??FOR alg : type.algorithm AFTER '\n'??
+			??alg.generateAlgorithm??
+		??ENDFOR??
 	'''
 
 	def protected generateAlgorithm(Algorithm alg) '''
-		void alg_«alg.name»(void);
+		void alg_??alg.name??(void);
 	'''
 
 	def protected generateMethods() '''
-		«FOR method : type.methods AFTER '\n'»
-			«methodLanguageSupport.get(method)?.generate(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE})»
-		«ENDFOR»
+		??FOR method : type.methods AFTER '\n'??
+			??methodLanguageSupport.get(method)?.generate(#{ForteNgExportFilter.OPTION_HEADER -> Boolean.TRUE})??
+		??ENDFOR??
 	'''
 
 	override getErrors() {

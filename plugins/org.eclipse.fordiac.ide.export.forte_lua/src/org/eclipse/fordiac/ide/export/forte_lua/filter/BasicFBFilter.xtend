@@ -50,22 +50,22 @@ class BasicFBFilter {
 	List<String> errors = new ArrayList<String>;
 
 	def String lua(BasicFBType type) '''
-		«type.setupLanguageSupport»
+		??type.setupLanguageSupport??
 		local STfunc = require "STfunc"
 		
-		«type.luaConstants»
+		??type.luaConstants??
 		
-		«type.luaMethods»
+		??type.luaMethods??
 		
-		«type.luaAlgorithms»
+		??type.luaAlgorithms??
 		
-		«type.ECC.luaStates»
+		??type.ECC.luaStates??
 		
-		«type.ECC.luaECC(type.variables, type.adapterSocketsVariables, type.adapterPlugsVariables)»
+		??type.ECC.luaECC(type.variables, type.adapterSocketsVariables, type.adapterPlugsVariables)??
 		
-		«type.interfaceList.luaInterfaceSpec»
+		??type.interfaceList.luaInterfaceSpec??
 		
-		«type.luaInternalVarsInformation»
+		??type.luaInternalVarsInformation??
 		
 		return {ECC = executeEvent, interfaceSpec = interfaceSpec, internalVarsInformation = internalVarsInformation}
 	'''
@@ -74,25 +74,25 @@ class BasicFBFilter {
 		Map<AdapterDeclaration, String> adapterSocketsVariables,
 		Map<AdapterDeclaration, String> adapterPlugsVariables) '''
 		local function transition(fb, id)
-		  local «luaStateVariable()» = «luaFBStateVariable()»
-		  «variables.luaFBVariablesPrefix»
-		  «FOR adapter : adapterSocketsVariables.keySet»
-		  	«FOR input: adapter.getType.interfaceList.inputVars» 
-		  		«input.luaFBAdapterInECCVariablesPrefix(adapter.name, false)»
-		  	«ENDFOR»
-		  	«FOR output: adapter.getType.interfaceList.outputVars» 
-		  		«output.luaFBAdapterInECCVariablesPrefix(adapter.name, false)»
-		  	«ENDFOR»
-		  «ENDFOR»
-		  «FOR adapter : adapterPlugsVariables.keySet»
-		  	«FOR input: adapter.getType.interfaceList.inputVars» 
-		  		«input.luaFBAdapterInECCVariablesPrefix(adapter.name, true)»
-		  	«ENDFOR»
-		  	«FOR output: adapter.getType.interfaceList.outputVars» 
-		  		«output.luaFBAdapterInECCVariablesPrefix(adapter.name, true)»
-		  	«ENDFOR»
-		  «ENDFOR»
-		  «ecc.luaTransitions»
+		  local ??luaStateVariable()?? = ??luaFBStateVariable()??
+		  ??variables.luaFBVariablesPrefix??
+		  ??FOR adapter : adapterSocketsVariables.keySet??
+		  	??FOR input: adapter.getType.interfaceList.inputVars?? 
+		  		??input.luaFBAdapterInECCVariablesPrefix(adapter.name, false)??
+		  	??ENDFOR??
+		  	??FOR output: adapter.getType.interfaceList.outputVars?? 
+		  		??output.luaFBAdapterInECCVariablesPrefix(adapter.name, false)??
+		  	??ENDFOR??
+		  ??ENDFOR??
+		  ??FOR adapter : adapterPlugsVariables.keySet??
+		  	??FOR input: adapter.getType.interfaceList.inputVars?? 
+		  		??input.luaFBAdapterInECCVariablesPrefix(adapter.name, true)??
+		  	??ENDFOR??
+		  	??FOR output: adapter.getType.interfaceList.outputVars?? 
+		  		??output.luaFBAdapterInECCVariablesPrefix(adapter.name, true)??
+		  	??ENDFOR??
+		  ??ENDFOR??
+		  ??ecc.luaTransitions??
 		end
 		
 		local function executeEvent(fb, id)
@@ -124,48 +124,48 @@ class BasicFBFilter {
 	}
 
 	def private luaTransitions(ECC ecc) '''
-	«FOR state : ecc.ECState BEFORE 'if ' SEPARATOR '\nelseif ' AFTER '\nelse return false\nend'»
-		«state.luaStateName» == «luaStateVariable» then
-		«state.luaTransition»«ENDFOR»'''
+	??FOR state : ecc.ECState BEFORE 'if ' SEPARATOR '\nelseif ' AFTER '\nelse return false\nend'??
+		??state.luaStateName?? == ??luaStateVariable?? then
+		??state.luaTransition????ENDFOR??'''
 
 	def private luaTransition(ECState state) '''
-	«FOR tran : state.outTransitions BEFORE 'if ' SEPARATOR '\nelseif ' AFTER '\nelse return false\nend'»
-		«tran.luaTransitionCondition» then return enter«tran.destination.luaStateName»(fb)«ENDFOR»'''
+	??FOR tran : state.outTransitions BEFORE 'if ' SEPARATOR '\nelseif ' AFTER '\nelse return false\nend'??
+		??tran.luaTransitionCondition?? then return enter??tran.destination.luaStateName??(fb)??ENDFOR??'''
 
 	def private luaTransitionCondition(
-		ECTransition tran) '''«IF tran.conditionEvent !== null»«tran.conditionEvent.luaInputEventName» == id«ELSE»true«ENDIF» and «IF !tran.conditionExpression.nullOrEmpty»«tran.luaTransitionConditionExpression»«ELSE»true«ENDIF»'''
+		ECTransition tran) '''??IF tran.conditionEvent !== null????tran.conditionEvent.luaInputEventName?? == id??ELSE??true??ENDIF?? and ??IF !tran.conditionExpression.nullOrEmpty????tran.luaTransitionConditionExpression????ELSE??true??ENDIF??'''
 
 	def private luaTransitionConditionExpression(ECTransition tran) {
 		transitionLanguageSupport.get(tran)?.generate(emptyMap)
 	}
 
 	def private luaStates(ECC ecc) '''
-		«FOR state : ecc.ECState»
-			«state.luaState»
+		??FOR state : ecc.ECState??
+			??state.luaState??
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 
 	def private luaState(ECState state) '''
-		local function enter«state.luaStateName»(fb)
-		  «luaFBStateVariable» = «state.luaStateName»
-		  «FOR action : state.ECAction»
-		  	«IF null !== action.algorithm»«action.algorithm.luaAlgorithmName»(fb)«ENDIF»
-		  	«IF action.output.blockFBNetworkElement instanceof AdapterFB»
-		  		«action.output?.luaSendAdapterOutputEvent»
-		  	«ELSE»	
-		  		«action.output?.luaSendOutputEvent»
-		  	«ENDIF»
-		  «ENDFOR»
+		local function enter??state.luaStateName??(fb)
+		  ??luaFBStateVariable?? = ??state.luaStateName??
+		  ??FOR action : state.ECAction??
+		  	??IF null !== action.algorithm????action.algorithm.luaAlgorithmName??(fb)??ENDIF??
+		  	??IF action.output.blockFBNetworkElement instanceof AdapterFB??
+		  		??action.output?.luaSendAdapterOutputEvent??
+		  	??ELSE??	
+		  		??action.output?.luaSendOutputEvent??
+		  	??ENDIF??
+		  ??ENDFOR??
 		  return true
 		end
 	'''
 
 	def private luaMethods(BasicFBType type) '''
-		«FOR meth : type.methods»
-			«meth.luaMethod»
+		??FOR meth : type.methods??
+			??meth.luaMethod??
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 	
 	def private dispatch luaMethod(Method meth) {
@@ -174,17 +174,17 @@ class BasicFBFilter {
 	
 	def private dispatch luaMethod(STMethod meth) {
 		val lang = ILanguageSupportFactory.createLanguageSupport("forte_lua", meth)
-		val result = '''«lang.generate(Collections.emptyMap())»'''
-		errors.addAll(lang.errors.map['''Error in algorithm «meth.name»: «it»'''])
+		val result = '''??lang.generate(Collections.emptyMap())??'''
+		errors.addAll(lang.errors.map['''Error in algorithm ??meth.name??: ??it??'''])
 		lang.errors.clear()
 		return result
 	}
 
 	def private luaAlgorithms(BasicFBType type) '''
-		«FOR alg : type.algorithm»
-			«alg.luaAlgorithm»
+		??FOR alg : type.algorithm??
+			??alg.luaAlgorithm??
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 
 	def private dispatch luaAlgorithm(Algorithm alg) {
@@ -193,19 +193,19 @@ class BasicFBFilter {
 
 	def private dispatch luaAlgorithm(STAlgorithm alg) {
 		/*val result = '''
-			local function «alg.luaAlgorithmName»(fb)
-			  «stAlgorithmFilter.lua(alg)»
+			local function ??alg.luaAlgorithmName??(fb)
+			  ??stAlgorithmFilter.lua(alg)??
 			end
 		'''
-		errors.addAll(stAlgorithmFilter.errors.map['''Error in algorithm «alg.name»: «it»'''])
+		errors.addAll(stAlgorithmFilter.errors.map['''Error in algorithm ??alg.name??: ??it??'''])
 		stAlgorithmFilter.errors.clear()*/
 		val lang = ILanguageSupportFactory.createLanguageSupport("forte_lua", alg)
 		val result = '''
-			local function «alg.luaAlgorithmName»(fb)
-			  «lang.generate(Collections.emptyMap())»
+			local function ??alg.luaAlgorithmName??(fb)
+			  ??lang.generate(Collections.emptyMap())??
 			end
 		'''
-		errors.addAll(lang.errors.map['''Error in algorithm «alg.name»: «it»'''])
+		errors.addAll(lang.errors.map['''Error in algorithm ??alg.name??: ??it??'''])
 		lang.errors.clear()
 		return result
 	}

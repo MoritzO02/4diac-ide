@@ -26,11 +26,11 @@ class ForteNgForLoopTest extends ExporterTestBasicFBTypeBase {
 	def void validForLoop() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-			«VARIABLE_NAME»: INT;
-			«VARIABLE2_NAME»: INT;
+			??VARIABLE_NAME??: INT;
+			??VARIABLE2_NAME??: INT;
 		END_VAR
-		FOR «VARIABLE_NAME»:=1 TO 5 DO
-			«VARIABLE2_NAME» := 0;
+		FOR ??VARIABLE_NAME??:=1 TO 5 DO
+			??VARIABLE2_NAME?? := 0;
 		END_FOR;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -52,11 +52,11 @@ class ForteNgForLoopTest extends ExporterTestBasicFBTypeBase {
 	def void validForLoopWithBy() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-			«VARIABLE_NAME»: INT;
-			«VARIABLE2_NAME»: INT;
+			??VARIABLE_NAME??: INT;
+			??VARIABLE2_NAME??: INT;
 		END_VAR
-		FOR «VARIABLE_NAME»:=1 TO 5 BY 2 DO
-			«VARIABLE2_NAME» := 0;
+		FOR ??VARIABLE_NAME??:=1 TO 5 BY 2 DO
+			??VARIABLE2_NAME?? := 0;
 		END_FOR;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -78,14 +78,14 @@ class ForteNgForLoopTest extends ExporterTestBasicFBTypeBase {
 	def void multipleForLoopsOnSameLevel() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-			«VARIABLE_NAME»: INT;
-			«VARIABLE2_NAME»: INT;
+			??VARIABLE_NAME??: INT;
+			??VARIABLE2_NAME??: INT;
 		END_VAR
-		FOR «VARIABLE_NAME»:=1 TO 5 DO
-			«VARIABLE2_NAME» := 0;
+		FOR ??VARIABLE_NAME??:=1 TO 5 DO
+			??VARIABLE2_NAME?? := 0;
 		END_FOR;
-		FOR «VARIABLE_NAME»:=6 TO 10 DO
-			«VARIABLE2_NAME» := 1;
+		FOR ??VARIABLE_NAME??:=6 TO 10 DO
+			??VARIABLE2_NAME?? := 1;
 		END_FOR;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -110,14 +110,14 @@ class ForteNgForLoopTest extends ExporterTestBasicFBTypeBase {
 	def void multipleForLoopsContained() {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		VAR_TEMP
-			«VARIABLE_NAME»: INT;
-			«VARIABLE2_NAME»: INT;
-			«VARIABLE3_NAME»: INT;
+			??VARIABLE_NAME??: INT;
+			??VARIABLE2_NAME??: INT;
+			??VARIABLE3_NAME??: INT;
 		END_VAR
-		FOR «VARIABLE_NAME»:=1 TO 5 DO
-			«VARIABLE2_NAME» := 0;
-			FOR «VARIABLE2_NAME»:=6 TO 10 DO
-				«VARIABLE3_NAME» := 1;
+		FOR ??VARIABLE_NAME??:=1 TO 5 DO
+			??VARIABLE2_NAME?? := 0;
+			FOR ??VARIABLE2_NAME??:=6 TO 10 DO
+				??VARIABLE3_NAME?? := 1;
 			END_FOR;
 		END_FOR;'''))
 

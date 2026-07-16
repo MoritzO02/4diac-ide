@@ -162,7 +162,7 @@ class ForteNgExportFilter extends TemplateExportFilter {
 							source.generateTypeSourceFilePath)
 					}
 				} else {
-					errors.add('''Unknown source type «source.eClass.name»''')
+					errors.add('''Unknown source type ??source.eClass.name??''')
 					emptySet
 				}
 			}
@@ -170,11 +170,11 @@ class ForteNgExportFilter extends TemplateExportFilter {
 				val languageSupport = ILanguageSupportFactory.createLanguageSupport("forte_ng", source, options)
 				if (languageSupport !== null) {
 					#{
-						new LanguageHeaderTemplate(languageSupport, '''«name».h''', Paths.get("")),
-						new LanguageImplTemplate(languageSupport, '''«name».cpp''', Paths.get(""))
+						new LanguageHeaderTemplate(languageSupport, '''??name??.h''', Paths.get("")),
+						new LanguageImplTemplate(languageSupport, '''??name??.cpp''', Paths.get(""))
 					}
 				} else {
-					errors.add('''Unknown source type «source.eClass.name»''')
+					errors.add('''Unknown source type ??source.eClass.name??''')
 					emptySet
 				}
 			}

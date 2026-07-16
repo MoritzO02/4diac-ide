@@ -25,9 +25,9 @@ class OtherAlgorithmSupport implements ILanguageSupport {
 	override prepare() { true }
 	
 	override generate(Map<?, ?> options) throws ExportException '''
-		#pragma GCC warning "Algorithm of type: '«algorithm.language»' may lead to unexpected results!"
-		#pragma message ("warning Algorithm of type: '«algorithm.language»' may lead to unexpected results!")
-		«algorithm.text»
+		#pragma GCC warning "Algorithm of type: '??algorithm.language??' may lead to unexpected results!"
+		#pragma message ("warning Algorithm of type: '??algorithm.language??' may lead to unexpected results!")
+		??algorithm.text??
 	'''
 	
 	override getDependencies(Map<?, ?> options) { emptySet }

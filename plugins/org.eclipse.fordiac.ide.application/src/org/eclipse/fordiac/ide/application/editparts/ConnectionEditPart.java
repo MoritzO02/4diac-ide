@@ -12,7 +12,7 @@
  *
  * Contributors:
  *   Gerhard Ebenhofer, Alois Zoitl, Monika Wenger, Gerd Kainz,
- *   Filip Pröstl-Andren
+ *   Filip Pr??stl-Andren
  *   - initial API and implementation and/or initial documentation
  *   Alois Zoitl - added separate colors for different data types
  *               - fixed hide event and data connection issues

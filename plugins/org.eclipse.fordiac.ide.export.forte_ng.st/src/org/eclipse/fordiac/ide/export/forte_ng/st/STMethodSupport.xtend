@@ -60,21 +60,21 @@ class STMethodSupport extends StructuredTextSupport {
 	}
 
 	def private CharSequence generateStructuredTextMethodHeader(STMethod method) '''
-		«method.generateStructuredTextMethodDeclaration(true)»;
+		??method.generateStructuredTextMethodDeclaration(true)??;
 	'''
 
 	def private CharSequence generateStructuredTextMethodImpl(STMethod method) '''
-		«method.generateStructuredTextMethodDeclaration(false)» {
-		  «method.generateStructuredTextMethodBody»
+		??method.generateStructuredTextMethodDeclaration(false)?? {
+		  ??method.generateStructuredTextMethodBody??
 		}
 		
 	'''
 
 	def private CharSequence generateStructuredTextMethodDeclaration(STMethod method, boolean header) //
-	'''«method.returnType?.generateTypeName ?: "void"» «IF !header»«FBType.generateTypeName»::«ENDIF»method_«method.name»(«method.generateStructuredTextMethodParameters»)'''
+	'''??method.returnType?.generateTypeName ?: "void"?? ??IF !header????FBType.generateTypeName??::??ENDIF??method_??method.name??(??method.generateStructuredTextMethodParameters??)'''
 
 	def private CharSequence generateStructuredTextMethodParameters(STMethod method) //
-	'''«FOR param : method.structuredTextMethodParameters SEPARATOR ", "»«param.generateParameterTypeName»«param.generateParameterName»«ENDFOR»'''
+	'''??FOR param : method.structuredTextMethodParameters SEPARATOR ", "????param.generateParameterTypeName????param.generateParameterName????ENDFOR??'''
 
 	def private getStructuredTextMethodParameters(STMethod method) {
 		method.body.varDeclarations.filter(STVarInputDeclarationBlock).flatMap[varDeclarations] +
@@ -83,18 +83,18 @@ class STMethodSupport extends StructuredTextSupport {
 	}
 
 	def private CharSequence generateStructuredTextMethodBody(STMethod method) '''
-		«method.body.varDeclarations.filter(STVarOutputDeclarationBlock).generateOutputGuard»
-		«IF method.returnType !== null»«method.returnType.generateTypeName» st_ret_val = «method.returnType.generateTypeDefaultValue»;«ENDIF»
-		«method.body.varDeclarations.filter(STVarOutputDeclarationBlock).generateVariables(false)»
-		«method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateVariables(true)»
+		??method.body.varDeclarations.filter(STVarOutputDeclarationBlock).generateOutputGuard??
+		??IF method.returnType !== null????method.returnType.generateTypeName?? st_ret_val = ??method.returnType.generateTypeDefaultValue??;??ENDIF??
+		??method.body.varDeclarations.filter(STVarOutputDeclarationBlock).generateVariables(false)??
+		??method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateVariables(true)??
 		
-		«method.body.statements.generateStatementList»
+		??method.body.statements.generateStatementList??
 		
-		«IF method.returnType !== null»return st_ret_val;«ENDIF»
+		??IF method.returnType !== null??return st_ret_val;??ENDIF??
 	'''
 
 	override protected dispatch CharSequence generateStatement(STReturn stmt) //
-	'''return«IF parseResult.returnType !== null» st_ret_val«ENDIF»;'''
+	'''return??IF parseResult.returnType !== null?? st_ret_val??ENDIF??;'''
 
 	override protected dispatch CharSequence generateExpression(STFeatureExpression expr) {
 		if (expr.feature === parseResult && !expr.call)

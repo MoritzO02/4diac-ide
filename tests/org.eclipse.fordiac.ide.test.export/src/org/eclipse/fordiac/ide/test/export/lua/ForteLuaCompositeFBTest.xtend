@@ -28,30 +28,30 @@ class ForteLuaCompositeFBTest extends ExporterTestCompositeFBTypeBase {
 		val luaString = generateLuaString(functionBlock);
 
 		assertEquals('''
-			local EI_«EVENT_INPUT_NAME» = 0
-			local EO_«EVENT_OUTPUT_NAME» = 0
-			local DI_«DATA_INPUT_NAME» = 33554432
-			local DO_«DATA_OUTPUT_NAME» = 67108864
+			local EI_??EVENT_INPUT_NAME?? = 0
+			local EO_??EVENT_OUTPUT_NAME?? = 0
+			local DI_??DATA_INPUT_NAME?? = 33554432
+			local DO_??DATA_OUTPUT_NAME?? = 67108864
 					
 			local interfaceSpec = {
 			  numEIs = 1,
-			  EINames = {"«EVENT_INPUT_NAME»"},
+			  EINames = {"??EVENT_INPUT_NAME??"},
 			  EIWith = {},
 			  EIWithIndexes = {-1},
 			  numEOs = 1,
-			  EONames = {"«EVENT_OUTPUT_NAME»"},
+			  EONames = {"??EVENT_OUTPUT_NAME??"},
 			  EOWith = {},
 			  EOWithIndexes = {-1},
 			  numDIs = 1,
-			  DINames = {"«DATA_INPUT_NAME»"},
+			  DINames = {"??DATA_INPUT_NAME??"},
 			  DIDataTypeNames = {"INT"},
 			  numDOs = 1,
-			  DONames = {"«DATA_OUTPUT_NAME»"},
+			  DONames = {"??DATA_OUTPUT_NAME??"},
 			  DODataTypeNames = {"INT"},
 			  numAdapters = 2,
 			  adapterInstanceDefinition = {
-			    {adapterNameID = "«ADAPTER_PLUG_NAME»", adapterTypeNameID = "«ADAPTERFUNCTIONBLOCK_NAME»", isPlug = true},
-			    {adapterNameID = "«ADAPTER_SOCKET_NAME»", adapterTypeNameID = "«ADAPTERFUNCTIONBLOCK_NAME»", isPlug = false}
+			    {adapterNameID = "??ADAPTER_PLUG_NAME??", adapterTypeNameID = "??ADAPTERFUNCTIONBLOCK_NAME??", isPlug = true},
+			    {adapterNameID = "??ADAPTER_SOCKET_NAME??", adapterTypeNameID = "??ADAPTERFUNCTIONBLOCK_NAME??", isPlug = false}
 			  }
 			}
 			

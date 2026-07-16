@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Martin Jobst - lock editing for function FBs
  *******************************************************************************/
 package org.eclipse.fordiac.ide.gef.widgets;

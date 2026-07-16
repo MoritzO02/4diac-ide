@@ -328,7 +328,7 @@ class StructuredTextEvaluatorTest {
 			case PLUS: value.abs
 			case MINUS: value.negate
 			case NOT: if(type instanceof BoolType) value.signum == 0 else value.toBigIntegerExact.not
-		}.wrapValue(type).assertEquals('''«operator» «typeName»#«value»'''.evaluateExpression)
+		}.wrapValue(type).assertEquals('''??operator?? ??typeName??#??value??'''.evaluateExpression)
 	}
 
 	def static Stream<Arguments> testUnaryExpressionArgumentsProvider() {
@@ -420,7 +420,7 @@ class StructuredTextEvaluatorTest {
 				first < second
 			default:
 				throw new UnsupportedOperationException
-		}.wrapValue(resultType).assertEquals('''«typeName»#«first» «operator» «typeName»#«second»'''.evaluateExpression)
+		}.wrapValue(resultType).assertEquals('''??typeName??#??first?? ??operator?? ??typeName??#??second??'''.evaluateExpression)
 	}
 
 	def static Stream<Arguments> testBinaryExpressionArgumentsProvider() {
@@ -616,7 +616,7 @@ class StructuredTextEvaluatorTest {
 				str: STRING := '4diac IDE';
 			END_VAR
 			
-			test := str[«index»];
+			test := str[??index??];
 		'''.evaluateAlgorithm)
 	}
 
@@ -629,7 +629,7 @@ class StructuredTextEvaluatorTest {
 				str: WSTRING := "4diac IDE";
 			END_VAR
 			
-			test := str[«index»];
+			test := str[??index??];
 		'''.evaluateAlgorithm)
 	}
 
@@ -773,7 +773,7 @@ class StructuredTextEvaluatorTest {
 					test: STRING := '4diac IDE';
 				END_VAR
 				
-				test[«AnyStringValue.MAX_LENGTH + 1»] := '?';
+				test[??AnyStringValue.MAX_LENGTH + 1??] := '?';
 			'''.evaluateAlgorithm
 		]
 	}
@@ -799,7 +799,7 @@ class StructuredTextEvaluatorTest {
 					test: WSTRING := "4diac IDE";
 				END_VAR
 				
-				test[«AnyStringValue.MAX_LENGTH + 1»] := "?";
+				test[??AnyStringValue.MAX_LENGTH + 1??] := "?";
 			'''.evaluateAlgorithm
 		]
 	}

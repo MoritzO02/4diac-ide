@@ -10,7 +10,7 @@
  * Contributors:
  *   Bianca Wiesmayr
  *     - initial API and implementation and/or initial documentation
- *   Dunja Životin
+ *   Dunja ??ivotin
  *     - length checks of the selection
  *******************************************************************************/
 

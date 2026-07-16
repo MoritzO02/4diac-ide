@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - changed the now AbstractSelectionButton class and extracted
+ *   Dunja ??ivotin - changed the now AbstractSelectionButton class and extracted
  *   this class for easier handling
  *   Martin Erich Jobst - refactored to accept generic content provider
  *******************************************************************************/

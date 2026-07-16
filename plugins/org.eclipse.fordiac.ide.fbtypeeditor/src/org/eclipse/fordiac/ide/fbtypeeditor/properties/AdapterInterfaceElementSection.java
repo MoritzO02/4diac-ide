@@ -12,7 +12,7 @@
  *     - initial API and implementation and/or initial documentation
  *   Alois Zoitl - moved adapter search code to palette
  *               - cleaned command stack handling for property sections
- *   Dunja Životin
+ *   Dunja ??ivotin
  *     - extracted a part of the class into a separate widget
  ******************************************************************************/
 package org.eclipse.fordiac.ide.fbtypeeditor.properties;

@@ -35,38 +35,38 @@ class SimpleFBImplTemplate extends BaseFBImplTemplate<SimpleFBType> {
 	}
 	
 	override generateExecuteEvent() '''
-		void «FBClassName»::executeEvent(const TEventID paEIID, CEventChainExecutionThread *const paECET) {
+		void ??FBClassName??::executeEvent(const TEventID paEIID, CEventChainExecutionThread *const paECET) {
 		  switch(paEIID) {
-		    «FOR state : type.simpleECStates»
-		     	case «state.inputEvent.generateEventID»:
-		     	  enterState«state.name»(paECET);
+		    ??FOR state : type.simpleECStates??
+		     	case ??state.inputEvent.generateEventID??:
+		     	  enterState??state.name??(paECET);
 		     	  break;
-		    «ENDFOR»
+		    ??ENDFOR??
 		    default:
 		      break;
 		  }
 		}
 		
-		«generateStates»
+		??generateStates??
 	'''
 	
 	def protected generateStates() '''
-		«FOR state : type.simpleECStates»
-			«state.generateState»
+		??FOR state : type.simpleECStates??
+			??state.generateState??
 			
-		«ENDFOR»
+		??ENDFOR??
 	'''
 
 	def protected generateState(SimpleECState state) '''
-		void «FBClassName»::enterState«state.name»(CEventChainExecutionThread *const«IF hasOutputEvent(state)» paECET«ENDIF») {
-		  «FOR action : state.simpleECActions»
-		  	«IF action.algorithm !== null»
-		  		alg_«action.algorithm»();
-		  	«ENDIF»
-		  	«IF action.output !== null»
-		  		«action.output.generateSendEvent»
-		  	«ENDIF»
-		  «ENDFOR»
+		void ??FBClassName??::enterState??state.name??(CEventChainExecutionThread *const??IF hasOutputEvent(state)?? paECET??ENDIF??) {
+		  ??FOR action : state.simpleECActions??
+		  	??IF action.algorithm !== null??
+		  		alg_??action.algorithm??();
+		  	??ENDIF??
+		  	??IF action.output !== null??
+		  		??action.output.generateSendEvent??
+		  	??ENDIF??
+		  ??ENDFOR??
 		}
 	'''
 		

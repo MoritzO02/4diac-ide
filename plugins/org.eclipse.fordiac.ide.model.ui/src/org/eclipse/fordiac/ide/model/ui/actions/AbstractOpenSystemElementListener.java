@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Michael J�ger - initial implementation and/or documentation
+ *   Michael J???ger - initial implementation and/or documentation
  *                  - extracted a base class for all model listener
  *******************************************************************************/
 package org.eclipse.fordiac.ide.model.ui.actions;

@@ -30,10 +30,10 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		functionBlock.getInternalVars().add(createVarDeclaration(VARIABLE_NAME, DINT))
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		CASE variable OF
-			0: «VARIABLE_NAME» := «VARIABLE_NAME» + 1;
-			1: «VARIABLE_NAME» := «VARIABLE_NAME» + 1;
-			2: «VARIABLE_NAME» := «VARIABLE_NAME» + 1;
-			255: «VARIABLE_NAME» := 0;
+			0: ??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
+			1: ??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
+			2: ??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
+			255: ??VARIABLE_NAME?? := 0;
 		END_CASE;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -42,15 +42,15 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		assertNotNull(generatedCode);
 		assertEquals('''
 			
-			if (auto st_lv_synthetic_0 = «EXPORTED_VARIABLE_NAME»; false) {
+			if (auto st_lv_synthetic_0 = ??EXPORTED_VARIABLE_NAME??; false) {
 			} else if (func_EQ(st_lv_synthetic_0, 0_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			} else if (func_EQ(st_lv_synthetic_0, 1_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			} else if (func_EQ(st_lv_synthetic_0, 2_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			} else if (func_EQ(st_lv_synthetic_0, 255_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = 0_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 0_DINT;
 			}
 		'''.toString(), generatedCode.toString())
 	}
@@ -60,8 +60,8 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		functionBlock.getInternalVars().add(createVarDeclaration(VARIABLE_NAME, DINT))
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		CASE variable OF
-			0, 1, 2: «VARIABLE_NAME» := «VARIABLE_NAME» + 1;
-			255: «VARIABLE_NAME» := 0;
+			0, 1, 2: ??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
+			255: ??VARIABLE_NAME?? := 0;
 		END_CASE;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -70,11 +70,11 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		assertNotNull(generatedCode);
 		assertEquals('''
 			
-			if (auto st_lv_synthetic_0 = «EXPORTED_VARIABLE_NAME»; false) {
+			if (auto st_lv_synthetic_0 = ??EXPORTED_VARIABLE_NAME??; false) {
 			} else if (func_EQ(st_lv_synthetic_0, 0_DINT) || func_EQ(st_lv_synthetic_0, 1_DINT) || func_EQ(st_lv_synthetic_0, 2_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			} else if (func_EQ(st_lv_synthetic_0, 255_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = 0_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 0_DINT;
 			}
 		'''.toString(), generatedCode.toString())
 	}
@@ -84,10 +84,10 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		functionBlock.getInternalVars().add(createVarDeclaration(VARIABLE_NAME, DINT))
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		CASE variable OF
-			0: «VARIABLE_NAME» := «VARIABLE_NAME» + 1;
-			255: «VARIABLE_NAME» := 0;
+			0: ??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
+			255: ??VARIABLE_NAME?? := 0;
 		ELSE
-			«VARIABLE_NAME» := 255;
+			??VARIABLE_NAME?? := 255;
 		END_CASE;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -96,13 +96,13 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		assertNotNull(generatedCode);
 		assertEquals('''
 			
-			if (auto st_lv_synthetic_0 = «EXPORTED_VARIABLE_NAME»; false) {
+			if (auto st_lv_synthetic_0 = ??EXPORTED_VARIABLE_NAME??; false) {
 			} else if (func_EQ(st_lv_synthetic_0, 0_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			} else if (func_EQ(st_lv_synthetic_0, 255_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = 0_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 0_DINT;
 			} else {
-			  «EXPORTED_VARIABLE_NAME» = 255_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 255_DINT;
 			}
 		'''.toString(), generatedCode.toString())
 	}
@@ -113,14 +113,14 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
 		CASE variable OF
 			0:
-				IF «VARIABLE_NAME» < 20 THEN
-						«VARIABLE_NAME» := «VARIABLE_NAME» + 1;
+				IF ??VARIABLE_NAME?? < 20 THEN
+						??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
 					ELSE
-						«VARIABLE_NAME» := «VARIABLE_NAME» - 1;
+						??VARIABLE_NAME?? := ??VARIABLE_NAME?? - 1;
 					END_IF;
-			255: «VARIABLE_NAME» := 0;
+			255: ??VARIABLE_NAME?? := 0;
 		ELSE
-			«VARIABLE_NAME» := 255;
+			??VARIABLE_NAME?? := 255;
 		END_CASE;'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)
@@ -129,18 +129,18 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 		assertNotNull(generatedCode);
 		assertEquals('''
 			
-			if (auto st_lv_synthetic_0 = «EXPORTED_VARIABLE_NAME»; false) {
+			if (auto st_lv_synthetic_0 = ??EXPORTED_VARIABLE_NAME??; false) {
 			} else if (func_EQ(st_lv_synthetic_0, 0_DINT)) {
-			  if (func_LT(«EXPORTED_VARIABLE_NAME», 20_DINT)) {
-			    «EXPORTED_VARIABLE_NAME» = func_ADD<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			  if (func_LT(??EXPORTED_VARIABLE_NAME??, 20_DINT)) {
+			    ??EXPORTED_VARIABLE_NAME?? = func_ADD<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			  }
 			  else {
-			    «EXPORTED_VARIABLE_NAME» = func_SUB<CIEC_DINT>(«EXPORTED_VARIABLE_NAME», 1_DINT);
+			    ??EXPORTED_VARIABLE_NAME?? = func_SUB<CIEC_DINT>(??EXPORTED_VARIABLE_NAME??, 1_DINT);
 			  }
 			} else if (func_EQ(st_lv_synthetic_0, 255_DINT)) {
-			  «EXPORTED_VARIABLE_NAME» = 0_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 0_DINT;
 			} else {
-			  «EXPORTED_VARIABLE_NAME» = 255_DINT;
+			  ??EXPORTED_VARIABLE_NAME?? = 255_DINT;
 			}
 		'''.toString(), generatedCode.toString())
 	}
@@ -149,14 +149,14 @@ class ForteNgCaseStatementTest extends ExporterTestBasicFBTypeBase {
 	def void invalidCaseStatementNoEnd() {
 		functionBlock.getInternalVars().add(createVarDeclaration(VARIABLE_NAME, DINT))
 		functionBlock.getCallables().add(createSTAlgorithm(ALGORITHM_NAME, '''
-			CASE «VARIABLE_NAME» OF
+			CASE ??VARIABLE_NAME?? OF
 				0:
-					IF «VARIABLE_NAME» < 20 THEN
-							«VARIABLE_NAME» := «VARIABLE_NAME» + 1;
+					IF ??VARIABLE_NAME?? < 20 THEN
+							??VARIABLE_NAME?? := ??VARIABLE_NAME?? + 1;
 						ELSE
-							«VARIABLE_NAME» := «VARIABLE_NAME» - 1;
+							??VARIABLE_NAME?? := ??VARIABLE_NAME?? - 1;
 						END_IF;
-				255: «VARIABLE_NAME» := 0;
+				255: ??VARIABLE_NAME?? := 0;
 		'''))
 
 		var generatedCode = generateAlgorithm(functionBlock, ALGORITHM_NAME, errors)

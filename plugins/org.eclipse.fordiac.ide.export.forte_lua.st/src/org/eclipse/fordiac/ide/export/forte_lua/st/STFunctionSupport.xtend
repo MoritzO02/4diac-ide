@@ -51,22 +51,22 @@ class STFunctionSupport extends StructuredTextSupport {
 	def private CharSequence generateStructuredTextFunction(STFunction func) {
 		outReturn = generateOutReturn(func)
 		return '''
-			local function func_«func.name»(fb, «func.generateStructuredTextFunctionParameters»)
+			local function func_??func.name??(fb, ??func.generateStructuredTextFunctionParameters??)
 				local ENV = {}
 				st_ret_val = nil
-				«func.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix»
-				«func.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix»
-				«func.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables»
+				??func.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix??
+				??func.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix??
+				??func.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables??
 				
-				«func.code.generateStatementList»
+				??func.code.generateStatementList??
 				
-				return st_ret_val«outReturn»
+				return st_ret_val??outReturn??
 			end
 		'''
 	}
 
 	def private CharSequence generateStructuredTextFunctionParameters(STFunction func) //
-	'''«FOR param : func.structuredTextFunctionParameters SEPARATOR ', '»par_«param.name»«ENDFOR»'''
+	'''??FOR param : func.structuredTextFunctionParameters SEPARATOR ', '??par_??param.name????ENDFOR??'''
 
 	def private getStructuredTextFunctionParameters(STFunction func) {
 		func.varDeclarations.filter(STVarInputDeclarationBlock).flatMap[varDeclarations] +
@@ -80,51 +80,51 @@ class STFunctionSupport extends StructuredTextSupport {
 	}
 
 	def protected CharSequence generateInParameterPrefix(Iterable<? extends STVarDeclarationBlock> blocks) '''
-		«FOR block : blocks»
-			«block.generateInParameterBlock»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateInParameterBlock??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateInParameterBlock(STVarDeclarationBlock block) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateInParameter»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateInParameter??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateInParameter(STVarDeclaration variable) '''
-		ENV.st_lv_«variable.name» = par_«variable.name»
+		ENV.st_lv_??variable.name?? = par_??variable.name??
 	'''
 
 	def protected CharSequence generateOutParameterSuffix(Iterable<? extends STVarDeclarationBlock> blocks) '''
-		«FOR block : blocks»
-			«block.generateOutParameterBlock»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateOutParameterBlock??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutParameterBlock(STVarDeclarationBlock block) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateOutParameter»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateOutParameter??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutParameter(STVarDeclaration variable) '''
-		par_«variable.name» = ENV.st_lv_«variable.name»
+		par_??variable.name?? = ENV.st_lv_??variable.name??
 	'''
 
 	override protected dispatch CharSequence generateFeatureName(STFunction feature, boolean call) {
 		if (call) {
-			return '''method_«feature.name»'''
+			return '''method_??feature.name??'''
 		} else {
 			return '''st_ret_val'''
 		}
 	}
 
 	override protected dispatch CharSequence generateStatement(STReturn stmt) '''
-		return st_ret_val«outReturn»
+		return st_ret_val??outReturn??
 	'''
 
 	def private CharSequence generateOutReturn(STFunction function) '''
-		«FOR param : function.structuredTextOutParameters BEFORE ', ' SEPARATOR ', '»«param.generateFeatureName(false)»«ENDFOR»
+		??FOR param : function.structuredTextOutParameters BEFORE ', ' SEPARATOR ', '????param.generateFeatureName(false)????ENDFOR??
 	'''
 
 	override getDependencies(Map<?, ?> options) {

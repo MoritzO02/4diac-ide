@@ -47,82 +47,82 @@ class CompositeFBImplTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		
-		    «generateFBInterfaceDefinition»
+		    ??generateFBInterfaceDefinition??
 		
-		    «generateFBInterfaceSpecDefinition»
+		    ??generateFBInterfaceSpecDefinition??
 		
-		    «generateFBNetwork»
+		    ??generateFBNetwork??
 		  }
 		
-		  «generateFBDefinition»
+		  ??generateFBDefinition??
 		
-		  «FBClassName»::«FBClassName»(const StringId paInstanceNameId, CFBContainer &paContainer) :
-		      «baseClass»(paContainer, cFBInterfaceSpec, paInstanceNameId, cFBNData)«//no newline
-		      »«fbs.generateInternalFBInitializer»«// no newline
-		      »«type.interfaceList.outputVars.filter[inputConnections.empty].generateVariableInitializer»«// no newline
-		      »«(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer»«// no newline
-		      »«generateConnectionInitializer» {
+		  ??FBClassName??::??FBClassName??(const StringId paInstanceNameId, CFBContainer &paContainer) :
+		      ??baseClass??(paContainer, cFBInterfaceSpec, paInstanceNameId, cFBNData)??//no newline
+		      ????fbs.generateInternalFBInitializer????// no newline
+		      ????type.interfaceList.outputVars.filter[inputConnections.empty].generateVariableInitializer????// no newline
+		      ????(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer????// no newline
+		      ????generateConnectionInitializer?? {
 		  };
 		
-		  «(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition»
-		  «generateSetFBNetworkInitialValuesDefinition»
-		  «generateInterfaceDefinitions»
+		  ??(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition??
+		  ??generateSetFBNetworkInitialValuesDefinition??
+		  ??generateInterfaceDefinitions??
 		}
 	'''
 
 	override protected generateInterfaceDefinitions() '''
-		«super.generateInterfaceDefinitions»
-		«type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getIf2InConUnchecked", "CDataConnection *", true)»
-		«IF (!type.interfaceList.inOutVars.empty)»
-			«type.interfaceList.outMappedInOutVars.generateConnectionAccessorsDefinition("getDIOOutConInternalUnchecked", "CInOutDataConnection *", true)»
-		«ENDIF»
+		??super.generateInterfaceDefinitions??
+		??type.interfaceList.inputVars.generateConnectionAccessorsDefinition("getIf2InConUnchecked", "CDataConnection *", true)??
+		??IF (!type.interfaceList.inOutVars.empty)??
+			??type.interfaceList.outMappedInOutVars.generateConnectionAccessorsDefinition("getDIOOutConInternalUnchecked", "CInOutDataConnection *", true)??
+		??ENDIF??
 	'''
 
 	def private generateFBNetwork() '''
-		«IF !type.FBNetwork.eventConnections.empty»
-			«type.FBNetwork.eventConnections.generateConnectionEndpointDeclarations»
-			«type.FBNetwork.eventConnections.generateConnections("cEventConnections")»
+		??IF !type.FBNetwork.eventConnections.empty??
+			??type.FBNetwork.eventConnections.generateConnectionEndpointDeclarations??
+			??type.FBNetwork.eventConnections.generateConnections("cEventConnections")??
 			
-		«ENDIF»
-		«IF !type.FBNetwork.dataConnections.empty»
-			«type.FBNetwork.dataConnections.generateConnectionEndpointDeclarations»
-			«type.FBNetwork.dataConnections.generateConnections("cDataConnections")»
+		??ENDIF??
+		??IF !type.FBNetwork.dataConnections.empty??
+			??type.FBNetwork.dataConnections.generateConnectionEndpointDeclarations??
+			??type.FBNetwork.dataConnections.generateConnections("cDataConnections")??
 			
-		«ENDIF»
-		«IF !type.FBNetwork.adapterConnections.empty»
-			«type.FBNetwork.adapterConnections.generateConnectionEndpointDeclarations»
-			«type.FBNetwork.adapterConnections.generateConnections("cAdapterConnections")»
+		??ENDIF??
+		??IF !type.FBNetwork.adapterConnections.empty??
+			??type.FBNetwork.adapterConnections.generateConnectionEndpointDeclarations??
+			??type.FBNetwork.adapterConnections.generateConnections("cAdapterConnections")??
 			
-		«ENDIF»
-		«generateFBNDataStruct()»
+		??ENDIF??
+		??generateFBNDataStruct()??
 	'''
 
 	def private generateFBNDataStruct() '''
 		const SCFB_FBNData cFBNData = {
-		  .mEventConnections = «IF !type.FBNetwork.eventConnections.empty»cEventConnections«ELSE»{}«ENDIF»,
-		  .mDataConnections = «IF !type.FBNetwork.dataConnections.empty»cDataConnections«ELSE»{}«ENDIF»,
-		  .mAdapterConnections = «IF !type.FBNetwork.adapterConnections.empty»cAdapterConnections«ELSE»{}«ENDIF»,
+		  .mEventConnections = ??IF !type.FBNetwork.eventConnections.empty??cEventConnections??ELSE??{}??ENDIF??,
+		  .mDataConnections = ??IF !type.FBNetwork.dataConnections.empty??cDataConnections??ELSE??{}??ENDIF??,
+		  .mAdapterConnections = ??IF !type.FBNetwork.adapterConnections.empty??cAdapterConnections??ELSE??{}??ENDIF??,
 		};
 	'''
 
 	def private generateConnections(EList<? extends Connection> connections, String listName) '''
-		const auto «listName» = std::to_array<SCFB_FBConnectionData>({
-		  «FOR conn : connections»
-		  	«conn.generateConnectionEntry»
-		  «ENDFOR»
+		const auto ??listName?? = std::to_array<SCFB_FBConnectionData>({
+		  ??FOR conn : connections??
+		  	??conn.generateConnectionEntry??
+		  ??ENDFOR??
 		});
 	'''
 
 	def private generateConnectionEntry(Connection con) //
-	'''{«con.sourceElement.generateConnectionElementId», «con.connectionSourcePath.generateConnectionEndpointReference», «con.destinationElement.generateConnectionElementId», «con.connectionDestinationPath.generateConnectionEndpointReference»},'''
+	'''{??con.sourceElement.generateConnectionElementId??, ??con.connectionSourcePath.generateConnectionEndpointReference??, ??con.destinationElement.generateConnectionElementId??, ??con.connectionDestinationPath.generateConnectionEndpointReference??},'''
 
 	def private generateConnectionElementId(FBNetworkElement elem) {
 		if (type.FBNetwork.networkElements.contains(elem))
@@ -132,9 +132,9 @@ class CompositeFBImplTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	def private generateConnectionEndpointDeclarations(Iterable<? extends Connection> connections) '''
-		«FOR endpoint : connections.flatMap[connectionEndpointPaths].filter[size > 1].toSet.sortBy[generateConnectionEndpointName.toString]»
-			«endpoint.generateConnectionEndpointDeclaration»
-		«ENDFOR»
+		??FOR endpoint : connections.flatMap[connectionEndpointPaths].filter[size > 1].toSet.sortBy[generateConnectionEndpointName.toString]??
+			??endpoint.generateConnectionEndpointDeclaration??
+		??ENDFOR??
 	'''
 
 	def private Iterable<Iterable<String>> getConnectionEndpointPaths(Connection conn) {
@@ -142,7 +142,7 @@ class CompositeFBImplTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	def private generateConnectionEndpointDeclaration(Iterable<String> path) '''
-		const auto «path.generateConnectionEndpointName» = std::array{«path.generateConnectionEndpointValue»};
+		const auto ??path.generateConnectionEndpointName?? = std::array{??path.generateConnectionEndpointValue??};
 	'''
 	
 	def private generateConnectionEndpointReference(Iterable<String> path) {
@@ -153,10 +153,10 @@ class CompositeFBImplTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	def private generateConnectionEndpointName(Iterable<String> path) //
-	'''«FOR segment : path BEFORE "ep_" SEPARATOR "__"»«segment»«ENDFOR»'''
+	'''??FOR segment : path BEFORE "ep_" SEPARATOR "__"????segment????ENDFOR??'''
 
 	def private generateConnectionEndpointValue(Iterable<String> path) //
-	'''«FOR segment : path SEPARATOR ", "»«segment.FORTEStringId»«ENDFOR»'''
+	'''??FOR segment : path SEPARATOR ", "????segment.FORTEStringId????ENDFOR??'''
 
 	def private getConnectionSourcePath(Connection conn) {
 		if (conn.negated)
@@ -170,38 +170,38 @@ class CompositeFBImplTemplate extends ForteFBTemplate<CompositeFBType> {
 	}
 
 	override protected generateConnectionInitializer() //
-	'''«super.generateConnectionInitializer»«// no newline
-		   »«type.interfaceList.inputVars.generateDataConnectionInitializer(true)»«// no newline
-		   »«type.interfaceList.outMappedInOutVars.generateDataConnectionInitializer(true)»'''
+	'''??super.generateConnectionInitializer????// no newline
+		   ????type.interfaceList.inputVars.generateDataConnectionInitializer(true)????// no newline
+		   ????type.interfaceList.outMappedInOutVars.generateDataConnectionInitializer(true)??'''
 
 	override protected generateDataConnectionInitializer(List<VarDeclaration> variables, boolean internal) //
-	'''«FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"»«variable.generateNameAsConnection(internal)»(*this, «variables.indexOf(variable)», «variable.generateVariableDefaultValue»)«ENDFOR»'''
+	'''??FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"????variable.generateNameAsConnection(internal)??(*this, ??variables.indexOf(variable)??, ??variable.generateVariableDefaultValue??)??ENDFOR??'''
 
 	override protected generateWriteOutputDataVariable(VarDeclaration variable) {
 		if (!variable.inOutVar && !variable.inputConnections.empty && variable.inputConnections.first.negated) {
 			'''
-				«variable.generateName» = func_NOT(«variable.inputConnections.first.generateConnectionValue»);
-				«super.generateWriteOutputDataVariable(variable)»
+				??variable.generateName?? = func_NOT(??variable.inputConnections.first.generateConnectionValue??);
+				??super.generateWriteOutputDataVariable(variable)??
 			'''
 		} else
 			super.generateWriteOutputDataVariable(variable)
 	}
 
 	def generateSetFBNetworkInitialValuesDefinition() '''
-		«IF fbs.flatMap[interface.inputVars].exists[!value?.value.nullOrEmpty]»
-			void «FBClassName»::setFBNetworkInitialValues() {
-			  «FOR fb : fbs»
-			  	«FOR variable : fb.interface.inputVars.filter[!value?.value.nullOrEmpty]»
-			  		«IF fb.genericType»
-			  			if (auto v = «fb.generateName»->getDataInput(«variable.name.FORTEStringId»)) { v->setValue(«variable.generateFBNetworkInitialValue»); }
-			  		«ELSE»
-			  			«fb.generateName»->«variable.generateName» = «variable.generateFBNetworkInitialValue»;
-			  		«ENDIF»
-			  	«ENDFOR»
-			  «ENDFOR»
+		??IF fbs.flatMap[interface.inputVars].exists[!value?.value.nullOrEmpty]??
+			void ??FBClassName??::setFBNetworkInitialValues() {
+			  ??FOR fb : fbs??
+			  	??FOR variable : fb.interface.inputVars.filter[!value?.value.nullOrEmpty]??
+			  		??IF fb.genericType??
+			  			if (auto v = ??fb.generateName??->getDataInput(??variable.name.FORTEStringId??)) { v->setValue(??variable.generateFBNetworkInitialValue??); }
+			  		??ELSE??
+			  			??fb.generateName??->??variable.generateName?? = ??variable.generateFBNetworkInitialValue??;
+			  		??ENDIF??
+			  	??ENDFOR??
+			  ??ENDFOR??
 			}
 			
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	def CharSequence generateFBNetworkInitialValue(VarDeclaration decl) {

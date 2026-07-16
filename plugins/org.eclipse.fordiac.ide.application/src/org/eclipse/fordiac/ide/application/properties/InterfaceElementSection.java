@@ -16,7 +16,7 @@
  *   Lisa Sonnleithner - new TypeAndCommentSection
  *   Alois Zoitl - Harmonized and improved connection section
  *               - added instance comment editing
- *   Dunja Životin - extracted in/out connections table into a separate widget
+ *   Dunja ??ivotin - extracted in/out connections table into a separate widget
  *   Martin Jobst - adopt ST editor for initial values
  *******************************************************************************/
 package org.eclipse.fordiac.ide.application.properties;

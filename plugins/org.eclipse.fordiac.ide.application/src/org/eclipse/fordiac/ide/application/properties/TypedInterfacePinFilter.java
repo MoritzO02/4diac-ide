@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Bianca Wiesmayr, Dunja Životin
+ *   Bianca Wiesmayr, Dunja ??ivotin
  *   - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.fordiac.ide.application.properties;

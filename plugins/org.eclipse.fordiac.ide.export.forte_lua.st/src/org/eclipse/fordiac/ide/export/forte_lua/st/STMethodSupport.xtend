@@ -53,40 +53,40 @@ class STMethodSupport extends StructuredTextSupport {
 		if (this.method.rootContainer instanceof BaseFBType) {
 			val container = this.method.rootContainer as BaseFBType
 			return '''
-				local function method_«method.name»(fb, «method.generateStructuredTextMethodParameters»)
+				local function method_??method.name??(fb, ??method.generateStructuredTextMethodParameters??)
 					local ENV = {}
 					st_ret_val = nil
-					«container.interfaceList.generateFBVariablePrefix»
-					«container.internalVars.generateInternalVariablePrefix»
-					«method.body.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix»
-					«method.body.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix»
-					«method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables»
+					??container.interfaceList.generateFBVariablePrefix??
+					??container.internalVars.generateInternalVariablePrefix??
+					??method.body.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix??
+					??method.body.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix??
+					??method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables??
 					
-					«method.body.statements.generateStatementList»
-					«container.internalVars.generateInternalVariableSuffix»
-					«container.interfaceList.generateFBVariableSuffix»
-					return st_ret_val«outReturn»
+					??method.body.statements.generateStatementList??
+					??container.internalVars.generateInternalVariableSuffix??
+					??container.interfaceList.generateFBVariableSuffix??
+					return st_ret_val??outReturn??
 				end
 			'''
 		} else {
 			return '''
-				local function method_«method.name»(fb, «method.generateStructuredTextMethodParameters»)
+				local function method_??method.name??(fb, ??method.generateStructuredTextMethodParameters??)
 					local ENV = {}
 					st_ret_val = nil
-					«method.body.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix»
-					«method.body.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix»
-					«method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables»
+					??method.body.varDeclarations.filter(STVarInputDeclarationBlock).generateInParameterPrefix??
+					??method.body.varDeclarations.filter(STVarInOutDeclarationBlock).generateInParameterPrefix??
+					??method.body.varDeclarations.filter(STVarTempDeclarationBlock).generateLocalVariables??
 					
-					«method.body.statements.generateStatementList»
+					??method.body.statements.generateStatementList??
 					
-					return st_ret_val«outReturn»
+					return st_ret_val??outReturn??
 				end
 			'''
 		}
 	}
 
 	def private CharSequence generateStructuredTextMethodParameters(STMethod method) //
-	'''«FOR param : method.structuredTextMethodParameters SEPARATOR ', '»par_«param.name»«ENDFOR»'''
+	'''??FOR param : method.structuredTextMethodParameters SEPARATOR ', '??par_??param.name????ENDFOR??'''
 
 	def private getStructuredTextMethodParameters(STMethod method) {
 		method.body.varDeclarations.filter(STVarInputDeclarationBlock).flatMap[varDeclarations] +
@@ -100,51 +100,51 @@ class STMethodSupport extends StructuredTextSupport {
 	}
 
 	def protected CharSequence generateInParameterPrefix(Iterable<? extends STVarDeclarationBlock> blocks) '''
-		«FOR block : blocks»
-			«block.generateInParameterBlock»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateInParameterBlock??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateInParameterBlock(STVarDeclarationBlock block) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateInParameter»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateInParameter??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateInParameter(STVarDeclaration variable) '''
-		ENV.st_lv_«variable.name» = par_«variable.name»
+		ENV.st_lv_??variable.name?? = par_??variable.name??
 	'''
 
 	def protected CharSequence generateOutParameterSuffix(Iterable<? extends STVarDeclarationBlock> blocks) '''
-		«FOR block : blocks»
-			«block.generateOutParameterBlock»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateOutParameterBlock??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutParameterBlock(STVarDeclarationBlock block) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateOutParameter»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateOutParameter??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutParameter(STVarDeclaration variable) '''
-		par_«variable.name» = ENV.st_lv_«variable.name»
+		par_??variable.name?? = ENV.st_lv_??variable.name??
 	'''
 
 	override protected dispatch CharSequence generateFeatureName(STMethod feature, boolean call) {
 		if (call) {
-			return '''method_«feature.name»'''
+			return '''method_??feature.name??'''
 		} else {
 			return '''st_ret_val'''
 		}
 	}
 
 	override protected dispatch CharSequence generateStatement(STReturn stmt) '''
-		return st_ret_val«outReturn»
+		return st_ret_val??outReturn??
 	'''
 
 	def private CharSequence generateOutReturn(STMethod method) '''
-		«FOR param : method.structuredTextOutParameters BEFORE ', ' SEPARATOR ', '»«param.generateFeatureName(false)»«ENDFOR»
+		??FOR param : method.structuredTextOutParameters BEFORE ', ' SEPARATOR ', '????param.generateFeatureName(false)????ENDFOR??
 	'''
 
 	override getDependencies(Map<?, ?> options) {

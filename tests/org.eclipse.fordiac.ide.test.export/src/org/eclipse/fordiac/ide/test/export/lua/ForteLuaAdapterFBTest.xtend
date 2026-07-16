@@ -30,18 +30,18 @@ class ForteLuaAdapterFBTest extends ExporterTestAdapterFBType {
 		assertEquals('''
 			local interfaceSpec = {
 			  numEIs = 1,
-			  EINames = {"«ADAPTER_EVENT_INPUT_NAME»"},
+			  EINames = {"??ADAPTER_EVENT_INPUT_NAME??"},
 			  EIWith = {0, 65535},
 			  EIWithIndexes = {0},
 			  numEOs = 1,
-			  EONames = {"«ADAPTER_EVENT_OUTPUT_NAME»"},
+			  EONames = {"??ADAPTER_EVENT_OUTPUT_NAME??"},
 			  EOWith = {0, 65535},
 			  EOWithIndexes = {0},
 			  numDIs = 1,
-			  DINames = {"«ADAPTER_DATA_INPUT_NAME»"},
+			  DINames = {"??ADAPTER_DATA_INPUT_NAME??"},
 			  DIDataTypeNames = {"INT"},
 			  numDOs = 1,
-			  DONames = {"«ADAPTER_DATA_OUTPUT_NAME»"},
+			  DONames = {"??ADAPTER_DATA_OUTPUT_NAME??"},
 			  DODataTypeNames = {"INT"}
 			}
 			

@@ -49,20 +49,20 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 		]
 	}
 
-	def protected getClassName() '''FORTE_«type.generateTypeNamePlain»'''
+	def protected getClassName() '''FORTE_??type.generateTypeNamePlain??'''
 
 	def protected generateHeader() '''
 		/*************************************************************************
 		 *** FORTE Library Element
 		 ***
-		 *** «HEADER_TEXT»
+		 *** ??HEADER_TEXT??
 		 ***
-		 *** Name: «type.name»
-		 *** Description: «type.comment.escapeMultilineCommentString»
+		 *** Name: ??type.name??
+		 *** Description: ??type.comment.escapeMultilineCommentString??
 		 *** Version:
-		 «FOR info : type.versionInfo»
-		 	***     «info.version.escapeMultilineCommentString»: «info.date.escapeMultilineCommentString»/«info.author.escapeMultilineCommentString» - «info.organization.escapeMultilineCommentString» - «info.remarks.escapeMultilineCommentString»
-		 «ENDFOR»
+		 ??FOR info : type.versionInfo??
+		 	***     ??info.version.escapeMultilineCommentString??: ??info.date.escapeMultilineCommentString??/??info.author.escapeMultilineCommentString?? - ??info.organization.escapeMultilineCommentString?? - ??info.remarks.escapeMultilineCommentString??
+		 ??ENDFOR??
 		 *************************************************************************/
 	'''
 
@@ -74,54 +74,54 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 	'''
 
 	def protected generateImplIncludes() '''
-		#include "«type.generateTypeIncludePath»"
+		#include "??type.generateTypeIncludePath??"
 
-		«getDependencies(emptyMap).generateDependencyIncludes»
-		«type.compilerInfo?.header»
+		??getDependencies(emptyMap).generateDependencyIncludes??
+		??type.compilerInfo?.header??
 		
 		using namespace std::literals;
 		using namespace forte::literals;
 	'''
 	
 	def protected generateVariableDeclarations(List<VarDeclaration> variables, boolean const) '''
-		«FOR variable : variables AFTER '\n'»
-			«IF const»static const «ENDIF»«variable.generateVariableTypeName» «variable.generateName»;
-		«ENDFOR»
+		??FOR variable : variables AFTER '\n'??
+			??IF const??static const ??ENDIF????variable.generateVariableTypeName?? ??variable.generateName??;
+		??ENDFOR??
 	'''
 
 	def protected generateVariableDefinitions(List<VarDeclaration> variables, boolean const) '''
-		«FOR variable : variables AFTER '\n'»
-			«IF const»const «ENDIF»«variable.generateVariableTypeName» «className»::«variable.generateName» = «variable.generateVariableDefaultValue»;
-		«ENDFOR»
+		??FOR variable : variables AFTER '\n'??
+			??IF const??const ??ENDIF????variable.generateVariableTypeName?? ??className??::??variable.generateName?? = ??variable.generateVariableDefaultValue??;
+		??ENDFOR??
 	'''
 
 	def protected generateVariableInitializer(Iterable<VarDeclaration> variables) ///
-	'''«FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"»«variable.generateName»(«variable.generateVariableDefaultValue»)«ENDFOR»'''
+	'''??FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"????variable.generateName??(??variable.generateVariableDefaultValue??)??ENDFOR??'''
 
 	def protected generateVariableInitializerFromParameters(Iterable<VarDeclaration> variables) //
-	'''«FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"»«variable.generateName»(«variable.generateNameAsParameter»)«ENDFOR»'''
+	'''??FOR variable : variables BEFORE ",\n" SEPARATOR ",\n"????variable.generateName??(??variable.generateNameAsParameter??)??ENDFOR??'''
 
 	def protected generatePlugDeclarations(List<AdapterDeclaration> adapters) '''
-		«FOR adapter : adapters AFTER '\n'»
-			forte::CPlugPin<«adapter.type.generateTypeName»_Plug> «adapter.generateName»;
-		«ENDFOR»
+		??FOR adapter : adapters AFTER '\n'??
+			forte::CPlugPin<??adapter.type.generateTypeName??_Plug> ??adapter.generateName??;
+		??ENDFOR??
 	'''
 
 	def protected generateSocketDeclarations(List<AdapterDeclaration> adapters) '''
-		«FOR adapter : adapters AFTER '\n'»
-			forte::CSocketPin<«adapter.type.generateTypeName»_Socket> «adapter.generateName»;
-		«ENDFOR»
+		??FOR adapter : adapters AFTER '\n'??
+			forte::CSocketPin<??adapter.type.generateTypeName??_Socket> ??adapter.generateName??;
+		??ENDFOR??
 	'''
 
 	def protected generateAdapterInitializer(List<AdapterDeclaration> adapters) ///
-	'''«FOR adapter : adapters BEFORE ",\n" SEPARATOR ",\n"»«adapter.generateName»(«adapter.name.FORTEStringId», *this, «IF type instanceof CompositeFBType»forte::cgCFBParentAdapterlistIDMarker«ELSE»«adapters.indexOf(adapter)»«ENDIF»)«ENDFOR»'''
+	'''??FOR adapter : adapters BEFORE ",\n" SEPARATOR ",\n"????adapter.generateName??(??adapter.name.FORTEStringId??, *this, ??IF type instanceof CompositeFBType??forte::cgCFBParentAdapterlistIDMarker??ELSE????adapters.indexOf(adapter)????ENDIF??)??ENDFOR??'''
 
 	def protected generateAccessorDeclaration(String function, boolean const) {
 		generateAccessorDeclaration(function, "CIEC_ANY *", const)
 	}
 
 	def protected generateAccessorDeclaration(String function, String type, boolean const) '''
-		«IF const»const «ENDIF»«type»«function»(size_t)«IF const» const«ENDIF» override;
+		??IF const??const ??ENDIF????type????function??(size_t)??IF const?? const??ENDIF?? override;
 	'''
 
 	def protected generateAccessorDefinition(List<VarDeclaration> variables, String function, boolean const) {
@@ -129,22 +129,22 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 	}
 
 	def protected generateAccessorDefinition(List<? extends IInterfaceElement> variables, String function, String type, boolean const) '''
-		«IF variables.empty»
-			«IF const»const «ENDIF»«type»«className»::«function»(size_t)«IF const» const«ENDIF» {
+		??IF variables.empty??
+			??IF const??const ??ENDIF????type????className??::??function??(size_t)??IF const?? const??ENDIF?? {
 			  return nullptr;
 			}
 			
-		«ELSE»
-			«IF const»const «ENDIF»«type»«className»::«function»(const size_t paIndex)«IF const» const«ENDIF» {
+		??ELSE??
+			??IF const??const ??ENDIF????type????className??::??function??(const size_t paIndex)??IF const?? const??ENDIF?? {
 			  switch(paIndex) {
-			    «FOR variable : variables»
-			    	case «variables.indexOf(variable)»: return &«variable.generateName»;
-			    «ENDFOR»
+			    ??FOR variable : variables??
+			    	case ??variables.indexOf(variable)??: return &??variable.generateName??;
+			    ??ENDFOR??
 			  }
 			  return nullptr;
 			}
 			
-		«ENDIF»
+		??ENDIF??
 	'''
 	
 	def CharSequence generateVariableDefaultValue(VarDeclaration decl) {
@@ -168,27 +168,27 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 	}
 
 	def protected CharSequence generateParameters(ICallable callable) //
-	'''«FOR param : callable.callableParameters SEPARATOR ", "»«param.generateParameter»«ENDFOR»'''
+	'''??FOR param : callable.callableParameters SEPARATOR ", "????param.generateParameter????ENDFOR??'''
 		
 	def protected CharSequence generateForwardArguments(ICallable callable) //
-	'''«FOR param : callable.callableParameters SEPARATOR ", "»«param.generateForwardArgument»«ENDFOR»'''
+	'''??FOR param : callable.callableParameters SEPARATOR ", "????param.generateForwardArgument????ENDFOR??'''
 
 	def protected CharSequence generateParameter(VarDeclaration param) {
 		if (param.inOutVar)
-			'''«param.generateVariableTypeNameAsInOutParameter» &«param.generateNameAsParameter»'''
+			'''??param.generateVariableTypeNameAsInOutParameter?? &??param.generateNameAsParameter??'''
 		else if (param.isIsInput)
-			'''const «param.generateVariableTypeNameAsInputParameter» &«param.generateNameAsParameter»'''
+			'''const ??param.generateVariableTypeNameAsInputParameter?? &??param.generateNameAsParameter??'''
 		else
-			'''«param.generateVariableTypeNameAsOutputParameter» «param.generateNameAsParameter»'''
+			'''??param.generateVariableTypeNameAsOutputParameter?? ??param.generateNameAsParameter??'''
 	}
 
 	def protected CharSequence generateForwardArgument(VarDeclaration param) {
 		if (param.inOutVar)
-			'''std::forward<«param.generateVariableTypeNameAsInOutParameter» &>(«param.generateNameAsParameter»)'''
+			'''std::forward<??param.generateVariableTypeNameAsInOutParameter?? &>(??param.generateNameAsParameter??)'''
 		else if (param.isIsInput)
-			'''std::forward<const «param.generateVariableTypeNameAsInputParameter» &>(«param.generateNameAsParameter»)'''
+			'''std::forward<const ??param.generateVariableTypeNameAsInputParameter?? &>(??param.generateNameAsParameter??)'''
 		else
-			'''std::forward<«param.generateVariableTypeNameAsOutputParameter»>(«param.generateNameAsParameter»)'''
+			'''std::forward<??param.generateVariableTypeNameAsOutputParameter??>(??param.generateNameAsParameter??)'''
 	}
 
 	def protected getCallableParameters(ICallable callable) {
@@ -196,7 +196,7 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 	}
 
 	def protected CharSequence generateOutputGuard(VarDeclaration variable) '''
-		COutputGuard guard_«variable.name»(«variable.generateNameAsParameter»);
+		COutputGuard guard_??variable.name??(??variable.generateNameAsParameter??);
 	'''
 
 	def protected getFORTENameList(List<? extends INamedElement> elements) {
@@ -224,6 +224,6 @@ abstract class ForteLibraryElementTemplate<T extends LibraryElement> extends For
 	}
 	
 	def protected generateTypeHash() '''
-		constexpr std::string_view TypeHash ="«type.typeEntry.typeHash»"sv;
+		constexpr std::string_view TypeHash ="??type.typeEntry.typeHash??"sv;
 	'''
 }

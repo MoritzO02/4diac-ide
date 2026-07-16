@@ -44,82 +44,82 @@ abstract class BaseFBImplTemplate<T extends BaseFBType> extends ForteFBTemplate<
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		
-		    «generateFBInterfaceDefinition»
-		    «generateFBInterfaceSpecDefinition»
-		    «generateInternalVarDefinition»
+		    ??generateFBInterfaceDefinition??
+		    ??generateFBInterfaceSpecDefinition??
+		    ??generateInternalVarDefinition??
 		  }
 		
-		  «generateFBDefinition»
-		  «IF !type.internalConstVars.isEmpty»
-		  	«type.internalConstVars.generateVariableDefinitions(true)»			
-		  «ENDIF»
+		  ??generateFBDefinition??
+		  ??IF !type.internalConstVars.isEmpty??
+		  	??type.internalConstVars.generateVariableDefinitions(true)??			
+		  ??ENDIF??
 		
-		  «FBClassName»::«FBClassName»(const StringId paInstanceNameId, CFBContainer &paContainer) :
-		      «baseClass»(paContainer, cFBInterfaceSpec, paInstanceNameId, «IF !type.internalVars.empty»cInternalsNames«ELSE»{}«ENDIF»)«// no newline
-		      			»«type.internalFbs.generateInternalFBInitializer»«// no newline
-		      			»«(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer»«// no newline
-		      			»«(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer»«// no newline
-		      			»«generateConnectionInitializer» {
+		  ??FBClassName??::??FBClassName??(const StringId paInstanceNameId, CFBContainer &paContainer) :
+		      ??baseClass??(paContainer, cFBInterfaceSpec, paInstanceNameId, ??IF !type.internalVars.empty??cInternalsNames??ELSE??{}??ENDIF??)??// no newline
+		      			????type.internalFbs.generateInternalFBInitializer????// no newline
+		      			????(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer????// no newline
+		      			????(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer????// no newline
+		      			????generateConnectionInitializer?? {
 		  }
 		
-		  «(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition»
-		  «generateExecuteEvent»
-		  «generateInterfaceDefinitions»
-		  «type.internalVars.generateAccessorDefinition("getVarInternal", false)»
-		  «generateAlgorithms»
-		  «generateMethods»
+		  ??(type.internalVars + type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition??
+		  ??generateExecuteEvent??
+		  ??generateInterfaceDefinitions??
+		  ??type.internalVars.generateAccessorDefinition("getVarInternal", false)??
+		  ??generateAlgorithms??
+		  ??generateMethods??
 		}
 	'''
 
 	def generateInternalVarDefinition() '''
-		«IF !type.internalVars.isEmpty»
+		??IF !type.internalVars.isEmpty??
 			
-			const auto cInternalsNames = std::array{«type.internalVars.FORTENameList»};
-		«ENDIF»
+			const auto cInternalsNames = std::array{??type.internalVars.FORTENameList??};
+		??ENDIF??
 	'''
 
 	def generateChangeFBExecutionState() //
 	'''
-		EMGMResponse «FBClassName»::changeFBExecutionState(EMGMCommandType paCommand) {
+		EMGMResponse ??FBClassName??::changeFBExecutionState(EMGMCommandType paCommand) {
 		  return changeFBExecutionStateHelper(paCommand, csmAmountOfInternalFBs, mInternalFBs);
 		}
 	'''
 
 	def protected generateSendEvent(Event event) {
 		if (event.blockFBNetworkElement instanceof AdapterFB) {
-			return '''sendAdapterEvent(*«event.blockFBNetworkElement.generateName», «event.blockFBNetworkElement.type.generateTypeName»::scmEvent«event.name»ID, paECET);'''
+			return '''sendAdapterEvent(*??event.blockFBNetworkElement.generateName??, ??event.blockFBNetworkElement.type.generateTypeName??::scmEvent??event.name??ID, paECET);'''
 		}
-		'''sendOutputEvent(scmEvent«event.name»ID, paECET);'''
+		'''sendOutputEvent(scmEvent??event.name??ID, paECET);'''
 	}
 
 	def protected generateAlgorithms() '''
-		«FOR algorithm : type.algorithm»
-			«algorithm.generateAlgorithm»
-		«ENDFOR»
+		??FOR algorithm : type.algorithm??
+			??algorithm.generateAlgorithm??
+		??ENDFOR??
 	'''
 
 	def protected generateAlgorithm(Algorithm alg) '''
-		void «FBClassName»::«alg.generateAlgorithmName»(void) {
-		  «algorithmLanguageSupport.get(alg)?.generate(emptyMap)»
+		void ??FBClassName??::??alg.generateAlgorithmName??(void) {
+		  ??algorithmLanguageSupport.get(alg)?.generate(emptyMap)??
 		}
 		
 	'''
 
 	def protected generateMethods() '''
-		«FOR method : type.methods»
-			«methodLanguageSupport.get(method)?.generate(emptyMap)»
-		«ENDFOR»
+		??FOR method : type.methods??
+			??methodLanguageSupport.get(method)?.generate(emptyMap)??
+		??ENDFOR??
 	'''
 
-	def protected generateAlgorithmName(Algorithm alg) '''alg_«alg.name»'''
+	def protected generateAlgorithmName(Algorithm alg) '''alg_??alg.name??'''
 
 	def protected abstract CharSequence generateExecuteEvent()
 

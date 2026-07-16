@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - extracted out of the DataTypeDropdown class
+ *   Dunja ??ivotin - extracted out of the DataTypeDropdown class
  *   Martin Erich Jobst - show FQN in type node labels
  *******************************************************************************/
 package org.eclipse.fordiac.ide.model.ui.editors;

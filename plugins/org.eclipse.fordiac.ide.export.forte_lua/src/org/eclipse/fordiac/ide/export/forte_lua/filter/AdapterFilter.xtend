@@ -28,7 +28,7 @@ class AdapterFilter {
 	List<String> errors = new ArrayList<String>;
 
 	def String lua(AdapterType type) '''
-		«type.interfaceList.luaEventDataInterfaceSpec»
+		??type.interfaceList.luaEventDataInterfaceSpec??
 		
 		return {interfaceSpec = interfaceSpec}
 	'''
@@ -46,20 +46,20 @@ class AdapterFilter {
 		}
 		'''
 		local interfaceSpec = {
-		  numEIs = «ifl.eventInputs.size»,
-		  EINames = «ifl.eventInputs.map[it.name].luaStringList»,
-		  EIWith = «inputWith.luaIntegerList»,
-		  EIWithIndexes = «inputWithIndexes.luaIntegerList»,
-		  numEOs = «ifl.eventOutputs.size»,
-		  EONames = «ifl.eventOutputs.map[it.name].luaStringList»,
-		  EOWith = «outputWith.luaIntegerList»,
-		  EOWithIndexes = «outputWithIndexes.luaIntegerList»,
-		  numDIs = «ifl.inputVars.size»,
-		  DINames = «ifl.inputVars.map[it.name].luaStringList»,
-		  DIDataTypeNames = «ifl.inputVars.typeList.luaValueList»,
-		  numDOs = «ifl.outputVars.size»,
-		  DONames = «ifl.outputVars.map[it.name].luaStringList»,
-		  DODataTypeNames = «ifl.outputVars.typeList.luaValueList»
+		  numEIs = ??ifl.eventInputs.size??,
+		  EINames = ??ifl.eventInputs.map[it.name].luaStringList??,
+		  EIWith = ??inputWith.luaIntegerList??,
+		  EIWithIndexes = ??inputWithIndexes.luaIntegerList??,
+		  numEOs = ??ifl.eventOutputs.size??,
+		  EONames = ??ifl.eventOutputs.map[it.name].luaStringList??,
+		  EOWith = ??outputWith.luaIntegerList??,
+		  EOWithIndexes = ??outputWithIndexes.luaIntegerList??,
+		  numDIs = ??ifl.inputVars.size??,
+		  DINames = ??ifl.inputVars.map[it.name].luaStringList??,
+		  DIDataTypeNames = ??ifl.inputVars.typeList.luaValueList??,
+		  numDOs = ??ifl.outputVars.size??,
+		  DONames = ??ifl.outputVars.map[it.name].luaStringList??,
+		  DODataTypeNames = ??ifl.outputVars.typeList.luaValueList??
 		}'''
 	}
 }

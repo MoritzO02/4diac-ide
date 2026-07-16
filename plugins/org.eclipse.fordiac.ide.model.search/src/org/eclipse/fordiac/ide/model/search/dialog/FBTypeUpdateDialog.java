@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Fabio Gandolfi - added functionality to update nested DataTypes
  *   Patrick Aigner - changed to handle updates in Function Blocks
  *******************************************************************************/

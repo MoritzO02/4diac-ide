@@ -26,49 +26,49 @@ class FunctionFBImplTemplate extends FunctionFBTemplate {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		
-		    «generateFBInterfaceDefinition»
-		    «generateFBInterfaceSpecDefinition»
+		    ??generateFBInterfaceDefinition??
+		    ??generateFBInterfaceSpecDefinition??
 		  }
 		
-		  «generateFBDefinition»
+		  ??generateFBDefinition??
 		
-		  «FBClassName»::«FBClassName»(const StringId paInstanceNameId, CFBContainer &paContainer) :
-		      «baseClass»(paContainer, cFBInterfaceSpec, paInstanceNameId)«// no newline
-		  	»«(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer»«// no newline
-		  	»«(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer»«// no newline
-		  	»«generateConnectionInitializer» {
+		  ??FBClassName??::??FBClassName??(const StringId paInstanceNameId, CFBContainer &paContainer) :
+		      ??baseClass??(paContainer, cFBInterfaceSpec, paInstanceNameId)??// no newline
+		  	????(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateVariableInitializer????// no newline
+		  	????(type.interfaceList.sockets + type.interfaceList.plugs).toList.generateAdapterInitializer????// no newline
+		  	????generateConnectionInitializer?? {
 		  }
 		
-		  «(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition»
-		  «generateInterfaceDefinitions»
-		  «generateExecuteEvent»
+		  ??(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).generateSetInitialValuesDefinition??
+		  ??generateInterfaceDefinitions??
+		  ??generateExecuteEvent??
 		
-		  «generateBody»
+		  ??generateBody??
 		}
 	'''
 
 	def protected CharSequence generateExecuteEvent() '''
-		void «FBClassName»::executeEvent(const TEventID, CEventChainExecutionThread *const paECET) {
-		  «generateBodyCall»
-		  «FOR event : type.interfaceList.eventOutputs»
-		  	«event.generateSendEvent»
-		  «ENDFOR»
+		void ??FBClassName??::executeEvent(const TEventID, CEventChainExecutionThread *const paECET) {
+		  ??generateBodyCall??
+		  ??FOR event : type.interfaceList.eventOutputs??
+		  	??event.generateSendEvent??
+		  ??ENDFOR??
 		}
 	'''
 
 	def protected generateBodyCall() //
-	'''«IF bodyReturnVariable !== null»«bodyReturnVariable.generateName» = «ENDIF»func_«type.name»(«generateBodyCallArguments»);'''
+	'''??IF bodyReturnVariable !== null????bodyReturnVariable.generateName?? = ??ENDIF??func_??type.name??(??generateBodyCallArguments??);'''
 
 	def protected CharSequence generateBodyCallArguments() //
-	'''«FOR variable : bodyCallArguments SEPARATOR ", "»«variable.generateName»«ENDFOR»'''
+	'''??FOR variable : bodyCallArguments SEPARATOR ", "????variable.generateName????ENDFOR??'''
 
 	def protected getBodyCallArguments() {
 		(type.interfaceList.inputVars + type.interfaceList.inOutVars + type.interfaceList.outputVars).filter [
@@ -85,13 +85,13 @@ class FunctionFBImplTemplate extends FunctionFBTemplate {
 			bodyLanguageSupport.generate(emptyMap)
 		else
 			'''
-				«generateFunctionSignature» {
+				??generateFunctionSignature?? {
 					#error add body for function
 				}
 			'''
 	}
 
 	def protected generateSendEvent(Event event) {
-		'''sendOutputEvent(scmEvent«event.name»ID, paECET);'''
+		'''sendOutputEvent(scmEvent??event.name??ID, paECET);'''
 	}
 }

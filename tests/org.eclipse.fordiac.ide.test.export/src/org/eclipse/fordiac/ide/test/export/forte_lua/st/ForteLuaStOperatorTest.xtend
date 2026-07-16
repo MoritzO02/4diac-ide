@@ -57,10 +57,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1
-			«var_a» = («var_a» + 1)
+			??var_a?? = 1
+			??var_a?? = (??var_a?? + 1)
 		'''.toString(), result.toString())
 	}
 
@@ -81,10 +81,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1
-			«var_a» = («var_a» - 1)
+			??var_a?? = 1
+			??var_a?? = (??var_a?? - 1)
 		'''.toString(), result.toString())
 	}
 
@@ -105,10 +105,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1
-			«var_a» = («var_a» * 1)
+			??var_a?? = 1
+			??var_a?? = (??var_a?? * 1)
 		'''.toString(), result.toString())
 	}
 
@@ -129,10 +129,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1
-			«var_a» = math.floor(«var_a» / 1)
+			??var_a?? = 1
+			??var_a?? = math.floor(??var_a?? / 1)
 		'''.toString(), result.toString())
 	}
 
@@ -153,10 +153,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1.0
-			«var_a» = («var_a» / 1.0)
+			??var_a?? = 1.0
+			??var_a?? = (??var_a?? / 1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -177,10 +177,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1
-			«var_a» = («var_a» % 1)
+			??var_a?? = 1
+			??var_a?? = (??var_a?? % 1)
 		'''.toString(), result.toString())
 	}
 
@@ -201,10 +201,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
+			??var_a?? = 0
 			
-			«var_a» = 1.0
-			«var_a» = («var_a»^1.0)
+			??var_a?? = 1.0
+			??var_a?? = (??var_a??^1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -226,11 +226,11 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
-			«var_b» = false
+			??var_a?? = 0
+			??var_b?? = false
 			
-			«var_a» = 1.0
-			«var_b» = («var_a» > 1.0)
+			??var_a?? = 1.0
+			??var_b?? = (??var_a?? > 1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -252,11 +252,11 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
-			«var_b» = false
+			??var_a?? = 0
+			??var_b?? = false
 			
-			«var_a» = 1.0
-			«var_b» = («var_a» <= 1.0)
+			??var_a?? = 1.0
+			??var_b?? = (??var_a?? <= 1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -278,11 +278,11 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
-			«var_b» = false
+			??var_a?? = 0
+			??var_b?? = false
 			
-			«var_a» = 1.0
-			«var_b» = («var_a» == 1.0)
+			??var_a?? = 1.0
+			??var_b?? = (??var_a?? == 1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -304,11 +304,11 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
-			«var_b» = false
+			??var_a?? = 0
+			??var_b?? = false
 			
-			«var_a» = 1.0
-			«var_b» = («var_a» ~= 1.0)
+			??var_a?? = 1.0
+			??var_b?? = (??var_a?? ~= 1.0)
 		'''.toString(), result.toString())
 	}
 
@@ -330,11 +330,11 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = false
+			??var_a?? = false
 			
-			«var_a» = true
-			«var_a» = («var_a» and false)
-			«var_a» = («var_a» and false)
+			??var_a?? = true
+			??var_a?? = (??var_a?? and false)
+			??var_a?? = (??var_a?? and false)
 		'''.toString(), result.toString())
 	}
 
@@ -355,10 +355,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = false
+			??var_a?? = false
 			
-			«var_a» = true
-			«var_a» = («var_a» or false)
+			??var_a?? = true
+			??var_a?? = (??var_a?? or false)
 		'''.toString(), result.toString())
 	}
 
@@ -379,10 +379,10 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = false
+			??var_a?? = false
 			
-			«var_a» = true
-			«var_a» = («var_a» ~= false)
+			??var_a?? = true
+			??var_a?? = (??var_a?? ~= false)
 		'''.toString(), result.toString())
 	}
 
@@ -405,12 +405,12 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = false
-			«var_b» = false
+			??var_a?? = false
+			??var_b?? = false
 			
-			«var_a» = true
-			«var_b» = false
-			«var_a» = («var_a» or («var_a» and «var_b»))
+			??var_a?? = true
+			??var_b?? = false
+			??var_a?? = (??var_a?? or (??var_a?? and ??var_b??))
 		'''.toString(), result.toString())
 	}
 
@@ -433,12 +433,12 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = false
-			«var_b» = false
+			??var_a?? = false
+			??var_b?? = false
 			
-			«var_a» = true
-			«var_b» = false
-			«var_a» = ((«var_a» or «var_a») and «var_b»)
+			??var_a?? = true
+			??var_b?? = false
+			??var_a?? = ((??var_a?? or ??var_a??) and ??var_b??)
 		'''.toString(), result.toString())
 	}
 
@@ -465,16 +465,16 @@ class ForteLuaStOperatorTest extends ExporterTestBasicFBTypeBase {
 		val result = lang.generate(emptyMap)
 		assertEquals('''
 			local ENV = {}
-			«var_a» = 0
-			«var_b» = 0
-			«var_c» = 0
+			??var_a?? = 0
+			??var_b?? = 0
+			??var_c?? = 0
 			
-			«var_a» = 1.1
-			«var_b» = 5
-			«var_c» = 2
-			«var_a» = («var_a» * math.floor(«var_b» / -«var_c»))
-			«var_a» = ((«var_a» * «var_b») / «var_c»)
-			«var_a» = ((«var_a» * «var_b») + «var_c»)
+			??var_a?? = 1.1
+			??var_b?? = 5
+			??var_c?? = 2
+			??var_a?? = (??var_a?? * math.floor(??var_b?? / -??var_c??))
+			??var_a?? = ((??var_a?? * ??var_b??) / ??var_c??)
+			??var_a?? = ((??var_a?? * ??var_b??) + ??var_c??)
 		'''.toString(), result.toString())
 	}
 }

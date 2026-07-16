@@ -198,7 +198,7 @@
   <extension point="org.eclipse.ui.menus">
     <menuContribution locationURI="popup:org.eclipse.fordiac.ide.debug.replaydebugging.ui.ReplayDebuggingView">
 
-      <!-- Delete Event — only shown when an EventMarkerEditPart is selected -->
+      <!-- Delete Event ??? only shown when an EventMarkerEditPart is selected -->
       <command commandId="org.eclipse.fordiac.ide.debug.replaydebugging.ui.deleteEvent"
                label="%command.delete_event_label">
         <visibleWhen checkEnabled="true">
@@ -210,7 +210,7 @@
         </visibleWhen>
       </command>
 
-    <!-- Delete Timeline — shown for both Timeline and Event selection -->
+    <!-- Delete Timeline ??? shown for both Timeline and Event selection -->
       <command commandId="org.eclipse.fordiac.ide.debug.replaydebugging.ui.deleteTimeline"
                label="%command.delete_timeline_label">
         <visibleWhen checkEnabled="true">

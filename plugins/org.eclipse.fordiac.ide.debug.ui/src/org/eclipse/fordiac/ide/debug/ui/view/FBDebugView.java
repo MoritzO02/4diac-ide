@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Alois Zoitl   - added event repetation toolbar
  *   Lukas Leimeister - added test recorder interface
  *******************************************************************************/

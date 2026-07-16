@@ -28,8 +28,8 @@ abstract class StructBaseTemplate extends ForteLibraryElementTemplate<Structured
 		super(type, name, prefix, options)
 	}
 	
-	override protected getClassName() '''CIEC_«type.generateTypeNamePlain»'''
+	override protected getClassName() '''CIEC_??type.generateTypeNamePlain??'''
 
 	def protected CharSequence generateConstructorParameters() //
-	'''«FOR param : type.memberVariables SEPARATOR ", "»const «param.generateVariableTypeNameAsInputParameter» &«param.generateNameAsParameter»«ENDFOR»'''
+	'''??FOR param : type.memberVariables SEPARATOR ", "??const ??param.generateVariableTypeNameAsInputParameter?? &??param.generateNameAsParameter????ENDFOR??'''
 }

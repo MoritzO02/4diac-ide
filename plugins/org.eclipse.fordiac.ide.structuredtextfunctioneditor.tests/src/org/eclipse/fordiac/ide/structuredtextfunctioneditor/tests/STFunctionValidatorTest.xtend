@@ -1208,9 +1208,9 @@ class STFunctionValidatorTest {
 				val result = '''
 				FUNCTION hubert
 				VAR
-				    var1 : «type.name»;
+				    var1 : ??type.name??;
 				END_VAR
-				var1 := «operator.literal» var1;
+				var1 := ??operator.literal?? var1;
 				END_FUNCTION'''.parse
 				if (STCoreUtil.isApplicableTo(operator, type))
 					result.assertNoErrors
@@ -1229,11 +1229,11 @@ class STFunctionValidatorTest {
 					val result = '''
 					FUNCTION hubert
 					VAR
-					    var1 : «leftType.name»;
-					    var2 : «rightType.name»;
+					    var1 : ??leftType.name??;
+					    var2 : ??rightType.name??;
 					    var3 : BOOL;
 					END_VAR
-					var3 := (var1 «operator.literal» var2) = (var1 «operator.literal» var2);
+					var3 := (var1 ??operator.literal?? var2) = (var1 ??operator.literal?? var2);
 					END_FUNCTION'''.parse
 					if (STCoreUtil.isApplicableTo(operator, leftType, rightType))
 						result.assertNoErrors
@@ -1252,9 +1252,9 @@ class STFunctionValidatorTest {
 				val result = '''
 				FUNCTION hubert
 				VAR
-				    var1 : «type.name»;
+				    var1 : ??type.name??;
 				END_VAR
-				«operator.literal» var1;
+				??operator.literal?? var1;
 				END_FUNCTION'''.parse
 				val expression = result.functions.head.code.head as STUnaryExpression
 				assertNotNull(expression.resultType, "invalid result type from applicable operator")
@@ -1270,10 +1270,10 @@ class STFunctionValidatorTest {
 					val result = '''
 					FUNCTION hubert
 					VAR
-					    var1 : «leftType.name»;
-					    var2 : «rightType.name»;
+					    var1 : ??leftType.name??;
+					    var2 : ??rightType.name??;
 					END_VAR
-					var1 «operator.literal» var2;
+					var1 ??operator.literal?? var2;
 					END_FUNCTION'''.parse
 					val expression = result.functions.head.code.head as STBinaryExpression
 					assertNotNull(expression.resultType, "invalid result type from applicable operator")
@@ -1423,11 +1423,11 @@ class STFunctionValidatorTest {
 		'''
 			FUNCTION ArrayTestDeclarationTest
 			VAR
-				arrayTest : ARRAY [«argument» .. 65535] OF REAL;
+				arrayTest : ARRAY [??argument?? .. 65535] OF REAL;
 			END_VAR
 			END_FUNCTION
 		'''.parse.assertError(STCorePackage.eINSTANCE.STBinaryExpression, STCoreValidator.
-			INDEX_RANGE_TYPE_INVALID, '''Type «argumentTypeName» is not valid for defining ranges. Ranges must be of type ANY_INT''')
+			INDEX_RANGE_TYPE_INVALID, '''Type ??argumentTypeName?? is not valid for defining ranges. Ranges must be of type ANY_INT''')
 	}
 
 	def static Stream<Arguments> validTypesForMaxLengthSpecifier() {
@@ -1440,7 +1440,7 @@ class STFunctionValidatorTest {
 		'''
 			FUNCTION ArrayTestDeclarationTest
 			VAR
-				testVar : «typeName» [5];
+				testVar : ??typeName?? [5];
 			END_VAR
 			END_FUNCTION
 		'''.parse.assertNoErrors
@@ -1456,7 +1456,7 @@ class STFunctionValidatorTest {
 		'''
 			FUNCTION ArrayTestDeclarationTest
 			VAR
-				testVar : «typeName» [5];
+				testVar : ??typeName?? [5];
 			END_VAR
 			END_FUNCTION
 		'''.parse.assertError(STCorePackage.eINSTANCE.STVarDeclaration, STCoreValidator.MAX_LENGTH_NOT_ALLOWED,
@@ -1469,11 +1469,11 @@ class STFunctionValidatorTest {
 		'''
 			FUNCTION ArrayTestDeclarationTest
 			VAR
-				testVar : STRING[«argument»];
+				testVar : STRING[??argument??];
 			END_VAR
 			END_FUNCTION
 		'''.parse.assertError(STCorePackage.eINSTANCE.STVarDeclaration, STCoreValidator.
-			MAX_LENGTH_TYPE_INVALID, '''Type «argumentTypeName» is not valid to specify an ANY_STRING max length. Max length must be of type ANY_INT''')
+			MAX_LENGTH_TYPE_INVALID, '''Type ??argumentTypeName?? is not valid to specify an ANY_STRING max length. Max length must be of type ANY_INT''')
 	}
 
 	@Test

@@ -48,7 +48,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : BYTE;
 				END_VAR
-				x.«input» := 1;
+				x.??input?? := 1;
 				END_FUNCTION
 			'''.parse.assertNoErrors
 		]
@@ -68,7 +68,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : WORD;
 				END_VAR
-				x.«input» := true;
+				x.??input?? := true;
 				END_FUNCTION
 			'''.parse.assertNoErrors
 		]
@@ -89,7 +89,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : DWORD;
 				END_VAR
-				x.«input» := true;
+				x.??input?? := true;
 				END_FUNCTION
 			'''.parse.assertNoErrors
 		]
@@ -111,7 +111,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : LWORD;
 				END_VAR
-				x.«input» := true;
+				x.??input?? := true;
 				END_FUNCTION
 			'''.parse.assertNoErrors
 		]
@@ -132,7 +132,7 @@ class STFunctionValidatorPartialAccessTest {
 			'''
 				FUNCTION partialTest
 				VAR
-				x : «input»;
+				x : ??input??;
 				END_VAR
 				x.1 := true;
 				END_FUNCTION
@@ -162,7 +162,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : BYTE;
 				END_VAR
-				x.«input» := 1;
+				x.??input?? := 1;
 				END_FUNCTION
 			'''.parse.assertError(
 				STCorePackage.eINSTANCE.STMultibitPartialExpression,
@@ -195,7 +195,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : WORD;
 				END_VAR
-				x.«input» := 1;
+				x.??input?? := 1;
 				END_FUNCTION
 			'''.parse.assertError(
 				STCorePackage.eINSTANCE.STMultibitPartialExpression,
@@ -229,7 +229,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : DWORD;
 				END_VAR
-				x.«input» := 1;
+				x.??input?? := 1;
 				END_FUNCTION
 			'''.parse.assertError(
 				STCorePackage.eINSTANCE.STMultibitPartialExpression,
@@ -264,7 +264,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : LWORD;
 				END_VAR
-				x.«input» := 1;
+				x.??input?? := 1;
 				END_FUNCTION
 			'''.parse.assertError(
 				STCorePackage.eINSTANCE.STMultibitPartialExpression,
@@ -292,7 +292,7 @@ class STFunctionValidatorPartialAccessTest {
 				VAR
 				x : LWORD;
 				END_VAR
-				x := (x OR x).«input»;
+				x := (x OR x).??input??;
 				END_FUNCTION
 			'''.parse.assertError(STCorePackage.eINSTANCE.STMultibitPartialExpression,
 				STCoreValidator.BIT_ACCESS_INVALID_RECEIVER, "Receiving expression invalid for partial access")
@@ -318,7 +318,7 @@ class STFunctionValidatorPartialAccessTest {
 			'''
 				FUNCTION partialTest
 				VAR
-				accessor : «input»;
+				accessor : ??input??;
 				accessed : LWORD;
 				END_VAR
 				accessed.(accessor);
@@ -337,7 +337,7 @@ class STFunctionValidatorPartialAccessTest {
 			'''
 				FUNCTION partialTest
 				VAR
-				accessor : «input»;
+				accessor : ??input??;
 				accessed : LWORD;
 				END_VAR
 				accessed.(accessor);

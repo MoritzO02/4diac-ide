@@ -28,46 +28,46 @@ class StructuredTypeImplTemplate extends StructBaseTemplate {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		    «generateTypeHash»
+		    ??generateTypeHash??
 		  }
 		
-		  DEFINE_FIRMWARE_DATATYPE(«type.generateTypeNamePlain», «type.generateTypeSpec», TypeHash);
+		  DEFINE_FIRMWARE_DATATYPE(??type.generateTypeNamePlain??, ??type.generateTypeSpec??, TypeHash);
 		
-		  const StringId «className»::scmElementNames[] = {«type.memberVariables.FORTENameList»};
+		  const StringId ??className??::scmElementNames[] = {??type.memberVariables.FORTENameList??};
 		
-		  «className»::«className»() :
-		      CIEC_STRUCT()«type.memberVariables.generateVariableInitializer» {
+		  ??className??::??className??() :
+		      CIEC_STRUCT()??type.memberVariables.generateVariableInitializer?? {
 		  }
-		«IF !type.memberVariables.empty»
+		??IF !type.memberVariables.empty??
 		
-		  «className»::«className»(«generateConstructorParameters») :
-		      CIEC_STRUCT()«type.memberVariables.generateVariableInitializerFromParameters» {
+		  ??className??::??className??(??generateConstructorParameters??) :
+		      CIEC_STRUCT()??type.memberVariables.generateVariableInitializerFromParameters?? {
 		  }
-		«ENDIF»
+		??ENDIF??
 		
-		  StringId «className»::getStructTypeNameID() const {
-		    return «type.generateTypeSpec»;
+		  StringId ??className??::getStructTypeNameID() const {
+		    return ??type.generateTypeSpec??;
 		  }
 		
-		  «generateSetValue»
+		  ??generateSetValue??
 		
-		  «type.memberVariables.generateAccessorDefinition("getMember", false)»
-		  «type.memberVariables.generateAccessorDefinition("getMember", true)»
+		  ??type.memberVariables.generateAccessorDefinition("getMember", false)??
+		  ??type.memberVariables.generateAccessorDefinition("getMember", true)??
 		}
 	'''
 	
 	def protected generateSetValue() '''
-		void «className»::setValue(const CIEC_ANY &paValue) {
+		void ??className??::setValue(const CIEC_ANY &paValue) {
 		  if (paValue.getDataTypeID() == e_STRUCT) {
 		    auto &otherStruct = static_cast<const CIEC_STRUCT &>(paValue);
-		    if («type.generateTypeSpec» == otherStruct.getStructTypeNameID()) {
-		      operator=(static_cast<const «className» &>(paValue));
+		    if (??type.generateTypeSpec?? == otherStruct.getStructTypeNameID()) {
+		      operator=(static_cast<const ??className?? &>(paValue));
 		    }
 		  }
 		}

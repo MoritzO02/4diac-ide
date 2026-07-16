@@ -34,7 +34,7 @@ public class ComparisonColumn {
 	private final String columnId; // unique, e.g. element UUID
 	private final EventPosition eventPosition;
 	private String label;
-	private final Map<String, String> cells; // rowKey → displayValue
+	private final Map<String, String> cells; // rowKey ??? displayValue
 	private final Color color; // for coloring the column
 
 	public ComparisonColumn(final String columnId, final EventPosition eventPosition, final String label,

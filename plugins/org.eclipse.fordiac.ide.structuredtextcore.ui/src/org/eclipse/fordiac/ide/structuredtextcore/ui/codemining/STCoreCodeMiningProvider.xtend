@@ -74,7 +74,7 @@ class STCoreCodeMiningProvider extends AbstractXtextCodeMiningProvider {
 						STNumericLiteralAccess.valueSignedNumericParserRuleCall_0_2_0.equals(grammarElement) ||
 						STSignedNumericLiteralAccess.valueSignedNumericParserRuleCall_0.equals(grammarElement)
 				].forEach [ value |
-					acceptor.accept(createNewLineContentCodeMining(value.offset, '''«inferredType.name»#'''))
+					acceptor.accept(createNewLineContentCodeMining(value.offset, '''??inferredType.name??#'''))
 				]
 			}
 		}
@@ -89,7 +89,7 @@ class STCoreCodeMiningProvider extends AbstractXtextCodeMiningProvider {
 				NodeModelUtils.findActualNodeFor(literal).asTreeIterable.filter [
 					STStringLiteralAccess.valueSTRINGTerminalRuleCall_1_0.equals(grammarElement)
 				].forEach [ value |
-					acceptor.accept(createNewLineContentCodeMining(value.offset, '''«inferredType.name»#'''))
+					acceptor.accept(createNewLineContentCodeMining(value.offset, '''??inferredType.name??#'''))
 				]
 			}
 		}

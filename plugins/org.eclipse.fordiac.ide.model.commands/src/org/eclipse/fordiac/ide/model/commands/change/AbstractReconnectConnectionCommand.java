@@ -149,7 +149,7 @@ public abstract class AbstractReconnectConnectionCommand extends Command impleme
 			deleteConnectionCmd.add(new DeleteConnectionCommand(curr));
 			nextConnections.forEach(this::reconnectRecursively);
 		} else {
-			// no usable pin at the far end — reconnect to the last usable source/dest
+			// no usable pin at the far end ??? reconnect to the last usable source/dest
 			final var lookupKey = isSourceReconnect ? curr.getSourceElement() : curr.getDestinationElement();
 			final var pin = usablePins.get(lookupKey);
 

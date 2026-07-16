@@ -48,9 +48,9 @@ class STAlgorithmSupport extends StructuredTextSupport {
 	}
 
 	def private CharSequence generateStructuredTextAlgorithm(STAlgorithm alg) '''
-		«alg.body.varTempDeclarations.generateVariables(true)»
+		??alg.body.varTempDeclarations.generateVariables(true)??
 		
-		«alg.body.statements.generateStatementList»
+		??alg.body.statements.generateStatementList??
 	'''
 
 	override getDependencies(Map<?, ?> options) {

@@ -29,16 +29,16 @@ abstract class ForteNgExportTemplate extends ExportTemplate {
 	}
 
 	def protected generateDependencyIncludes(Iterable<? extends INamedElement> dependencies) '''
-		«FOR include : dependencies.flatMap[generateDefiningIncludes].toSet.sort»
-			«include.generateDependencyInclude»
-		«ENDFOR»
+		??FOR include : dependencies.flatMap[generateDefiningIncludes].toSet.sort??
+			??include.generateDependencyInclude??
+		??ENDFOR??
 	'''
 
 	def protected generateDependencyInclude(String path) {
 		if (ForteNgExportOptions.useSystemIncludes)
-			'''#include <«path»>'''
+			'''#include <??path??>'''
 		else
-			'''#include "«path»"'''
+			'''#include "??path??"'''
 	}
 
 	def getFileBasename() { name.replaceAll("\\.[^.]+$", "") }

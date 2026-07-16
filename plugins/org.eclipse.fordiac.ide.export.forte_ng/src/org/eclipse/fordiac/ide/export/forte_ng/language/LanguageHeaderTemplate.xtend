@@ -26,28 +26,28 @@ class LanguageHeaderTemplate extends ForteNgExportTemplate {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 
-		«generateIncludeGuardStart»
+		??generateIncludeGuardStart??
 
-		«generateHeaderIncludes»
+		??generateHeaderIncludes??
 
-		«generateLanguage»
+		??generateLanguage??
 
-		«generateIncludeGuardEnd»
+		??generateIncludeGuardEnd??
 	'''
 
 	def protected generateLanguage() '''
-		«languageSupport?.generate(#{ForteNgExportFilter.OPTION_HEADER -> true})»
+		??languageSupport?.generate(#{ForteNgExportFilter.OPTION_HEADER -> true})??
 	'''
 
 	def protected generateHeader() '''
 		/*************************************************************************
 		 *** FORTE Language Element
 		 ***
-		 *** «ForteNgExportTemplate.HEADER_TEXT»
+		 *** ??ForteNgExportTemplate.HEADER_TEXT??
 		 ***
-		 *** Name: «fileBasename»
+		 *** Name: ??fileBasename??
 		 *************************************************************************/
 	'''
 
@@ -59,7 +59,7 @@ class LanguageHeaderTemplate extends ForteNgExportTemplate {
 	'''
 
 	def protected generateHeaderIncludes() '''
-		«IF languageSupport !== null»«languageSupport.getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> true}).generateDependencyIncludes»«ENDIF»
+		??IF languageSupport !== null????languageSupport.getDependencies(#{ForteNgExportFilter.OPTION_HEADER -> true}).generateDependencyIncludes????ENDIF??
 	'''
 
 	override getErrors() {

@@ -25,31 +25,31 @@ class LanguageImplTemplate extends ForteNgExportTemplate {
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		«generateLanguage»
+		??generateLanguage??
 	'''
 
 	def protected generateLanguage() '''
-		«languageSupport?.generate(emptyMap)»
+		??languageSupport?.generate(emptyMap)??
 	'''
 
 	def protected generateHeader() '''
 		/*************************************************************************
 		 *** FORTE Language Element
 		 ***
-		 *** «ForteNgExportTemplate.HEADER_TEXT»
+		 *** ??ForteNgExportTemplate.HEADER_TEXT??
 		 ***
-		 *** Name: «fileBasename»
+		 *** Name: ??fileBasename??
 		 *************************************************************************/
 	'''
 
 	def protected generateImplIncludes() '''
-		#include "«fileBasename».h"
+		#include "??fileBasename??.h"
 
-		«IF languageSupport !== null»«languageSupport.getDependencies(emptyMap).generateDependencyIncludes»«ENDIF»
+		??IF languageSupport !== null????languageSupport.getDependencies(emptyMap).generateDependencyIncludes????ENDIF??
 	'''
 
 	override getErrors() {

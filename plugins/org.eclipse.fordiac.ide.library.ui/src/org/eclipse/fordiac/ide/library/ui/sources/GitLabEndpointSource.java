@@ -47,7 +47,7 @@ public final class GitLabEndpointSource implements ILibrarySource, IDisposable {
 
 	private final GitLabEndpoint endpoint;
 	private GitLabDownloader downloadManager;
-	private String details = "Configured via Preferences → GitLab Endpoints.\n" + "Endpoint: "; //$NON-NLS-1$ //$NON-NLS-2$
+	private String details = "Configured via Preferences ??? GitLab Endpoints.\n" + "Endpoint: "; //$NON-NLS-1$ //$NON-NLS-2$
 
 	GitLabEndpointSource(final GitLabEndpoint endpoint) {
 		this.endpoint = Objects.requireNonNull(endpoint);
@@ -60,7 +60,7 @@ public final class GitLabEndpointSource implements ILibrarySource, IDisposable {
 
 	@Override
 	public String comboLabelText() {
-		return "GitLab – " + endpoint.name();
+		return "GitLab ??? " + endpoint.name();
 	}
 
 	@Override

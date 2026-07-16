@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin & Fabio Gandolfi
+ *   Dunja ??ivotin & Fabio Gandolfi
  *     - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.fordiac.ide.model.edit.providers;

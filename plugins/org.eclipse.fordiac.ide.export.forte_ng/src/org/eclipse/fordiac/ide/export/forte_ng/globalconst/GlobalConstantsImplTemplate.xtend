@@ -26,23 +26,23 @@ class GlobalConstantsImplTemplate extends ForteLibraryElementTemplate<GlobalCons
 	}
 
 	override generate() '''
-		«generateHeader»
+		??generateHeader??
 		
-		«generateImplIncludes»
+		??generateImplIncludes??
 		
-		namespace «type.generateTypeNamespace» {
+		namespace ??type.generateTypeNamespace?? {
 		  namespace {
-		      «generateTypeHash»
+		      ??generateTypeHash??
 		  }
 		
-		  «generateGlobalConstDefinition»
+		  ??generateGlobalConstDefinition??
 		
-		  «type.constants.generateVariableDefinitions(true)»
+		  ??type.constants.generateVariableDefinitions(true)??
 		}
 	'''
 	
 	def protected generateGlobalConstDefinition() '''
-		DEFINE_FIRMWARE_GLOBAL_CONST(«className», «type.generateTypeSpec», TypeHash)
+		DEFINE_FIRMWARE_GLOBAL_CONST(??className??, ??type.generateTypeSpec??, TypeHash)
 		
 	'''
 	

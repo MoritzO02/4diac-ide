@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - extracted out of the DataTypeDropdown class
+ *   Dunja ??ivotin - extracted out of the DataTypeDropdown class
  *   Martin Erich Jobst - refactored type proposals
  *******************************************************************************/
 package org.eclipse.fordiac.ide.model.ui.nat;

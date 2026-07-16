@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin, Bianca Wiesmayr
+ *   Dunja ??ivotin, Bianca Wiesmayr
  *    - initial API and implementation and/or initial documentation
  *   Ernst Blecha
  *    - add cancelation of search

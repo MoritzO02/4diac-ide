@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *   Dunja Životin - initial API and implementation and/or initial documentation
+ *   Dunja ??ivotin - initial API and implementation and/or initial documentation
  *   Martin Jobst - adopt ST editor for initial values
  *                - fix refresh for array size changes
  *   Martin Melik Merkumians - add VarConfig checkbox for data pins

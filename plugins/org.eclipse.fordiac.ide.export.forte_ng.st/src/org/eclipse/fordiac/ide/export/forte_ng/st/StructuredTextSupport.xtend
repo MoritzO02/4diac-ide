@@ -114,22 +114,22 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	int uniqueVariableIndex = 0;
 
 	def protected CharSequence generateVariables(Iterable<? extends STVarDeclarationBlock> blocks, boolean decl) '''
-		«FOR block : blocks»
-			«block.generateVariableBlock(decl)»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateVariableBlock(decl)??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateVariableBlock(STVarDeclarationBlock block, boolean decl) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateVariable(decl, block.constant)»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateVariable(decl, block.constant)??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateVariable(STVarDeclaration variable, boolean decl, boolean const) {
 		if (variable.locatedAt !== null)
-			'''«IF decl»«IF const»const «ENDIF»«variable.generateFeatureTypeName» «IF !variable.array»&«ENDIF»«ENDIF»«variable.generateFeatureName» = «variable.locatedAt.generateFeatureName»;'''
+			'''??IF decl????IF const??const ??ENDIF????variable.generateFeatureTypeName?? ??IF !variable.array??&??ENDIF????ENDIF????variable.generateFeatureName?? = ??variable.locatedAt.generateFeatureName??;'''
 		else
-			'''«IF decl»«IF const»const «ENDIF»«variable.generateFeatureTypeName» «ENDIF»«variable.generateFeatureName» = «variable.generateVariableDefaultValue»;'''
+			'''??IF decl????IF const??const ??ENDIF????variable.generateFeatureTypeName?? ??ENDIF????variable.generateFeatureName?? = ??variable.generateVariableDefaultValue??;'''
 	}
 
 	def protected dispatch CharSequence generateInitializerExpression(STElementaryInitializerExpression expr) {
@@ -137,17 +137,17 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected dispatch CharSequence generateInitializerExpression(STArrayInitializerExpression expr) //
-	'''«expr.expectedType.generateTypeName»{«FOR elem : expr.values SEPARATOR ", "»«elem.generateArrayInitElement»«ENDFOR»}'''
+	'''??expr.expectedType.generateTypeName??{??FOR elem : expr.values SEPARATOR ", "????elem.generateArrayInitElement????ENDFOR??}'''
 
 	def protected dispatch CharSequence generateArrayInitElement(STSingleArrayInitElement elem) {
 		elem.initExpression.generateInitializerExpression
 	}
 
 	def protected dispatch CharSequence generateArrayInitElement(STRepeatArrayInitElement elem) //
-	'''«FOR i : 0..<elem.repetitions.intValueExact SEPARATOR ", "»«FOR initExpression : elem.initExpressions SEPARATOR ", "»«initExpression.generateInitializerExpression»«ENDFOR»«ENDFOR»'''
+	'''??FOR i : 0..<elem.repetitions.intValueExact SEPARATOR ", "????FOR initExpression : elem.initExpressions SEPARATOR ", "????initExpression.generateInitializerExpression????ENDFOR????ENDFOR??'''
 
 	def protected dispatch CharSequence generateInitializerExpression(STStructInitializerExpression expr) //
-	'''«expr.expectedType.generateTypeName»(«FOR elem : expr.generateStructInitElements SEPARATOR ", "»«elem»«ENDFOR»)'''
+	'''??expr.expectedType.generateTypeName??(??FOR elem : expr.generateStructInitElements SEPARATOR ", "????elem????ENDFOR??)'''
 
 	def protected Iterable<CharSequence> generateStructInitElements(STStructInitializerExpression expr) {
 		expr.mappedStructInitElements.entrySet.map[key.generateStructInitElement(value)]
@@ -158,14 +158,14 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected CharSequence generateStatementList(List<STStatement> statements) '''
-		«FOR statement : statements»
-			«statement.generateLineDirective»«statement.generateStatement»
-		«ENDFOR»
+		??FOR statement : statements??
+			??statement.generateLineDirective????statement.generateStatement??
+		??ENDFOR??
 	'''
 
 	def protected dispatch CharSequence generateStatement(STStatement stmt) {
-		errors.add('''The statement «stmt.eClass.name» is not supported''')
-		'''#error "The statement «stmt.eClass.name» is not supported"'''
+		errors.add('''The statement ??stmt.eClass.name?? is not supported''')
+		'''#error "The statement ??stmt.eClass.name?? is not supported"'''
 	}
 
 	def protected dispatch CharSequence generateStatement(STNop stmt) {
@@ -173,59 +173,59 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected dispatch CharSequence generateStatement(STIfStatement stmt) '''
-		if («stmt.condition.generateExpression») {
-		  «stmt.statements.generateStatementList»
+		if (??stmt.condition.generateExpression??) {
+		  ??stmt.statements.generateStatementList??
 		}
-		«FOR elseif : stmt.elseifs»
-			else if («elseif.condition.generateExpression») {
-			  «elseif.statements.generateStatementList»
+		??FOR elseif : stmt.elseifs??
+			else if (??elseif.condition.generateExpression??) {
+			  ??elseif.statements.generateStatementList??
 			}
-		«ENDFOR»
-		«IF stmt.^else !== null»
+		??ENDFOR??
+		??IF stmt.^else !== null??
 			else {
-			  «stmt.^else.statements.generateStatementList»
+			  ??stmt.^else.statements.generateStatementList??
 			}
-		«ENDIF»
+		??ENDIF??
 	'''
 
 	def protected dispatch CharSequence generateStatement(STCaseStatement stmt) '''
-		«val variable = generateUniqueVariableName»
-		if (auto «variable» = «stmt.selector.generateExpression»; false) {
-		«FOR clause : stmt.cases»
-			} else if («FOR value : clause.conditions SEPARATOR ' || '»«value.generateCaseCondition(variable)»«ENDFOR») {
-			  «clause.statements.generateStatementList»
-		«ENDFOR»
-		«IF stmt.^else !== null»
+		??val variable = generateUniqueVariableName??
+		if (auto ??variable?? = ??stmt.selector.generateExpression??; false) {
+		??FOR clause : stmt.cases??
+			} else if (??FOR value : clause.conditions SEPARATOR ' || '????value.generateCaseCondition(variable)????ENDFOR??) {
+			  ??clause.statements.generateStatementList??
+		??ENDFOR??
+		??IF stmt.^else !== null??
 			} else {
-			  «stmt.^else.statements.generateStatementList»
-		«ENDIF»
+			  ??stmt.^else.statements.generateStatementList??
+		??ENDIF??
 		}
 	'''
 
 	def protected CharSequence generateCaseCondition(STExpression expr, CharSequence variable) {
 		switch (expr) {
 			STBinaryExpression case expr.op.range: //
-			'''func_AND(func_GE(«variable», «expr.left.generateExpression»), func_LE(«variable», «expr.right.generateExpression»))'''
-			default: '''func_EQ(«variable», «expr.generateExpression»)'''
+			'''func_AND(func_GE(??variable??, ??expr.left.generateExpression??), func_LE(??variable??, ??expr.right.generateExpression??))'''
+			default: '''func_EQ(??variable??, ??expr.generateExpression??)'''
 		}
 	}
 
 	def protected dispatch generateStatement(STForStatement stmt) '''
-		for (auto «generateUniqueVariableName» : ST_FOR_ITER<«stmt.variable.resultType.generateTypeName»«IF stmt.by !== null», «stmt.by.resultType.generateTypeName»«ENDIF»>(«stmt.variable.generateExpression», «stmt.from.generateExpression», «stmt.to.generateExpression»«IF stmt.by !== null», «stmt.by.generateExpression»«ENDIF»)) {
-		  «stmt.statements.generateStatementList»
+		for (auto ??generateUniqueVariableName?? : ST_FOR_ITER<??stmt.variable.resultType.generateTypeName????IF stmt.by !== null??, ??stmt.by.resultType.generateTypeName????ENDIF??>(??stmt.variable.generateExpression??, ??stmt.from.generateExpression??, ??stmt.to.generateExpression????IF stmt.by !== null??, ??stmt.by.generateExpression????ENDIF??)) {
+		  ??stmt.statements.generateStatementList??
 		}
 	'''
 
 	def protected dispatch generateStatement(STWhileStatement stmt) '''
-		while («stmt.condition.generateExpression») {
-		  «stmt.statements.generateStatementList»
+		while (??stmt.condition.generateExpression??) {
+		  ??stmt.statements.generateStatementList??
 		}
 	'''
 
 	def protected dispatch generateStatement(STRepeatStatement stmt) '''
 		do {
-		  «stmt.statements.generateStatementList»
-		} while (!((«stmt.condition.generateExpression»)));
+		  ??stmt.statements.generateStatementList??
+		} while (!((??stmt.condition.generateExpression??)));
 	'''
 
 	def protected dispatch CharSequence generateStatement(STContinue stmt) '''continue;'''
@@ -234,47 +234,47 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 
 	def protected dispatch CharSequence generateStatement(STExit stmt) '''break;'''
 
-	def protected dispatch CharSequence generateStatement(STExpression stmt) '''«stmt.generateExpression»;'''
+	def protected dispatch CharSequence generateStatement(STExpression stmt) '''??stmt.generateExpression??;'''
 
 	def protected dispatch CharSequence generateExpression(STExpression expr) {
-		errors.add('''The expression «expr.eClass.name» is not supported''')
+		errors.add('''The expression ??expr.eClass.name?? is not supported''')
 		""
 	}
 
 	def protected dispatch CharSequence generateExpression(STAssignment expr) {
 		if (expr.right.isAnyVariableReference)
-			'''«expr.left.generateExpression».setValue(«expr.right.generateExpression».unwrap())'''
+			'''??expr.left.generateExpression??.setValue(??expr.right.generateExpression??.unwrap())'''
 		else
-			'''«expr.left.generateExpression» = «expr.right.generateExpression»'''
+			'''??expr.left.generateExpression?? = ??expr.right.generateExpression??'''
 	}
 
 	def protected dispatch CharSequence generateExpression(STBinaryExpression expr) //
-	'''«switch (expr.op) {
+	'''??switch (expr.op) {
 			case AMPERSAND: "func_AND"
 			case POWER: "func_EXPT"
-			default: '''func_«expr.op.getName»'''
-		}»«IF expr.op.arithmetic || expr.op.logical»<«expr.resultType.generateTypeName»>«ENDIF»(«expr.left.generateExpression», «expr.right.generateExpression»)'''
+			default: '''func_??expr.op.getName??'''
+		}????IF expr.op.arithmetic || expr.op.logical??<??expr.resultType.generateTypeName??>??ENDIF??(??expr.left.generateExpression??, ??expr.right.generateExpression??)'''
 
 	def protected dispatch CharSequence generateExpression(STUnaryExpression expr) //
-	'''func_«expr.op.getName»<«expr.resultType.generateTypeName»>(«expr.expression.generateExpression»)'''
+	'''func_??expr.op.getName??<??expr.resultType.generateTypeName??>(??expr.expression.generateExpression??)'''
 
 	def protected dispatch CharSequence generateExpression(STMemberAccessExpression expr) {
 		switch (expr.receiver.resultType) {
 			AdapterType,
-			FBType: '''«expr.receiver.generateExpression»->«expr.member.generateExpression»'''
-			default: '''«expr.receiver.generateExpression».«expr.member.generateExpression»'''
+			FBType: '''??expr.receiver.generateExpression??->??expr.member.generateExpression??'''
+			default: '''??expr.receiver.generateExpression??.??expr.member.generateExpression??'''
 		}
 	}
 
 	def protected dispatch CharSequence generateExpression(STArrayAccessExpression expr) //
-	'''«expr.receiver.generateExpression»«FOR index : expr.index».at(«index.generateExpression»)«ENDFOR»'''
+	'''??expr.receiver.generateExpression????FOR index : expr.index??.at(??index.generateExpression??)??ENDFOR??'''
 
 	def protected dispatch CharSequence generateExpression(STFeatureExpression expr) //
-	'''«expr.feature.generateFeatureName»«expr.generateTemplateArguments»«IF expr.call»(«FOR arg : expr.generateCallArguments SEPARATOR ", "»«arg»«ENDFOR»)«ENDIF»'''
+	'''??expr.feature.generateFeatureName????expr.generateTemplateArguments????IF expr.call??(??FOR arg : expr.generateCallArguments SEPARATOR ", "????arg????ENDFOR??)??ENDIF??'''
 
 	def protected CharSequence generateTemplateArguments(STFeatureExpression expr) {
 		switch (feature : expr.feature) {
-			STStandardFunction case feature.isGenericReturnType: '''<«expr.resultType.generateTypeName»>'''
+			STStandardFunction case feature.isGenericReturnType: '''<??expr.resultType.generateTypeName??>'''
 			default:
 				""
 		}
@@ -293,7 +293,7 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 				expr.mappedInOutArguments.entrySet.map[key.generateInOutCallArgument(value)] +
 				expr.mappedOutputArguments.entrySet.map[key.generateOutputCallArgument(value)]
 		} catch (IndexOutOfBoundsException e) {
-			errors.add('''Not enough arguments for «expr.feature.name»''')
+			errors.add('''Not enough arguments for ??expr.feature.name??''')
 			emptyList
 		} catch (ClassCastException e) {
 			errors.add('''Mixing named and unnamed arguments is not allowed''')
@@ -305,7 +305,7 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 		switch (expr.feature) {
 			case THIS:
 				if (expr.call)
-					'''(*this)(«FOR arg : expr.generateCallArguments SEPARATOR ", "»«arg»«ENDFOR»)'''
+					'''(*this)(??FOR arg : expr.generateCallArguments SEPARATOR ", "????arg????ENDFOR??)'''
 				else
 					"this"
 		}
@@ -317,7 +317,7 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 				expr.mappedInOutArguments.entrySet.map[key.generateInOutCallArgument(value)] +
 				expr.mappedOutputArguments.entrySet.map[key.generateOutputCallArgument(value)]
 		} catch (IndexOutOfBoundsException e) {
-			errors.add('''Not enough arguments for «expr.feature.getName»''')
+			errors.add('''Not enough arguments for ??expr.feature.getName??''')
 			emptyList
 		} catch (ClassCastException e) {
 			errors.add('''Mixing named and unnamed arguments is not allowed''')
@@ -328,9 +328,9 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	def protected CharSequence generateInputCallArgument(ITypedElement parameter, STCallArgument argument,
 		STFeatureExpression expr) {
 		switch (expr.feature) {
-			FB case argument === null: '''«expr.feature.generateFeatureName»->«parameter.generateFeatureName»'''
+			FB case argument === null: '''??expr.feature.generateFeatureName??->??parameter.generateFeatureName??'''
 			Event case argument ===
-				null: '''«(expr.eContainer as STMemberAccessExpression).receiver.generateExpression»->«parameter.generateFeatureName»'''
+				null: '''??(expr.eContainer as STMemberAccessExpression).receiver.generateExpression??->??parameter.generateFeatureName??'''
 			default:
 				parameter.generateInputCallArgument(argument)
 		}
@@ -342,10 +342,10 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 
 	def protected CharSequence generateInOutCallArgument(ITypedElement parameter, STCallArgument argument) {
 		switch (argument) {
-			case null: '''ST_IGNORE_OUT_PARAM(«parameter.featureType.generateTypeName»(«parameter.generateVariableDefaultValue»))'''
+			case null: '''ST_IGNORE_OUT_PARAM(??parameter.featureType.generateTypeName??(??parameter.generateVariableDefaultValue??))'''
 			case (argument.argument instanceof STMemberAccessExpression) &&
 				(argument.argument as STMemberAccessExpression).
-					member instanceof STMultibitPartialExpression: '''ST_EXTEND_LIFETIME(«argument.argument.generateExpression»)'''
+					member instanceof STMultibitPartialExpression: '''ST_EXTEND_LIFETIME(??argument.argument.generateExpression??)'''
 			default:
 				argument.argument.generateExpression
 		}
@@ -355,16 +355,16 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 		switch (argument) {
 			case null: {
 				if (parameter.featureType instanceof AnyBitType)
-					'''CAnyBitOutputParameter<«parameter.generateFeatureTypeName»>()'''
+					'''CAnyBitOutputParameter<??parameter.generateFeatureTypeName??>()'''
 				else
-					'''COutputParameter<«parameter.generateFeatureTypeName»>()'''
+					'''COutputParameter<??parameter.generateFeatureTypeName??>()'''
 			}
 			STCallNamedOutputArgument case argument.not: {
-				'''CAnyBitOutputParameter<«parameter.generateFeatureTypeName»>(«argument.argument.generateExpression», true)'''
+				'''CAnyBitOutputParameter<??parameter.generateFeatureTypeName??>(??argument.argument.generateExpression??, true)'''
 			}
 			case (argument.argument instanceof STMemberAccessExpression) &&
 				(argument.argument as STMemberAccessExpression).member instanceof STMultibitPartialExpression: {
-				'''ST_EXTEND_LIFETIME(«argument.argument.generateExpression»)'''
+				'''ST_EXTEND_LIFETIME(??argument.argument.generateExpression??)'''
 			}
 			default:
 				argument.argument.generateExpression
@@ -372,7 +372,7 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected dispatch CharSequence generateExpression(STMultibitPartialExpression expr) //
-	'''«IF expr.accessMode != AccessMode.WRITE»c«ENDIF»partial<«expr.specifier.generateMultiBitAccessSpecifier»>(«IF expr.expression !== null»«expr.expression.generateExpression»«ELSE»«expr.index»«ENDIF»)'''
+	'''??IF expr.accessMode != AccessMode.WRITE??c??ENDIF??partial<??expr.specifier.generateMultiBitAccessSpecifier??>(??IF expr.expression !== null????expr.expression.generateExpression????ELSE????expr.index????ENDIF??)'''
 
 	def protected CharSequence generateMultiBitAccessSpecifier(STMultiBitAccessSpecifier spec) {
 		switch (spec) {
@@ -386,49 +386,49 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected dispatch CharSequence generateExpression(STNumericLiteral expr) //
-	'''«expr.value»_«expr.resultType.generateTypeNamePlain»'''
+	'''??expr.value??_??expr.resultType.generateTypeNamePlain??'''
 
 	def protected dispatch CharSequence generateExpression(STStringLiteral expr) {
 		val type = expr.resultType
 		switch (type) {
-			StringType: '''"«expr.value.toString.convertToJavaString»"_STRING'''
-			WstringType: '''u"«expr.value.toString.convertToJavaString»"_WSTRING'''
-			CharType: '''«String.format("0x%02x",  expr.value.toString.getBytes(StandardCharsets.UTF_8).get(0))»_CHAR'''
-			WcharType: '''u'«expr.value.toString.convertToJavaString»'_WCHAR'''
+			StringType: '''"??expr.value.toString.convertToJavaString??"_STRING'''
+			WstringType: '''u"??expr.value.toString.convertToJavaString??"_WSTRING'''
+			CharType: '''??String.format("0x%02x",  expr.value.toString.getBytes(StandardCharsets.UTF_8).get(0))??_CHAR'''
+			WcharType: '''u'??expr.value.toString.convertToJavaString??'_WCHAR'''
 		}
 	}
 
 	def protected dispatch CharSequence generateExpression(STDateLiteral expr) {
-		'''«expr.value.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000000000L»_«expr.resultType.generateTypeNamePlain»'''
+		'''??expr.value.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000000000L??_??expr.resultType.generateTypeNamePlain??'''
 	}
 
 	def protected dispatch CharSequence generateExpression(STTimeLiteral expr) {
-		'''«expr.value.toNanos»_«expr.resultType.generateTypeNamePlain»'''
+		'''??expr.value.toNanos??_??expr.resultType.generateTypeNamePlain??'''
 	}
 
 	def protected dispatch CharSequence generateExpression(STTimeOfDayLiteral expr) {
-		'''«expr.value.toNanoOfDay»_«expr.resultType.generateTypeNamePlain»'''
+		'''??expr.value.toNanoOfDay??_??expr.resultType.generateTypeNamePlain??'''
 	}
 
 	def protected dispatch CharSequence generateExpression(STDateAndTimeLiteral expr) {
-		'''«LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC).until(expr.value, ChronoUnit.NANOS)»_«expr.resultType.generateTypeNamePlain»'''
+		'''??LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC).until(expr.value, ChronoUnit.NANOS)??_??expr.resultType.generateTypeNamePlain??'''
 	}
 
 	def protected dispatch CharSequence generateTemplateExpression(STBinaryExpression expr) {
 		switch (expr.op) {
-			case RANGE: '''«expr.left.generateTemplateExpression», «expr.right.generateTemplateExpression»'''
-			case AMPERSAND: '''AND(«expr.left.generateTemplateExpression», «expr.right.generateTemplateExpression»)'''
-			default: '''«expr.op.getName»(«expr.left.generateTemplateExpression», «expr.right.generateTemplateExpression»)'''
+			case RANGE: '''??expr.left.generateTemplateExpression??, ??expr.right.generateTemplateExpression??'''
+			case AMPERSAND: '''AND(??expr.left.generateTemplateExpression??, ??expr.right.generateTemplateExpression??)'''
+			default: '''??expr.op.getName??(??expr.left.generateTemplateExpression??, ??expr.right.generateTemplateExpression??)'''
 		}
 	}
 
 	def protected dispatch CharSequence generateTemplateExpression(STUnaryExpression expr) //
-	'''«expr.op.getName»(«expr.expression.generateTemplateExpression»)'''
+	'''??expr.op.getName??(??expr.expression.generateTemplateExpression??)'''
 
 	def protected dispatch CharSequence generateTemplateExpression(STNumericLiteral expr) { expr.value.toString }
 
 	def protected dispatch CharSequence generateVariableDefaultValue(INamedElement feature) {
-		errors.add('''The variable «feature.eClass.name» is not supported''')
+		errors.add('''The variable ??feature.eClass.name?? is not supported''')
 		"0"
 	}
 
@@ -449,7 +449,7 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected dispatch CharSequence generateFeatureName(INamedElement feature) {
-		errors.add('''The feature «feature.eClass.name» is not supported''')
+		errors.add('''The feature ??feature.eClass.name?? is not supported''')
 		""
 	}
 
@@ -459,20 +459,20 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 
 	def protected dispatch CharSequence generateFeatureName(STVarDeclaration feature) {
 		switch (feature.eContainer) {
-			STVarGlobalDeclarationBlock: '''«feature.generateDefiningTypeName»::var_«feature.name»'''
-			STVarOutputDeclarationBlock: '''(*st_lv_«feature.name»)'''
-			default: '''st_lv_«feature.name»'''
+			STVarGlobalDeclarationBlock: '''??feature.generateDefiningTypeName??::var_??feature.name??'''
+			STVarOutputDeclarationBlock: '''(*st_lv_??feature.name??)'''
+			default: '''st_lv_??feature.name??'''
 		}
 	}
 
-	def protected dispatch CharSequence generateFeatureName(STFunction feature) '''func_«feature.name»'''
+	def protected dispatch CharSequence generateFeatureName(STFunction feature) '''func_??feature.name??'''
 
 	def protected dispatch CharSequence generateFeatureName(FunctionFBType feature) //
-	'''«feature.generateTypeNamespace»::func_«feature.name»'''
+	'''??feature.generateTypeNamespace??::func_??feature.name??'''
 
-	def protected dispatch CharSequence generateFeatureName(STStandardFunction feature) '''func_«feature.name»'''
+	def protected dispatch CharSequence generateFeatureName(STStandardFunction feature) '''func_??feature.name??'''
 
-	def protected dispatch CharSequence generateFeatureName(STMethod feature) '''method_«feature.name»'''
+	def protected dispatch CharSequence generateFeatureName(STMethod feature) '''method_??feature.name??'''
 
 	def protected dispatch CharSequence generateFeatureName(FB feature) {
 		ForteNgExportUtil.generateName(feature)
@@ -495,44 +495,44 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	def protected CharSequence generateParameterName(STVarDeclaration feature) {
-		'''st_lv_«feature.name»'''
+		'''st_lv_??feature.name??'''
 	}
 
 	def protected CharSequence generateParameterTypeName(STVarDeclaration variable) {
 		val type = STVariableOperations.evaluateResultType(variable)
 		switch (variable.eContainer) {
-			STVarInputDeclarationBlock: '''const «type.generateTypeNameAsInputParameter» &'''
-			STVarInOutDeclarationBlock: '''«type.generateTypeNameAsInOutParameter» &'''
-			STVarOutputDeclarationBlock: '''«type.generateTypeNameAsOutputParameter» '''
+			STVarInputDeclarationBlock: '''const ??type.generateTypeNameAsInputParameter?? &'''
+			STVarInOutDeclarationBlock: '''??type.generateTypeNameAsInOutParameter?? &'''
+			STVarOutputDeclarationBlock: '''??type.generateTypeNameAsOutputParameter?? '''
 		}
 	}
 
 	def protected CharSequence generateOutputGuard(Iterable<? extends STVarDeclarationBlock> blocks) '''
-		«FOR block : blocks»
-			«block.generateOutputGuard»
-		«ENDFOR»
+		??FOR block : blocks??
+			??block.generateOutputGuard??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutputGuard(STVarDeclarationBlock block) '''
-		«FOR variable : block.varDeclarations.filter(STVarDeclaration)»
-			«variable.generateOutputGuard»
-		«ENDFOR»
+		??FOR variable : block.varDeclarations.filter(STVarDeclaration)??
+			??variable.generateOutputGuard??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateOutputGuard(STVarDeclaration variable) '''
-		COutputGuard st_guard_«variable.name»(«variable.generateParameterName»);
+		COutputGuard st_guard_??variable.name??(??variable.generateParameterName??);
 	'''
 
 	def protected CharSequence generateTypeDefaultValue(INamedElement type) {
 		switch (type) {
-			DataType case GenericTypes.isAnyType(type): '''«type.generateTypeName»()'''
+			DataType case GenericTypes.isAnyType(type): '''??type.generateTypeName??()'''
 			StringType: '''""_STRING'''
 			WstringType: '''u""_WSTRING'''
 			CharType: ''''\0'_CHAR'''
 			WcharType: '''u'\0'_WCHAR'''
-			AnyElementaryType: '''0_«type.generateTypeNamePlain»'''
-			ArrayType: '''«type.generateTypeName»{}'''
-			StructuredType: '''«type.generateTypeName»()'''
+			AnyElementaryType: '''0_??type.generateTypeNamePlain??'''
+			ArrayType: '''??type.generateTypeName??{}'''
+			StructuredType: '''??type.generateTypeName??()'''
 			default:
 				"0"
 		}
@@ -700,21 +700,21 @@ abstract class StructuredTextSupport implements ILanguageSupport {
 	}
 
 	protected def LibraryElement createStandardFunctionDependencyPlaceholder(CharSequence name) {
-		createDependencyPlaceholder('''iec61131_functions/func_«name»''')
+		createDependencyPlaceholder('''iec61131_functions/func_??name??''')
 	}
 
 	def protected generateLineDirective(EObject element) {
 		val node = element.findActualNodeFor
 		val sourceName = element.eResource?.URI?.lastSegment
 		if (node !== null && sourceName !== null)
-			'''#line «node.startLine» "«sourceName»"
+			'''#line ??node.startLine?? "??sourceName??"
 			'''
 		else if (node !== null)
-			'''#line «node.startLine» "unknown"
+			'''#line ??node.startLine?? "unknown"
 			'''
 		else
 			""
 	}
 
-	def protected generateUniqueVariableName() '''st_lv_synthetic_«uniqueVariableIndex++»'''
+	def protected generateUniqueVariableName() '''st_lv_synthetic_??uniqueVariableIndex++??'''
 }

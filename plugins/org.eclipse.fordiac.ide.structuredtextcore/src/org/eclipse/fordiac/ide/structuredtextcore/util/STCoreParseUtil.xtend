@@ -85,9 +85,9 @@ final class STCoreParseUtil {
 	def static IParseResult postProcess(String name, List<String> errors, List<String> warnings, List<String> infos,
 		List<Issue> issues, IParseResult parseResult) {
 
-		errors?.addAll(issues.filter[severity == Severity.ERROR].map['''«name» at «lineNumber»: «message»'''])
-		warnings?.addAll(issues.filter[severity == Severity.WARNING].map['''«name» at «lineNumber»: «message»'''])
-		infos?.addAll(issues.filter[severity == Severity.INFO].map['''«name» at «lineNumber»: «message»'''])
+		errors?.addAll(issues.filter[severity == Severity.ERROR].map['''??name?? at ??lineNumber??: ??message??'''])
+		warnings?.addAll(issues.filter[severity == Severity.WARNING].map['''??name?? at ??lineNumber??: ??message??'''])
+		infos?.addAll(issues.filter[severity == Severity.INFO].map['''??name?? at ??lineNumber??: ??message??'''])
 		if (issues.exists[severity == Severity.ERROR]) {
 			return null
 		}

@@ -34,21 +34,21 @@ class BasicFBHeaderTemplate extends BaseFBHeaderTemplate<BasicFBType> {
 	}
 
 	override generateAdditionalDeclarations() '''
-		«generateStates»
+		??generateStates??
 	'''
 	
-	override generateClassInclude() '''«generateDependencyInclude("forte/basicfb.h")»'''
+	override generateClassInclude() '''??generateDependencyInclude("forte/basicfb.h")??'''
 
 	def protected generateStates() '''
-		«FOR state : type.ECC.ECState AFTER '\n'»
-			static const TForteInt16 scmState«state.name» = «type.ECC.ECState.indexOf(state)»;
-		«ENDFOR»
-		«FOR state : type.ECC.ECState AFTER '\n'»
-			«state.generateState»
-		«ENDFOR»
+		??FOR state : type.ECC.ECState AFTER '\n'??
+			static const TForteInt16 scmState??state.name?? = ??type.ECC.ECState.indexOf(state)??;
+		??ENDFOR??
+		??FOR state : type.ECC.ECState AFTER '\n'??
+			??state.generateState??
+		??ENDFOR??
 	'''
 
 	def protected CharSequence generateState(ECState state) '''
-		void enterState«state.name»(CEventChainExecutionThread *const paECET);
+		void enterState??state.name??(CEventChainExecutionThread *const paECET);
 	'''
 }
