@@ -448,9 +448,15 @@ public class PrintPreview extends Dialog {
 	}
 
 	private void performPrinting() {
-		final PrintDialog dialog = new PrintDialog(getShell());
-		// Prompts the printer dialog to let the user select a printer.
-		final PrinterData printerData = dialog.open();
+		PrinterData printerData = null;
+		try {
+			final PrintDialog dialog = new PrintDialog(getShell());
+			// Prompts the printer dialog to let the user select a printer.
+			printerData = dialog.open();
+		} catch (final Throwable e) {
+			FordiacLogHelper.logError(Messages.PrintPreview_ERROR_StartingPrintJob, e);
+			return;
+		}
 
 		if (printerData == null) {
 			return;
