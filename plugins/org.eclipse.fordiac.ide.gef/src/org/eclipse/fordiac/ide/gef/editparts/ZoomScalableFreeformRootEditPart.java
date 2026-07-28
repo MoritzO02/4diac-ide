@@ -38,6 +38,7 @@ import org.eclipse.fordiac.ide.gef.figures.AbstractFreeformFigure;
 import org.eclipse.fordiac.ide.gef.figures.BackgroundFreeformFigure;
 import org.eclipse.fordiac.ide.gef.figures.CoordinateOriginFigure;
 import org.eclipse.fordiac.ide.gef.figures.ModuloFreeformFigure;
+import org.eclipse.fordiac.ide.gef.frame.DocumentFrame;
 import org.eclipse.fordiac.ide.gef.frame.DocumentFrameFigure;
 import org.eclipse.fordiac.ide.gef.tools.AdvancedMarqueeDragTracker;
 import org.eclipse.gef.DragTracker;
@@ -66,9 +67,15 @@ public class ZoomScalableFreeformRootEditPart extends ScalableFreeformRootEditPa
 	public static final String ORIGIN_LAYER = "ORIGIN_LAYER"; //$NON-NLS-1$
 	public static final String FRAME_LAYER = "FRAME_LAYER"; //$NON-NLS-1$
 
+	private final DocumentFrame documentFrame = new DocumentFrame();
+
 	public ZoomScalableFreeformRootEditPart(final IWorkbenchPartSite site, final ActionRegistry actionRegistry) {
 		configureZoomManger();
 		setupZoomActions(site, actionRegistry);
+	}
+
+	public DocumentFrame getDocumentFrame() {
+		return documentFrame;
 	}
 
 	@Override
@@ -79,7 +86,7 @@ public class ZoomScalableFreeformRootEditPart extends ScalableFreeformRootEditPa
 	@Override
 	protected LayeredPane createPrintableLayers() {
 		final FreeformLayeredPane layeredPane = new FreeformLayeredPane();
-		layeredPane.add(new DocumentFrameFigure(), FRAME_LAYER);
+		layeredPane.add(new DocumentFrameFigure(documentFrame), FRAME_LAYER);
 		layeredPane.add(new CoordinateOriginFigure(), ORIGIN_LAYER);
 		layeredPane.add(new FreeformLayer(), PRIMARY_LAYER);
 		final ConnectionLayer connectionLayer = new ConnectionLayer();
@@ -113,7 +120,7 @@ public class ZoomScalableFreeformRootEditPart extends ScalableFreeformRootEditPa
 	@Override
 	protected ScalableFreeformLayeredPane createScaledLayers() {
 		final ScalableFreeformLayeredPane pane = super.createScaledLayers();
-		pane.add(new DocumentFrameFigure(), FRAME_LAYER, 0);
+		pane.add(new DocumentFrameFigure(documentFrame), FRAME_LAYER, 0);
 		pane.add(new CoordinateOriginFigure(), ORIGIN_LAYER, 0);
 		pane.add(new FreeformLayer(), HANDLE_LAYER);
 		pane.add(new FeedbackLayer(), FEEDBACK_LAYER);
