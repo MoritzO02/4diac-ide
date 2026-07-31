@@ -259,13 +259,11 @@ public class PrintPreview extends Dialog {
 		final double scaledPageHeight = margin.getHeight() / scale;
 		page -= 1;
 
-		// Start tiling from (0,0) so the IEC frame and coordinate origin
-		// (drawn at the origin) are included in the print output.
-		final int cols = (int) Math.ceil((bounds.width() + bounds.x) / scaledPageWidth);
+		final int cols = (int) Math.ceil((bounds.width()) / scaledPageWidth);
 		final int currentColumn = page % cols;
 		final int currentRow = page / cols;
-		return new org.eclipse.draw2d.geometry.Point((int) (currentColumn * scaledPageWidth),
-				(int) (currentRow * scaledPageHeight));
+		return new org.eclipse.draw2d.geometry.Point((int) (bounds.x + currentColumn * scaledPageWidth),
+				(int) (bounds.y + currentRow * scaledPageHeight));
 	}
 
 	private void updatePageNumbers() {
@@ -273,11 +271,8 @@ public class PrintPreview extends Dialog {
 		final org.eclipse.draw2d.geometry.Rectangle rectangle = figure.getBounds();
 
 		final double scale = getScale();
-		// Include bounds offset so tiling from (0,0) covers the IEC frame
-		final double totalWidth = rectangle.preciseWidth() + rectangle.x;
-		final double totalHeight = rectangle.preciseHeight() + rectangle.y;
-		numberOfPages = (int) (Math.ceil((totalWidth * scale) / margin.getWidth())
-				* Math.ceil((totalHeight * scale) / margin.getHeight()));
+		numberOfPages = (int) (Math.ceil((rectangle.preciseWidth() * scale) / margin.getWidth())
+				* Math.ceil((rectangle.preciseHeight() * scale) / margin.getHeight()));
 		numberOfPagesLabel.setText(String.valueOf(numberOfPages));
 		if (currentPage > numberOfPages) {
 			setCurrentPage(numberOfPages);
