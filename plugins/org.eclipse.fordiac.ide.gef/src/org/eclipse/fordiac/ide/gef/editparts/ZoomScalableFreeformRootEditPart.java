@@ -121,7 +121,8 @@ public class ZoomScalableFreeformRootEditPart extends ScalableFreeformRootEditPa
 	protected ScalableFreeformLayeredPane createScaledLayers() {
 		final ScalableFreeformLayeredPane pane = super.createScaledLayers();
 		pane.add(new DocumentFrameFigure(documentFrame), FRAME_LAYER, 0);
-		pane.add(new CoordinateOriginFigure(), ORIGIN_LAYER, 0);
+		// CoordinateOriginFigure intentionally only in createPrintableLayers()
+		// — visible in print output but not in the editor
 		pane.add(new FreeformLayer(), HANDLE_LAYER);
 		pane.add(new FeedbackLayer(), FEEDBACK_LAYER);
 		return pane;
