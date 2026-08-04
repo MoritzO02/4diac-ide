@@ -22,6 +22,8 @@ import org.eclipse.draw2d.PrintFigureOperation;
 import org.eclipse.draw2d.PrinterGraphics;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.fordiac.ide.gef.Messages;
+import org.eclipse.fordiac.ide.gef.frame.DocumentFrame;
+import org.eclipse.fordiac.ide.gef.frame.DocumentFrameFigure;
 import org.eclipse.fordiac.ide.ui.FordiacLogHelper;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.LayerConstants;
@@ -254,7 +256,7 @@ public class PrintPreview extends Dialog {
 	}
 
 	private org.eclipse.draw2d.geometry.Point getClipRectLocationForPage(int page, final double scale) {
-		final org.eclipse.draw2d.geometry.Rectangle bounds = figure.getBounds();
+		final org.eclipse.draw2d.geometry.Rectangle bounds = getPrintArea();
 		final double scaledPageWidth = margin.getWidth() / scale;
 		final double scaledPageHeight = margin.getHeight() / scale;
 		page -= 1;
@@ -266,9 +268,28 @@ public class PrintPreview extends Dialog {
 				(int) (bounds.y + currentRow * scaledPageHeight));
 	}
 
+	/**
+	 * Returns the full print area = content bounds unioned with the IEC document
+	 * frame paper size. This ensures the frame (drawn at origin 0,0) is included
+	 * in the tiling calculation.
+	 */
+	private org.eclipse.draw2d.geometry.Rectangle getPrintArea() {
+		final org.eclipse.draw2d.geometry.Rectangle area = figure.getBounds().getCopy();
+		for (final IFigure child : figure.getChildren()) {
+			if (child instanceof final DocumentFrameFigure dff) {
+				final DocumentFrame frame = dff.getFrame();
+				if (frame != null && frame.getPaperSize() != null) {
+					area.union(new org.eclipse.draw2d.geometry.Rectangle(0, 0,
+							frame.getPaperSize().getWidth(), frame.getPaperSize().getHeight()));
+				}
+			}
+		}
+		return area;
+	}
+
 	private void updatePageNumbers() {
 
-		final org.eclipse.draw2d.geometry.Rectangle rectangle = figure.getBounds();
+		final org.eclipse.draw2d.geometry.Rectangle rectangle = getPrintArea();
 
 		final double scale = getScale();
 		numberOfPages = (int) (Math.ceil((rectangle.preciseWidth() * scale) / margin.getWidth())
@@ -280,20 +301,21 @@ public class PrintPreview extends Dialog {
 	}
 
 	private double getScale() {
+		final org.eclipse.draw2d.geometry.Rectangle printArea = getPrintArea();
 		final Point displayDpi = Display.getCurrent().getDPI();
 		final Point printerDpi = (printer != null && !printer.isDisposed()) ? printer.getDPI() : displayDpi;
 		double scale = printerDpi.x * 1.0 / displayDpi.x * 1.0;
 
 		switch (getOptionsSelection()) {
 		case PrintFigureOperation.FIT_PAGE:
-			scale *= Math.min(margin.getWidth() / (scale * figure.getBounds().width),
-					margin.getHeight() / (scale * figure.getBounds().height));
+			scale *= Math.min(margin.getWidth() / (scale * printArea.width),
+					margin.getHeight() / (scale * printArea.height));
 			break;
 		case PrintFigureOperation.FIT_WIDTH:
-			scale *= (margin.getWidth() / (scale * figure.getBounds().width));
+			scale *= (margin.getWidth() / (scale * printArea.width));
 			break;
 		case PrintFigureOperation.FIT_HEIGHT:
-			scale *= (margin.getHeight() / (scale * figure.getBounds().height));
+			scale *= (margin.getHeight() / (scale * printArea.height));
 			break;
 		case PAGE_LIMIT:
 			int limit = 1;
@@ -302,7 +324,7 @@ public class PrintPreview extends Dialog {
 			} catch (final NumberFormatException e) {
 				// fallback to 1
 			}
-			scale = computePageLimitScale(limit, figure.getBounds().width, figure.getBounds().height,
+			scale = computePageLimitScale(limit, printArea.width, printArea.height,
 					margin.getWidth(), margin.getHeight());
 			break;
 		case PrintFigureOperation.TILE: // when tile is selected we keep the default printer scale factor
